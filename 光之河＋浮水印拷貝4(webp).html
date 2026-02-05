@@ -665,7 +665,7 @@
         <div class="container mx-auto px-4 relative z-10">
             <!-- Navigation -->
             <div class="grid grid-cols-3 gap-2 w-full md:flex md:w-auto md:gap-8 md:justify-center mb-4 border-b-0 md:border-b border-gray-200/50 pb-2 md:pb-0">
-                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 active" id="btn-awards" onclick="switchTab('awards')">
+                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 active" id="btn-awards" onclick="toggleMobileTrustTab('awards')">
                     <div class="flex md:flex-row items-center justify-center gap-1 md:gap-3">
                     <i class="fa-solid fa-certificate"></i>
                     <span class="tab-text tracking-widest font-bold">評鑑優良</span>
@@ -673,7 +673,7 @@
                     <span class="text-xs mt-1 opacity-70 mobile-hide-text">接連 7 屆臺中市政府評鑑優良</span>
                 </button>
                 <div class="hidden md:block w-px h-10 bg-gray-300"></div>
-                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 hover:bg-white/50" id="btn-pricing" onclick="switchTab('pricing')">
+                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 hover:bg-white/50" id="btn-pricing" onclick="toggleMobileTrustTab('pricing')">
                     <div class="flex md:flex-row items-center justify-center gap-1 md:gap-3">
                     <i class="fa-solid fa-file-contract"></i>
                     <span class="tab-text tracking-widest font-bold">價格透明</span>
@@ -681,7 +681,7 @@
                     <span class="text-xs mt-1 opacity-70 mobile-hide-text">契約公開．合約履約保證</span>
                 </button>
                 <div class="hidden md:block w-px h-10 bg-gray-300"></div>
-                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 hover:bg-white/50" id="btn-team" onclick="switchTab('team')">
+                <button class="tab-btn group md:px-6 md:py-4 md:rounded-t-lg transition-all duration-300 hover:bg-white/50" id="btn-team" onclick="toggleMobileTrustTab('team')">
                     <div class="flex md:flex-row items-center justify-center gap-1 md:gap-3">
                     <i class="fa-solid fa-users"></i>
                     <span class="tab-text tracking-widest font-bold">專業團隊</span>
@@ -1582,6 +1582,59 @@
 
 <script>
     // ... (Script remains largely same, just ensuring modal logic is correct)
+
+    function toggleMobileTrustTab(tabId) {
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        if (!isMobile) {
+            switchTab(tabId);
+            return;
+        }
+
+        const selectedContent = document.getElementById('content-' + tabId);
+        const activeBtn = document.getElementById('btn-' + tabId);
+        if (!selectedContent || !activeBtn) return;
+
+        const isHidden = selectedContent.classList.contains('hidden-content');
+        if (isHidden) {
+            document.querySelectorAll('#trust-tabs .tab-content').forEach(content => {
+                content.classList.add('hidden-content');
+            });
+            document.querySelectorAll('#trust-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            selectedContent.classList.remove('hidden-content');
+            activeBtn.classList.add('active');
+        } else {
+            selectedContent.classList.add('hidden-content');
+            activeBtn.classList.remove('active');
+        }
+    }
+
+    function collapseMobileTrustTabs() {
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        if (!isMobile) return;
+
+        document.querySelectorAll('#trust-tabs .tab-content').forEach(content => {
+            content.classList.add('hidden-content');
+        });
+        document.querySelectorAll('#trust-tabs .tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+    }
+
+    function restoreDesktopTrustTabs() {
+        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+        if (!isDesktop) return;
+
+        const firstContent = document.getElementById('content-awards');
+        const firstBtn = document.getElementById('btn-awards');
+        if (firstContent && firstContent.classList.contains('hidden-content')) {
+            firstContent.classList.remove('hidden-content');
+        }
+        if (firstBtn && !firstBtn.classList.contains('active')) {
+            firstBtn.classList.add('active');
+        }
+    }
     
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(content => {
@@ -1764,6 +1817,17 @@
         // Initial Setup
         setPricingBg('contract');
         setAwardsBg('114'); // Default background for awards
+        collapseMobileTrustTabs();
+        
+        // Responsive toggle for trust tabs
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                collapseMobileTrustTabs();
+                restoreDesktopTrustTabs();
+            }, 150);
+        });
         
         // ✅ Scroll Listener for Mobile (Pricing Section) - 優化版：節流 + 快取
         const pricingScrollContainer = document.getElementById('pricing-features-scroll');
