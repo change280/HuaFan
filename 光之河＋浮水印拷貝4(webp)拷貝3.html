@@ -406,6 +406,67 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
+
+        /* 手機版互動卡片動畫 */
+        @keyframes fade-enter {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fade-exit {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .fade-enter {
+            animation: fade-enter 0.7s ease-in-out forwards;
+        }
+        .fade-enter-active {
+            opacity: 1;
+        }
+        .fade-exit-active {
+            animation: fade-exit 0.7s ease-in-out forwards;
+        }
+
+        /* 內容淡入動畫 */
+        @keyframes content-enter {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .content-enter-active {
+            animation: content-enter 0.6s ease-out forwards;
+        }
+
+        /* 固定按鈕形狀和尺寸 - 防止點擊時變形 */
+        .service-btn-mobile,
+        .religion-btn-tag {
+            border-radius: 9999px !important;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            padding: 0.375rem 1rem !important;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .service-btn-mobile:active,
+        .religion-btn-tag:active {
+            outline: none;
+            border-radius: 9999px !important;
+            padding: 0.375rem 1rem !important;
+            transform: none;
+        }
+
+        .service-btn-mobile:focus,
+        .religion-btn-tag:focus {
+            outline: none;
+        }
+
+        /* 移除瀏覽器默認點擊效果 */
+        button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body class="text-text bg-warm relative">
@@ -689,8 +750,22 @@
                     <span class="text-xs mt-1 opacity-70 mobile-hide-text">國家級證照禮儀師服務</span>
                 </button>
             </div>
+                <!-- 視覺引導提示區（手機版）- 巨大手勢設計 -->
+                <div id="guide-hint-box" class="md:hidden flex justify-center mt-6 mb-6 transition-all duration-500">
+                    <div class="w-[calc(100%-1rem)] border-2 border-dashed border-primary/30 rounded-[2.5rem] px-6 py-12 relative overflow-hidden">
+                        <!-- 巨大的手勢圖標 -->
+                        <div class="absolute left-6 top-1/2 -translate-y-1/2 opacity-20">
+                            <i class="fa-solid fa-hand-pointer text-primary text-[140px] -rotate-12"></i>
+                        </div>
+                        
+                        <!-- 文字內容 -->
+                        <div class="relative z-10 flex flex-col items-center justify-center gap-3">
+                            <p class="text-primary/60 text-lg font-medium tracking-wide">點選上方看詳細內容</p>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Content Area (Transparent Background) -->
+                            <!-- Content Area (Transparent Background) -->
             <!-- 增加 backdrop-blur-sm, bg-warm/30 讓內容在浮水印上仍清晰 -->
             <div class="tab-content w-full relative min-h-[500px] mt-2 md:mt-8 bg-warm/60 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/40 shadow-sm" id="content-awards">
                 
@@ -1104,16 +1179,134 @@
 
         <div class="container mx-auto px-6 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                <div>
-                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-primaryDark">多元化禮儀服務</h2>
-                    <p class="text-gray-600 mt-4 max-w-lg">尊重每一種信仰與價值觀。從傳統到現代，從莊嚴到溫馨。</p>
+                <!-- 左側：標題與說明區 - 優化版本 -->
+                <div class="w-full md:w-auto">
+                    <!-- 頂部裝飾線 -->
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-accent to-accent/30 rounded-full"></div>
+                        <span class="text-accent text-xs font-bold tracking-[0.15em] uppercase">禮儀服務</span>
+                    </div>
+                    
+                    <!-- 主標題 - 增強視覺層次 -->
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 leading-tight tracking-wide">
+                        多元化<br class="hidden md:block" /><span class="text-accent relative inline-block">禮儀服務<span class="absolute -bottom-2 left-0 w-full h-2 bg-accent/20 -skew-x-12 -z-10"></span></span>
+                    </h2>
+                    
+                    <!-- 副標題 - 優雅排版 -->
+                    <div class="mt-6 space-y-2 max-w-lg">
+                        <p class="text-gray-600 text-base leading-relaxed font-light">
+                            尊重每一種信仰與價值觀。
+                        </p>
+                        <p class="text-gray-500 text-sm leading-relaxed border-l-2 border-accent pl-4">
+                            從傳統到現代，從莊嚴到溫馨。
+                        </p>
+                    </div>
                 </div>
-                <a href="#" class="px-6 py-2 border-2 border-primary/20 text-primary rounded-full hover:bg-primary hover:text-white transition flex items-center gap-2 group backdrop-blur-sm bg-white/30">
+
+                <!-- 右側：CTA 按鈕 -->
+                <a href="#" class="hidden md:flex px-6 py-2 border-2 border-primary/20 text-primary rounded-full hover:bg-primary hover:text-white transition flex items-center gap-2 group backdrop-blur-sm bg-white/30">
                     查看所有方案 <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Mobile: Interactive Multi-Religion Card -->
+            <div class="md:hidden">
+                <div class="bg-surface rounded-[2.5rem] shadow-2xl overflow-hidden transform hover:shadow-gold-lg transition duration-500 border border-white/50">
+                    <div class="relative h-60 w-full bg-gray-900 overflow-hidden group">
+                        <!-- 圖片容器 -->
+                        <div id="image-container-religion" class="absolute inset-0 w-full h-full">
+                            <img id="religion-image" src="b.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Multi-Religion Service" onerror="this.src='https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=2000&auto=format&fit=crop'">
+                        </div>
+                        <!-- 漸層遮罩 -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <!-- 內容與控制項 -->
+                        <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col items-start justify-end h-full">
+                            <!-- 大標題 -->
+                            <h2 id="religion-title" class="text-3xl font-serif font-bold text-white mb-4 drop-shadow-lg tracking-wide content-enter-active">中式傳統禮儀</h2>
+                            <!-- 切換按鈕 -->
+                            <div class="flex flex-wrap gap-2 relative z-20">
+                                <button onclick="toggleReligionType(0)" class="religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-xs font-medium tracking-wider">中式傳統</button>
+                                <button onclick="toggleReligionType(1)" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">西式/基督教</button>
+                                <button onclick="toggleReligionType(2)" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">環保葬</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 下半部：詳細說明區 -->
+                    <div class="p-6 bg-surface relative">
+                        <!-- 裝飾線 -->
+                        <div class="w-12 h-1 bg-accent mb-4 rounded-full"></div>
+                        <div id="text-content-religion" class="content-enter-active">
+                            <p id="religion-desc" class="text-gray-600 text-base leading-relaxed mb-6 font-light">遵循古禮，莊嚴誦經。引導家屬為逝者積福報，圓滿功德，讓孝思流傳。</p>
+                            <a href="#" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
+                                <span>了解詳細方案</span>
+                                <i class="fa-solid fa-arrow-right ml-2 transform group-link-hover:translate-x-2 transition duration-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile: Integrated Interactive Service Card -->
+            <div class="md:hidden mt-8">
+                <div class="bg-surface rounded-[2.5rem] overflow-hidden transform transition duration-500 border border-white/50">
+                    
+                    <!-- 上半部：視覺展示區 -->
+                    <div class="relative h-60 w-full bg-gray-900 overflow-hidden group">
+                        
+                        <!-- 圖片容器 (絕對定位疊加) -->
+                        <div id="image-container-mobile" class="absolute inset-0 w-full h-full">
+                            <!-- 預設第一張圖 -->
+                            <img src="spa.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Service Image" onerror="this.src='https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop'">
+                        </div>
+
+                        <!-- 漸層遮罩 -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <!-- 內容與控制項 -->
+                        <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col items-start justify-end h-full">
+                            
+                            <!-- 大標題 (動態變更) -->
+                            <h2 id="service-title-mobile" class="text-3xl font-serif font-bold text-white mb-4 drop-shadow-lg tracking-wide content-enter-active">
+                                禮體淨身 SPA
+                            </h2>
+
+                            <!-- 切換按鈕組 -->
+                            <div class="flex flex-wrap gap-2 relative z-20">
+                                <button onclick="toggleServiceMobile(0)" class="service-btn-mobile active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-xs font-medium tracking-wider">
+                                    禮體淨身
+                                </button>
+                                <button onclick="toggleServiceMobile(1)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">
+                                    花藝佈置
+                                </button>
+                                <button onclick="toggleServiceMobile(2)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">
+                                    私人會館
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 下半部：詳細說明區 -->
+                    <div class="p-6 bg-surface relative">
+                        <!-- 裝飾線 -->
+                        <div class="w-12 h-1 bg-accent mb-4 rounded-full"></div>
+
+                        <div id="text-content-mobile" class="content-enter-active">
+                            <p id="service-desc-mobile" class="text-gray-600 text-base leading-relaxed mb-6 font-light">
+                                如同對待生者般的溫柔觸碰，透過專業的SPA淨身技術，洗去病痛，回復安詳容顏。我們使用頂級精油與溫水，細緻地為逝者清潔，展現對生命最後的尊重與呵護。
+                            </p>
+
+                            <a href="#" id="service-link-mobile" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
+                                <span id="service-cta-mobile">了解詳細方案</span>
+                                <i class="fa-solid fa-arrow-right ml-2 transform group-link-hover:translate-x-2 transition duration-300"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Desktop: Original Three Cards -->
+            <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Card 1 -->
                 <div class="group relative">
                     <div class="overflow-hidden rounded-[2rem] shadow-soft bg-white/70 backdrop-blur-md h-full hover:-translate-y-2 transition duration-500 border border-white/50">
@@ -1272,7 +1465,7 @@
 
 
     <!-- 服務介紹 -->
-    <section class="pt-16 pb-28 md:pb-20 bg-transparent text-white overflow-hidden relative">
+    <section class="hidden md:block pt-16 pb-28 md:pb-20 bg-transparent text-white overflow-hidden relative">
 
         <div class="container mx-auto px-4 relative z-10">
           
@@ -1363,30 +1556,33 @@
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 45%, black 50%, transparent 100%);
                     mask-image: linear-gradient(to bottom, transparent 0%, black 45%, black 50%, transparent 100%);">
         </div>
-         <div class="container mx-auto px-6 relative z-10">
+
+
+
+         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-wrap justify-center gap-6 md:gap-8">
-                <a href="#" class="group relative w-40 h-40 md:w-48 md:h-48 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">喪葬補助</h3>
                     <p class="text-gray-500 text-xs font-medium">勞保/國保申請</p>
                 </a>
                 <!-- ... other bubbles ... -->
-                 <a href="#" class="group relative w-40 h-40 md:w-48 md:h-48 rounded-[70%_30%_30%_70%/60%_40%_60%_40%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-8 md:mt-12">
+                 <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[70%_30%_30%_70%/60%_40%_60%_40%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-book-journal-whills"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">禮儀百科</h3>
                     <p class="text-gray-500 text-xs font-medium">習俗與禁忌</p>
                 </a>
-                <a href="#" class="group relative w-40 h-40 md:w-48 md:h-48 rounded-[50%_50%_20%_80%/25%_25%_75%_75%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[50%_50%_20%_80%/25%_25%_75%_75%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-file-signature"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">契約書表</h3>
                     <p class="text-gray-500 text-xs font-medium">下載範本文件</p>
                 </a>
-                <a href="#" class="group relative w-40 h-40 md:w-48 md:h-48 rounded-[20%_80%_20%_80%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-8 md:mt-12">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[20%_80%_20%_80%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-gavel"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">合法查詢</h3>
                     <p class="text-gray-500 text-xs font-medium">內政部名冊</p>
                 </a>
-                <a href="#" class="group relative w-40 h-40 md:w-48 md:h-48 rounded-[80%_20%_80%_20%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[80%_20%_80%_20%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-circle-question"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">常見問題</h3>
                     <p class="text-gray-500 text-xs font-medium">百日對年計算</p>
@@ -1596,6 +1792,16 @@
 
         const isHidden = selectedContent.classList.contains('hidden-content');
         if (isHidden) {
+            // 隱藏引導提示匡
+            const guideHint = document.getElementById('guide-hint-box');
+            if (guideHint) {
+                guideHint.style.opacity = '0';
+                guideHint.style.pointerEvents = 'none';
+                guideHint.style.height = '0';
+                guideHint.style.marginTop = '0';
+                guideHint.style.marginBottom = '0';
+            }
+            
             document.querySelectorAll('#trust-tabs .tab-content').forEach(content => {
                 content.classList.add('hidden-content');
             });
@@ -1605,6 +1811,16 @@
             selectedContent.classList.remove('hidden-content');
             activeBtn.classList.add('active');
         } else {
+            // 內容收回時，重新顯示引導匡
+            const guideHint = document.getElementById('guide-hint-box');
+            if (guideHint) {
+                guideHint.style.opacity = '1';
+                guideHint.style.pointerEvents = 'auto';
+                guideHint.style.height = '';
+                guideHint.style.marginTop = '1.5rem';
+                guideHint.style.marginBottom = '1.5rem';
+            }
+            
             selectedContent.classList.add('hidden-content');
             activeBtn.classList.remove('active');
         }
@@ -2008,7 +2224,226 @@
         // 初始化試算器顯示
         updateCalculatorPrice();
 
+        // 初始化宗教卡片
+        initializeReligionCard();
+
     });
+
+    // ============================================
+    // 多元化禮儀服務卡片 - 宗教類型切換
+    // ============================================
+    const religionTypeData = [
+        {
+            title: "中式傳統禮儀",
+            image: "b.png",
+            desc: "遵循古禮，莊嚴誦經。引導家屬為逝者積福報，圓滿功德，讓孝思流傳。"
+        },
+        {
+            title: "西式/基督教禮儀",
+            image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
+            desc: "溫馨感人的追思禮拜。尊重教義，佈置典雅，用詩歌與禱告送別摯愛。"
+        },
+        {
+            title: "環保葬禮",
+            image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070&auto=format&fit=crop",
+            desc: "綠色環保的終身大事。親近自然，綠色回歸，留下美好給後代的選擇。"
+        }
+    ];
+
+    let currentReligionType = 0;
+
+    function initializeReligionCard() {
+        // 初始化顯示第一個（中式傳統）
+        const data = religionTypeData[0];
+        const imgContainer = document.getElementById('image-container-religion');
+        const imgEl = imgContainer ? imgContainer.querySelector('img') : null;
+        
+        if (imgEl) {
+            imgEl.src = data.image;
+        }
+    }
+
+    function toggleReligionType(index) {
+        if (index === currentReligionType) return;
+        currentReligionType = index;
+
+        const data = religionTypeData[index];
+        
+        // 隱藏引導提示匡
+        const guideHint = document.getElementById('guide-hint-box');
+        if (guideHint) {
+            guideHint.style.opacity = '0';
+            guideHint.style.pointerEvents = 'none';
+            guideHint.style.height = '0';
+            guideHint.style.marginTop = '0';
+            guideHint.style.marginBottom = '0';
+        }
+        
+        // 1. 更新按鈕樣式
+        const buttons = document.querySelectorAll('.religion-btn-tag');
+        buttons.forEach((btn, idx) => {
+            if (idx === index) {
+                btn.className = "religion-btn-tag active border border-white/50 px-2 py-1 rounded backdrop-blur-sm bg-white/20 text-white text-xs font-medium transition duration-300";
+            } else {
+                btn.className = "religion-btn-tag border border-white/50 px-2 py-1 rounded backdrop-blur-sm bg-black/30 text-gray-300 text-xs font-medium hover:bg-white/10 hover:text-white transition duration-300";
+            }
+        });
+
+        // 2. 圖片轉場
+        const imgContainer = document.getElementById('image-container-religion');
+        if (!imgContainer) return;
+        
+        const oldImg = imgContainer.querySelector('img');
+        
+        const newImg = document.createElement('img');
+        newImg.src = data.image;
+        newImg.id = "religion-image";
+        newImg.className = "absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 fade-enter";
+        newImg.onerror = function() { this.src = "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=2000&auto=format&fit=crop"; };
+        
+        imgContainer.appendChild(newImg);
+
+        requestAnimationFrame(() => {
+            newImg.classList.add('fade-enter-active');
+            newImg.classList.remove('fade-enter');
+            
+            if (oldImg) {
+                oldImg.classList.add('fade-exit-active');
+                setTimeout(() => {
+                    oldImg.remove();
+                }, 700);
+            }
+        });
+
+        // 3. 文字內容轉場
+        const titleEl = document.getElementById('religion-title');
+        const descEl = document.getElementById('religion-desc');
+
+        if (!titleEl || !descEl) return;
+
+        titleEl.classList.remove('content-enter-active');
+        titleEl.classList.add('opacity-0', 'translate-y-2');
+        
+        descEl.classList.remove('content-enter-active');
+        descEl.classList.add('opacity-0', 'translate-y-2');
+
+        setTimeout(() => {
+            titleEl.textContent = data.title;
+            descEl.textContent = data.desc;
+
+            titleEl.classList.remove('opacity-0', 'translate-y-2');
+            titleEl.classList.add('content-enter-active');
+            
+            descEl.classList.remove('opacity-0', 'translate-y-2');
+            descEl.classList.add('content-enter-active');
+        }, 300);
+    }
+
+    // ============================================
+
+    const serviceDataMobile = [
+        {
+            title: "禮體淨身 SPA",
+            image: "spa.png",
+            fallback: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
+            desc: "如同對待生者般的溫柔觸碰，透過專業的SPA淨身技術，洗去病痛，回復安詳容顏。我們使用頂級精油與溫水，細緻地為逝者清潔，展現對生命最後的尊重與呵護。",
+            cta: "了解詳細方案"
+        },
+        {
+            title: "會場佈置花藝",
+            image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=2070&auto=format&fit=crop",
+            fallback: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=2070&auto=format&fit=crop",
+            desc: "捨棄擁擠的傳統罐頭塔，採用客製化鮮花佈置。無論是溫馨歐式或莊嚴日式，皆能呈現。每一朵花都代表著對逝者的思念，打造最優雅的告別場景。",
+            cta: "觀看花藝作品"
+        },
+        {
+            title: "靜心私人會館",
+            image: "unnamed.png",
+            fallback: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2070&auto=format&fit=crop",
+            desc: "遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，溫馨典雅的環境設計，讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感，陪伴摯愛最後一程。",
+            cta: "預約參觀會館"
+        }
+    ];
+
+    let currentIndexMobile = 0;
+
+    function toggleServiceMobile(index) {
+        if (index === currentIndexMobile) return;
+        currentIndexMobile = index;
+
+        const data = serviceDataMobile[index];
+        
+        // 隱藏引導提示匡
+        const guideHint = document.getElementById('guide-hint-box');
+        if (guideHint) {
+            guideHint.style.opacity = '0';
+            guideHint.style.pointerEvents = 'none';
+            guideHint.style.height = '0';
+            guideHint.style.marginTop = '0';
+            guideHint.style.marginBottom = '0';
+        }
+        
+        // 1. 更新按鈕樣式
+        const buttons = document.querySelectorAll('.service-btn-mobile');
+        buttons.forEach((btn, idx) => {
+            if (idx === index) {
+                btn.className = "service-btn-mobile active px-4 py-1.5 rounded-full border border-white/60 backdrop-blur-md bg-white/20 text-white shadow-gold transition duration-300 text-xs font-medium tracking-wider transform scale-105";
+            } else {
+                btn.className = "service-btn-mobile px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-md bg-black/30 text-gray-400 hover:bg-white/10 hover:text-white transition duration-300 text-xs font-medium tracking-wider";
+            }
+        });
+
+        // 2. 圖片轉場
+        const imgContainer = document.getElementById('image-container-mobile');
+        if (!imgContainer) return;
+        
+        const oldImg = imgContainer.querySelector('img');
+        
+        const newImg = document.createElement('img');
+        newImg.src = data.image;
+        newImg.className = "absolute inset-0 w-full h-full object-cover fade-enter";
+        newImg.onerror = function() { this.src = data.fallback; };
+        
+        imgContainer.appendChild(newImg);
+
+        requestAnimationFrame(() => {
+            newImg.classList.add('fade-enter-active');
+            newImg.classList.remove('fade-enter');
+            
+            if (oldImg) {
+                oldImg.classList.add('fade-exit-active');
+                setTimeout(() => {
+                    oldImg.remove();
+                }, 700);
+            }
+        });
+
+        // 3. 文字內容轉場
+        const titleEl = document.getElementById('service-title-mobile');
+        const descEl = document.getElementById('service-desc-mobile');
+        const ctaEl = document.getElementById('service-cta-mobile');
+        const textContent = document.getElementById('text-content-mobile');
+
+        if (!titleEl || !descEl || !ctaEl || !textContent) return;
+
+        titleEl.classList.remove('content-enter-active');
+        titleEl.classList.add('opacity-0', 'translate-y-4');
+        
+        textContent.classList.remove('content-enter-active');
+        textContent.classList.add('opacity-0', 'translate-y-4');
+
+        setTimeout(() => {
+            titleEl.textContent = data.title;
+            descEl.textContent = data.desc;
+            ctaEl.textContent = data.cta;
+
+            titleEl.classList.remove('opacity-0', 'translate-y-4');
+            titleEl.classList.add('content-enter-active');
+            
+            textContent.classList.remove('opacity-0', 'translate-y-4');
+            textContent.classList.add('content-enter-active');
+        }, 300);
+    }
 
 </script>
 </body>
