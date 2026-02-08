@@ -173,6 +173,20 @@
             z-index: 1;
         }
 
+        /* 垂直文字排列样式 - 仅在iPhone 12及更小屏幕(≤390px)生效 */
+        @media (max-width: 390px) {
+            .writing-mode-vertical {
+                writing-mode: vertical-rl;
+                text-orientation: upright;
+                letter-spacing: 0.1em;
+            }
+        }
+        
+        @media (min-width: 391px) {
+            .writing-mode-vertical {
+                writing-mode: horizontal-tb;
+            }
+        }
         
         /* Desktop: Active State */
         @media (min-width: 768px) {
@@ -1481,7 +1495,7 @@
     </section>
 
     <!-- Google 評論區塊 -->
-    <section class="pt-12 pb-12 relative overflow-visible">
+    <section class="pt-12 pb-12 relative overflow-hidden">
 
         <div class="container mx-auto px-6 relative z-10">
             
@@ -1649,10 +1663,10 @@
     </section>
 
     <!-- 最新消息區塊 (Refined Layout using Flow for Overlap Prevention) -->
-    <section class="py-24 relative z-20 overflow-visible">
+    <section class="pt-16 pb-24 relative z-20 overflow-visible overflow-hidden">
 
         <!-- 背景裝飾葉片 -->
-        <div class="absolute -bottom-20 left-36 opacity-16 pointer-events-none hidden lg:block">
+        <div class="absolute -bottom-12 md:-bottom-20 left-16 md:left-36 opacity-40 pointer-events-none">
             <svg width="100" height="100" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M40 5C40 5 65 20 65 40C65 60 40 75 40 75C40 75 15 60 15 40C15 20 40 5 40 5Z" fill="#C5A670"/>
             </svg>
@@ -1663,10 +1677,6 @@
              <span class="text-[12rem] md:text-[25rem] font-serif font-bold text-[#EBE8E0]/55 leading-none tracking-tight absolute -top-10 md:-top-20 opacity-40 lg:opacity-60">News</span>
         </div>
 
-        <!-- 漂浮落葉 -->
-        <div class="hidden lg:flex top-10 left-10 w-24 h-24 opacity-20 animate-float pointer-events-none z-0">
-             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 0C50 0 70 30 70 50C70 80 50 100 50 100C50 100 30 80 30 50C30 30 50 0 50 0Z" fill="#C5A670"/></svg>
-        </div>
 
         <div class="container mx-auto px-6 relative z-10">
             <!-- 
@@ -3032,8 +3042,20 @@
                     button.dataset.groupIndex = groupIndex;
 
                     const label = document.createElement('span');
-                    label.className = groupIndex === 0 ? 'text-primaryDark font-semibold text-sm' : 'text-gray-500 text-sm font-medium';
-                    label.textContent = (groupIndex === 0 ? '丨 ' : '') + group.category;
+                    // iPhone 12及以下(≤390px)使用垂直排列，更大屏幕使用水平排列
+                    label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm writing-mode-vertical whitespace-normal';
+                    
+                    // 处理文字：在≤390px时移除丨但保留/
+                    const isSmallMobile = window.innerWidth <= 390;
+                    let categoryText;
+                    if (isSmallMobile) {
+                        // 垂直排列：移除丨，保留/不换行
+                        categoryText = group.category;
+                    } else {
+                        // 水平排列：显示丨
+                        categoryText = (groupIndex === 0 ? '丨 ' : '') + group.category;
+                    }
+                    label.textContent = categoryText;
 
                     const underline = document.createElement('span');
                     underline.className = 'absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300';
@@ -3054,10 +3076,10 @@
                             const btnLabel = btn.querySelector('span:first-child');
                             const btnUnderline = btn.querySelector('span:last-child');
                             if (idx === groupIndex) {
-                                btnLabel.className = 'text-primaryDark font-semibold text-sm';
+                                btnLabel.className = 'text-primaryDark font-semibold text-sm writing-mode-vertical whitespace-normal';
                                 btnUnderline.style.backgroundColor = '#C5A670';
                             } else {
-                                btnLabel.className = 'text-gray-500 text-sm font-medium';
+                                btnLabel.className = 'text-gray-500 font-medium text-sm writing-mode-vertical whitespace-normal';
                                 btnUnderline.style.backgroundColor = 'transparent';
                             }
                         });
@@ -3066,6 +3088,26 @@
                     categoryButtons.push(button);
                     categoryContainer.appendChild(button);
                 });
+
+                // 响应式更新按钮文本显示
+                function updateLocationButtonText() {
+                    const isSmallMobile = window.innerWidth <= 390;
+                    categoryButtons.forEach((btn, idx) => {
+                        const label = btn.querySelector('span:first-child');
+                        let categoryText;
+                        if (isSmallMobile) {
+                            // ≤390px: 垂直排列，移除丨，保留/
+                            categoryText = locationGroups[idx].category;
+                        } else {
+                            // >390px: 水平排列，显示丨
+                            categoryText = (idx === 0 ? '丨 ' : '') + locationGroups[idx].category;
+                        }
+                        label.textContent = categoryText;
+                    });
+                }
+
+                // 监听窗口大小变化
+                window.addEventListener('resize', updateLocationButtonText);
 
                 // 移除載入動畫
                 setTimeout(() => {
