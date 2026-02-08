@@ -1916,7 +1916,7 @@
                     <p class="text-gray-600 mb-4 leading-relaxed">華梵禮儀服務範圍遍及大台中地區，隨時為您提供就近協助。我們設有專屬洽談室，提供隱私且安靜的諮詢環境。</p>
 
                     <!-- Category Switch (Fixed under description) -->
-                    <div id="location-categories" class="flex items-center gap-4 mt-3 mb-2">
+                    <div id="location-categories" class="flex items-center gap-4 mt-3 mb-2 md:flex-row md:gap-4 flex-wrap md:flex-nowrap">
                         <!-- Javascript 將會在此注入分類切換 -->
                     </div>
                     
@@ -3086,8 +3086,9 @@ function adjustFontSize(change) {
                     const isSmallMobile = window.innerWidth <= 390;
                     
                     if (isSmallMobile) {
-                        // 手機版：2x2網格，首字左右標齊
-                        label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-loose text-left';
+                        // 手機版：2x2網格排列，首字左右標齊
+                        label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-relaxed text-center whitespace-pre-line';
+                        button.className = 'relative pb-2 transition-all duration-300 flex-1 min-w-[calc(50%-0.5rem)] md:flex-none md:min-w-auto';
                     } else {
                         // 桌機版：水平排列
                         label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm writing-mode-vertical whitespace-normal';
@@ -3096,14 +3097,14 @@ function adjustFontSize(change) {
                     // 處理文字
                     let categoryText;
                     if (isSmallMobile) {
-                        // 手機版：在/處分行
-                        categoryText = group.category.replace('/', '\n');
+                        // 手機版：在/處分行，格式化為 上字\n下字
+                        const parts = group.category.split('/');
+                        categoryText = parts.join('\n');
                     } else {
                         // 桌機版：顯示丨分隔符
                         categoryText = (groupIndex === 0 ? '丨 ' : '') + group.category;
                     }
                     label.textContent = categoryText;
-                    label.style.whiteSpace = isSmallMobile ? 'pre-wrap' : 'normal';
 
                     const underline = document.createElement('span');
                     if (isSmallMobile) {
@@ -3134,9 +3135,9 @@ function adjustFontSize(change) {
                             if (isSmallMobile) {
                                 // 手機版：只改變文字顏色
                                 if (idx === groupIndex) {
-                                    btnLabel.className = 'text-primaryDark font-semibold text-sm leading-loose text-left';
+                                    btnLabel.className = 'text-primaryDark font-semibold text-sm leading-relaxed text-center whitespace-pre-line';
                                 } else {
-                                    btnLabel.className = 'text-gray-500 font-medium text-sm leading-loose text-left';
+                                    btnLabel.className = 'text-gray-500 font-medium text-sm leading-relaxed text-center whitespace-pre-line';
                                 }
                             } else {
                                 // 桌機版：改變文字顏色和底線
@@ -3160,18 +3161,24 @@ function adjustFontSize(change) {
                     const isSmallMobile = window.innerWidth <= 390;
                     categoryButtons.forEach((btn, idx) => {
                         const label = btn.querySelector('span:first-child');
+                        const underline = btn.querySelector('span:last-child');
                         let categoryText;
                         if (isSmallMobile) {
-                            // 手機版：在/處分行，不顯示底線
-                            categoryText = locationGroups[idx].category.replace('/', '\n');
-                            label.className = (idx === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-loose text-left';
+                            // 手機版：在/處分行
+                            const parts = locationGroups[idx].category.split('/');
+                            categoryText = parts.join('\n');
+                            label.className = (idx === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-relaxed text-center whitespace-pre-line';
+                            btn.className = 'relative pb-2 transition-all duration-300 flex-1 min-w-[calc(50%-0.5rem)]';
                             underline.className = 'hidden';
                         } else {
-                            // 桌機版：水平排列，顯示丨和底線
+                            // 桌機版：水平排列
                             categoryText = (idx === 0 ? '丨 ' : '') + locationGroups[idx].category;
+                            label.className = (idx === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm writing-mode-vertical whitespace-normal';
+                            btn.className = 'relative pb-2 transition-all duration-300';
+                            underline.className = 'absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300';
+                            underline.style.backgroundColor = idx === 0 ? '#C5A670' : 'transparent';
                         }
                         label.textContent = categoryText;
-                        label.style.whiteSpace = isSmallMobile ? 'pre-wrap' : 'normal';
                     });
                 }
 
