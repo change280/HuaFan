@@ -2092,8 +2092,7 @@ function adjustFontSize(change) {
         html.style.fontSize = newSize + 'px';
     }
 }
-
-// ... (Script remains largely same, just ensuring modal logic is correct)
+    // ... (Script remains largely same, just ensuring modal logic is correct)
 
     function toggleMobileTrustTab(tabId) {
         const isMobile = window.matchMedia('(max-width: 767px)').matches;
@@ -3084,27 +3083,37 @@ function adjustFontSize(change) {
                     button.dataset.groupIndex = groupIndex;
 
                     const label = document.createElement('span');
-                    // iPhone 12及以下(≤390px)使用垂直排列，更大屏幕使用水平排列
-                    label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm writing-mode-vertical whitespace-normal';
-                    
-                    // 处理文字：在≤390px时移除丨但在/处分行
                     const isSmallMobile = window.innerWidth <= 390;
+                    
+                    if (isSmallMobile) {
+                        // 手機版：2x2網格，首字左右標齊
+                        label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-loose text-left';
+                    } else {
+                        // 桌機版：水平排列
+                        label.className = (groupIndex === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm writing-mode-vertical whitespace-normal';
+                    }
+                    
+                    // 處理文字
                     let categoryText;
                     if (isSmallMobile) {
-                        // 垂直排列：仅移除丨，在/处添加<br>分行
-                        let text = group.category;
-                        // 替换/为<br>／<br>
-                        text = text.replace(/\//g, '<br>／<br>');
-                        categoryText = text;
+                        // 手機版：在/處分行
+                        categoryText = group.category.replace('/', '\n');
                     } else {
-                        // 水平排列：显示丨，不分行
+                        // 桌機版：顯示丨分隔符
                         categoryText = (groupIndex === 0 ? '丨 ' : '') + group.category;
                     }
-                    label.innerHTML = categoryText;
+                    label.textContent = categoryText;
+                    label.style.whiteSpace = isSmallMobile ? 'pre-wrap' : 'normal';
 
                     const underline = document.createElement('span');
-                    underline.className = 'absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300';
-                    underline.style.backgroundColor = groupIndex === 0 ? '#C5A670' : 'transparent';
+                    if (isSmallMobile) {
+                        // 手機版：不顯示底線
+                        underline.className = 'hidden';
+                    } else {
+                        // 桌機版：顯示底線
+                        underline.className = 'absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300';
+                        underline.style.backgroundColor = groupIndex === 0 ? '#C5A670' : 'transparent';
+                    }
 
                     button.appendChild(label);
                     button.appendChild(underline);
@@ -3117,32 +3126,27 @@ function adjustFontSize(change) {
                         });
 
                         // 更新分類按鈕樣式
-                        const isSmallMobile = window.innerWidth <= 390;
                         categoryButtons.forEach((btn, idx) => {
                             const btnLabel = btn.querySelector('span:first-child');
                             const btnUnderline = btn.querySelector('span:last-child');
-                            if (idx === groupIndex) {
-                                btnLabel.className = 'text-primaryDark font-semibold text-sm writing-mode-vertical whitespace-normal';
-                                // 更新按钮文本内容
-                                let text = locationGroups[idx].category;
-                                if (isSmallMobile) {
-                                    text = text.replace(/\//g, '<br>／<br>');
+                            const isSmallMobile = window.innerWidth <= 390;
+                            
+                            if (isSmallMobile) {
+                                // 手機版：只改變文字顏色
+                                if (idx === groupIndex) {
+                                    btnLabel.className = 'text-primaryDark font-semibold text-sm leading-loose text-left';
                                 } else {
-                                    text = '丨 ' + text;
+                                    btnLabel.className = 'text-gray-500 font-medium text-sm leading-loose text-left';
                                 }
-                                btnLabel.innerHTML = text;
-                                btnUnderline.style.backgroundColor = '#C5A670';
                             } else {
-                                btnLabel.className = 'text-gray-500 font-medium text-sm writing-mode-vertical whitespace-normal';
-                                // 更新按钮文本内容
-                                let text = locationGroups[idx].category;
-                                if (isSmallMobile) {
-                                    text = text.replace(/\//g, '<br>／<br>');
+                                // 桌機版：改變文字顏色和底線
+                                if (idx === groupIndex) {
+                                    btnLabel.className = 'text-primaryDark font-semibold text-sm writing-mode-vertical whitespace-normal';
+                                    btnUnderline.style.backgroundColor = '#C5A670';
                                 } else {
-                                    text = idx === 0 ? '丨 ' + text : text;
+                                    btnLabel.className = 'text-gray-500 font-medium text-sm writing-mode-vertical whitespace-normal';
+                                    btnUnderline.style.backgroundColor = 'transparent';
                                 }
-                                btnLabel.innerHTML = text;
-                                btnUnderline.style.backgroundColor = 'transparent';
                             }
                         });
                     });
@@ -3158,13 +3162,16 @@ function adjustFontSize(change) {
                         const label = btn.querySelector('span:first-child');
                         let categoryText;
                         if (isSmallMobile) {
-                            // ≤390px: 垂直排列，移除丨，在/处分行
-                            categoryText = locationGroups[idx].category.replace(/\//g, '<br>／<br>');
+                            // 手機版：在/處分行，不顯示底線
+                            categoryText = locationGroups[idx].category.replace('/', '\n');
+                            label.className = (idx === 0 ? 'text-primaryDark font-semibold ' : 'text-gray-500 font-medium ') + 'text-sm leading-loose text-left';
+                            underline.className = 'hidden';
                         } else {
-                            // >390px: 水平排列，显示丨
+                            // 桌機版：水平排列，顯示丨和底線
                             categoryText = (idx === 0 ? '丨 ' : '') + locationGroups[idx].category;
                         }
-                        label.innerHTML = categoryText;
+                        label.textContent = categoryText;
+                        label.style.whiteSpace = isSmallMobile ? 'pre-wrap' : 'normal';
                     });
                 }
 
