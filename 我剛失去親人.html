@@ -158,22 +158,8 @@
 <body class="text-text bg-warm relative pb-20 md:pb-0">
 
     <!-- 右側懸浮按鈕組 -->
-    <div class="fixed right-4 bottom-8 z-40 flex flex-col gap-3">
+    <div class="fixed right-4 bottom-24 z-40 flex flex-col gap-3">
         
-        <a href="https://line.me/ti/p/@your_line_id" target="_blank" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer">
-            <i class="fa-brands fa-line text-lg md:text-2xl"></i>
-            <span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
-                加入 LINE
-            </span>
-        </a>
-
-        <a href="#" target="_blank" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer">
-            <i class="fa-brands fa-facebook-f text-lg md:text-xl"></i>
-            <span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
-                關注 Facebook
-            </span>
-        </a>
-
         <!-- 字體大小調整器（直立膠囊） -->
         <div class="font-pill-vertical group relative w-10 md:w-12 h-[110px] mx-auto flex flex-col items-center justify-center shadow-lg py-3 bg-primary rounded-full border border-white/10 text-[#C5A670]">
             <button onclick="adjustFontSize(1)" class="font-pill-btn-vertical" aria-label="放大字體">
@@ -276,7 +262,7 @@
                 <a href="關於華梵.html" class="hover:text-primary relative group transition">關於華梵<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
                 <a href="首頁_webp.html#services" class="hover:text-primary relative group transition">服務方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
                 <a href="preneed.html" class="hover:text-primary relative group transition">生前契約<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
-                <a href="#obituaries" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="流程拷貝9.html" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
                 <a href="首頁_webp.html#locations" class="hover:text-primary relative group transition">聯絡我們<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
             </nav>
 
@@ -864,6 +850,22 @@
 </div>
 
     <script>
+    // 字體大小調整函數
+function adjustFontSize(change) {
+    // 取得根元素 (html)
+    const html = document.documentElement;
+    
+    // 取得當前的字體大小 (預設通常是 16px)
+    let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+    
+    // 計算新的字體大小
+    let newSize = currentSize + change;
+    
+    // 設定限制範圍：最小 12px，最大 24px
+    if (newSize >= 12 && newSize <= 24) {
+        html.style.fontSize = newSize + 'px';
+    }
+}
 function switchTab(tabName) {
     const contentHospital = document.getElementById('content-hospital');
     const contentHome = document.getElementById('content-home');
