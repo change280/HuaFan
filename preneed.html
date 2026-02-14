@@ -562,6 +562,18 @@
             </span>
         </a>
 
+        <!-- 字體大小調整器（直立膠囊） -->
+        <div class="font-pill-vertical group relative w-10 md:w-12 h-[110px] mx-auto flex flex-col items-center justify-center shadow-lg py-3 bg-primary rounded-full border border-white/10 text-[#C5A670]">
+            <button onclick="adjustFontSize(1)" class="font-pill-btn-vertical" aria-label="放大字體">
+                <i class="fa-solid fa-plus text-lg"></i>
+            </button>
+            <span class="text-xs font-medium px-1 select-none text-white/80">字</span>
+            <span class="text-xs font-medium px-1 select-none text-white/80">體</span>
+            <button onclick="adjustFontSize(-1)" class="font-pill-btn-vertical" aria-label="縮小字體">
+                <i class="fa-solid fa-minus text-sm"></i>
+            </button>
+        </div>
+
         <a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group mt-1 cursor-pointer">
             <i class="fa-solid fa-angle-up text-lg md:text-xl"></i>
             <span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
@@ -571,91 +583,76 @@
 
     </div>
 
-    <!-- 全螢幕選單 -->
+    <!-- 全螢幕選單 Overlay -->
     <div id="full-screen-menu" class="fixed inset-0 bg-[#F7F5F0]/95 backdrop-blur-xl z-[100] hidden flex-col transition-opacity duration-300 opacity-0 bg-dots-pattern">
-    
-    <div class="absolute top-1/4 left-[-10%] text-primary/5 pointer-events-none rotate-12 select-none">
-        <i class="fa-solid fa-leaf text-[300px]"></i>
-    </div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div class="absolute top-1/4 left-[-10%] text-primary/5 pointer-events-none rotate-12 select-none">
+            <i class="fa-solid fa-leaf text-[300px]"></i>
+        </div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-[80px] pointer-events-none"></div>
 
-    <!-- Header: Logo 和關閉按鈕 -->
-    <div class="relative z-10 w-full flex justify-between items-center p-6 md:p-8">
-        <div class="flex items-center gap-3 opacity-80">
-            <div class="w-8 h-8 bg-primary text-white flex items-center justify-center rounded-full font-serif font-bold text-sm">華</div>
-            <span class="text-primary font-serif font-bold tracking-widest">華梵禮儀</span>
+        <div class="relative z-10 w-full flex justify-between items-center p-6 md:p-8">
+            <div class="flex items-center gap-3 opacity-80">
+                <div class="w-8 h-8 bg-primary text-white flex items-center justify-center rounded-full font-serif font-bold text-sm">華</div>
+                <span class="text-primary font-serif font-bold tracking-widest">華梵禮儀</span>
+            </div>
+
+            <button id="close-menu-btn" class="w-12 h-12 rounded-full bg-white border border-gray-200 text-primary shadow-sm hover:bg-primary hover:text-white hover:rotate-90 transition-all duration-300 flex items-center justify-center cursor-pointer group">
+                <i class="fa-solid fa-xmark text-xl group-hover:scale-110 transition-transform"></i>
+            </button>
         </div>
 
-        <button id="close-menu-btn" class="w-12 h-12 rounded-full bg-white border border-gray-200 text-primary shadow-sm hover:bg-primary hover:text-white hover:rotate-90 transition-all duration-300 flex items-center justify-center cursor-pointer group">
-            <i class="fa-solid fa-xmark text-xl group-hover:scale-110 transition-transform"></i>
-        </button>
+        <div class="relative z-10 flex-1 flex flex-col justify-center items-end space-y-8 md:space-y-10 pb-20 pr-10 md:pr-24">
+            <a href="關於華梵.html" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    關於華梵
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Home</span>
+            </a>
+
+            <a href="首頁_webp.html#services" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    服務方案
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Guideline</span>
+            </a>
+
+            <a href="preneed.html" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    生前契約
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Pricing</span>
+            </a>
+
+            <a href="流程拷貝9.html" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    禮儀百科
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Promise</span>
+            </a>
+
+            <a href="首頁_webp.html#locations" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    聯絡我們
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Q&A</span>
+            </a>
+        </div>
     </div>
 
-    <!-- 選單項目 -->
-    <div class="relative z-10 flex-1 flex flex-col justify-center items-end space-y-8 md:space-y-10 pb-20 pr-10 md:pr-24">
-        
-        <a href="光之河＋浮水印拷貝.html" class="menu-link group text-right cursor-pointer relative">
-            <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                回首頁
-                <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-            </span>
-            <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Home</span>
-        </a>
-
-        <a href="#benefits" class="menu-link group text-right cursor-pointer relative">
-            <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                契約優勢
-                <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-            </span>
-            <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Benefits</span>
-        </a>
-
-        <a href="#trust" class="menu-link group text-right cursor-pointer relative">
-            <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                信託保障
-                <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-            </span>
-            <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Trust</span>
-        </a>
-
-        <a href="#contact-form" class="menu-link group text-right cursor-pointer relative">
-            <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                快速預約
-                <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-            </span>
-            <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Booking</span>
-        </a>
-
-        <a href="#faq" class="menu-link group text-right cursor-pointer relative">
-            <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                常見問題
-                <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-            </span>
-            <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">FAQ</span>
-        </a>
-    </div>
-
-    <!-- 底部搜尋欄 -->
-    <div class="relative z-10 w-full p-8 border-t border-gray-200/50 bg-white/40 backdrop-blur-sm flex flex-col items-center justify-center gap-6">
-        
-        <form onsubmit="alert('搜尋功能需要串接後端資料庫或 Google 搜尋引擎。\n您剛剛輸入了：' + this.q.value); return false;" class="relative w-full max-w-xs">
-    
-            <input type="text" name="q" placeholder="搜尋關鍵字..." class="w-full pl-4 pr-10 py-3 rounded-full bg-white border border-gray-200 text-sm focus:outline-none focus:border-accent text-primary placeholder-gray-400 shadow-sm">
-    
-            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-accent cursor-pointer transition-colors">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-
-        </form>
-
-    </div>
-</div>
     <!-- Header -->
     <header class="fixed w-full top-0 z-50 bg-dots-pattern shadow-md transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center relative z-10">
             
-           <a href="光之河＋浮水印拷貝.html" class="flex items-center gap-3 group">
-                <img src="image_8286fa.png" alt="華梵禮儀" class="h-12 w-auto object-contain">
+           <a href="首頁_webp.html" class="flex items-center gap-3 group">
+                <picture>
+                    <source srcset="image_8286fa.webp" type="image/webp">
+                    <img src="image_8286fa.png" alt="華梵禮儀" class="h-10 w-auto object-contain" loading="eager" decoding="async">
+                </picture>
                 <div class="flex flex-col">
                     <span class="text-xl font-serif font-bold tracking-widest text-primary group-hover:text-accent transition">華梵禮儀</span>
                     <span class="text-[10px] text-accent tracking-[0.2em] uppercase">Hua Fan Etiquette</span>
@@ -664,27 +661,35 @@
 
             <!-- 電腦版選單 -->
             <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
-                <a href="光之河＋浮水印拷貝.html" class="hover:text-primary relative group transition">回到首頁<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
-                <a href="#benefits" class="hover:text-primary relative group transition">服務優勢<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
-                <a href="#trust" class="hover:text-primary relative group transition">信託保障<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
-                <a href="#plans" class="hover:text-primary relative group transition">契約方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="關於華梵.html" class="hover:text-primary relative group transition">關於華梵<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="首頁_webp.html#services" class="hover:text-primary relative group transition">服務方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="preneed.html" class="hover:text-primary relative group transition">生前契約<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="#obituaries" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                <a href="首頁_webp.html#locations" class="hover:text-primary relative group transition">聯絡我們<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
             </nav>
 
             <div class="flex items-center gap-3 md:gap-4 relative z-50">
-                <a href="#cta" class="hidden md:flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-full text-base text-gray-600 hover:border-primary hover:text-primary transition duration-300 bg-white shadow-sm">
-                    <i class="fa-solid fa-download"></i> 下載契約
+                <a href="#calculator" class="hidden md:flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-full text-base text-gray-600 hover:border-primary hover:text-primary transition duration-300 bg-white shadow-sm">
+                    <i class="fa-solid fa-calculator"></i> 預估費用
                 </a>
                 
                 <!-- 緊急協助按鈕 -->
-                <a href="tel:0800-800818" class="flex items-center gap-3 px-4 md:px-6 py-2 bg-emergency text-white rounded-full shadow-red-glow hover:bg-[#8a3e3b] transition animate-attention">
+                <a href="tel:0800-800818" class="flex items-center gap-2 md:gap-3 px-3 md:px-6 py-2 bg-emergency text-white rounded-full shadow-red-glow hover:bg-[#8a3e3b] transition animate-attention">
                     <i class="fa-solid fa-phone-volume text-xl md:text-2xl"></i>
                     <div class="flex flex-col items-start leading-none">
-                        <span class="text-[9px] md:text-[10px] opacity-90 tracking-widest mb-0.5">24H 專人服務</span>
-                        <span class="font-bold tracking-wide text-base md:text-lg font-sans">緊急協助</span>
+                        <span class="text-[9px] md:text-[10px] opacity-90 tracking-widest mb-0.5">
+                            <span class="md:hidden">24H 服務</span>
+                            <span class="hidden md:inline">24H 專人服務</span>
+                        </span>
+
+                        <span class="font-bold tracking-wide text-base md:text-lg font-sans">
+                            <span class="md:hidden">專線</span>
+                            <span class="hidden md:inline">緊急協助專線</span>
+                        </span>
                     </div>
                 </a>
 
-                <!-- 手機版選單 -->
+                <!-- 手機版漢堡選單按鈕 -->
                 <button id="menu-btn" class="lg:hidden text-primary p-2 focus:outline-none ml-1 relative z-[60] cursor-pointer">
                     <i class="fa-solid fa-bars text-3xl"></i>
                 </button>
