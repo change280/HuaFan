@@ -36,6 +36,17 @@
                         'gold-lg': '0 25px 50px -12px rgba(197, 166, 112, 0.5)', 
                         'glow': '0 0 15px rgba(197, 166, 112, 0.3)',
 
+                    },
+                    animation: {
+                        'pulse-right': 'pulseRight 1.5s infinite ease-in-out', // 加快一點頻率讓它更明顯
+                    },
+                    keyframes: {
+                        // 更新：模擬手指滑動的軌跡，幅度稍微加大
+                        pulseRight: {
+                            '0%': { transform: 'translateX(0)', opacity: '0.6' },
+                            '50%': { transform: 'translateX(10px)', opacity: '1' },
+                            '100%': { transform: 'translateX(0)', opacity: '0.6' },
+                        }
                     }
                 }
             }
@@ -50,26 +61,31 @@
             text-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        
-       .hero-bg {
-            background-image:
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(94, 115, 90, 0.65) 100%),
-                url('hero.webp'); 
+        /* 修改 Hero 背景樣式，支援 JS 切換 */
+        .hero-bg {
             background-size: cover;
             background-position: center;
-	    background-attachment: scroll; /* ✅ 優化：改為scroll，避免持續重排 */
-            /* 降級支援：不支援 WebP 的瀏覽器使用 JPG */
-            background-image:
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(94, 115, 90, 0.65) 100%),
-                url('hero.jpg');
+            background-attachment: scroll; 
+            /* 移除這裡的 background-image 與 transition，改由 .hero-slide 處理 */
+            position: relative;
         }
         
-        @supports (background-image: url('data:image/webp;base64,')) {
-            .hero-bg {
-                background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(94, 115, 90, 0.65) 100%),
-                    url('hero.webp');
-            }
+        /* 新增：Hero 幻燈片圖層樣式 */
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out; /* 增加時間至 2s 製造電影溶接感 */
+            z-index: 0;
+        }
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 1;
         }
 
 
@@ -586,6 +602,44 @@
             background-color: #465B40;
             color: #fff;
         }
+        /* 主題切換按鈕 - 極簡圓點樣式 */
+        .theme-btn {
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            background-color: rgba(255, 255, 255, 0.4); /* 預設半透明白 */
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            position: relative; 
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .theme-btn:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(1.2);
+        }
+        .theme-btn.active {
+            background-color: #fff; /* 激活時實心白 */
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 微光暈 */
+            border-color: transparent;
+        }
+        
+        /* 新增：左側提示框樣式 (適用於垂直排列) */
+        .theme-tooltip-left {
+            position: absolute; top: 50%; right: 200%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px;
+            font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .theme-btn:hover .theme-tooltip-left { opacity: 1; }
+
+        /* Hero 文字過渡效果 */
+        .hero-text-transition {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .hero-text-hidden {
+            opacity: 0;
+            transform: translateY(10px);
+        }
     </style>
 </head>
 <body class="text-text bg-warm relative">
@@ -717,7 +771,7 @@
 
         <div class="relative z-10 w-full flex justify-between items-center p-6 md:p-8">
             <div class="flex items-center gap-3 opacity-80">
-                <div class="w-8 h-8 bg-primary text-white flex items-center justify-center rounded-full font-serif font-bold text-sm">華</div>
+                <img src="image_8286fa.webp" alt="華梵LOGO" class="w-10 h-auto object-contain">
                 <span class="text-primary font-serif font-bold tracking-widest">華梵禮儀</span>
             </div>
 
@@ -727,44 +781,59 @@
         </div>
 
         <div class="relative z-10 flex-1 flex flex-col justify-center items-end space-y-8 md:space-y-10 pb-20 pr-10 md:pr-24">
-            <a href="關於華梵.html" class="menu-link group text-right cursor-pointer relative">
+
+            <!-- 新增：首頁連結 -->
+            <a href="首頁_webp.html" class="menu-link group text-right cursor-pointer relative">
                 <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    關於華梵
+                    首頁
                     <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </span>
                 <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Home</span>
             </a>
 
+            <!-- 修正英文：關於華梵 (Home -> About Us) -->
+            <a href="關於華梵.html" class="menu-link group text-right cursor-pointer relative">
+                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                    關於華梵
+                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
+                </span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">About Us</span>
+            </a>
+
+            <!-- 修正英文：服務方案 (Guideline -> Services) -->
             <a href="#services" class="menu-link group text-right cursor-pointer relative">
                 <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
                     服務方案
                     <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Guideline</span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Services</span>
             </a>
 
+            <!-- 修正英文：生前契約 (Pricing -> Pre-need) -->
             <a href="preneed.html" class="menu-link group text-right cursor-pointer relative">
                 <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
                     生前契約
                     <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Pricing</span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Pre-need</span>
             </a>
 
+            <!-- 修正英文：禮儀百科 (Promise -> Etiquette Guide) -->
             <a href="流程拷貝9.html" class="menu-link group text-right cursor-pointer relative">
                 <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
                     禮儀百科
                     <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Promise</span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Etiquette Guide</span>
             </a>
 
+            <!-- 修正英文：聯絡我們 (Q&A -> Contact) -->
             <a href="#locations" class="menu-link group text-right cursor-pointer relative">
                 <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
                     聯絡我們
                     <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Q&A</span>
+                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Contact</span>
             </a>
         </div>
     </div>
@@ -773,7 +842,7 @@
     <header class="fixed w-full top-0 z-50 bg-dots-pattern shadow-md transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center relative z-10">
             
-           <a href="#光之河＋浮水印拷貝4(webp)拷貝6.html" class="flex items-center gap-3 group">
+           <a href="首頁_webp.html" class="flex items-center gap-3 group">
                 <picture>
                     <source srcset="image_8286fa.webp" type="image/webp">
                     <img src="image_8286fa.png" alt="華梵禮儀" class="h-10 w-auto object-contain" loading="eager" decoding="async">
@@ -822,59 +891,67 @@
         </div>
     </header>
 
-    <!-- Hero Section (保持原樣，背景已經足夠豐富) -->
-    <!-- Modified Hero Section: z-index increased to appear above global ambience -->
-    <!-- 注意：Section 設為 z-10，而 #global-fg-layer 設為 z-20，確保前景元素覆蓋在 Hero 圖片之上 -->
-    <section class="hero-bg min-h-screen flex flex-col justify-center relative pt-32 pb-32 z-0">
-        <!-- ... (Hero Content same as before) ... -->
+    <!-- Hero Section -->
+    <section id="hero-section" class="hero-bg min-h-screen flex flex-col justify-center relative pt-32 pb-32 z-0">
+        <!-- 這裡是背景圖層容器，JS 會自動產生 .hero-slide 在此 -->
+        <div id="hero-bg-container" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></div>
+
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-25">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 mb-3 md:mb-6">
                 <i class="fa-solid fa-star text-accent text-sm"></i>
                 <span class="text-white text-sm font-medium tracking-wider">台中市殯葬評鑑特優．人文關懷獎</span>
             </div>
-            <h1 class="text-white text-5xl md:text-7xl font-serif font-bold leading-tight mb-6 text-shadow-lg animate-fade-in-up" style="animation-delay: 0.1s;">
+            
+            <!-- 可變文字區塊：標題 -->
+            <h1 id="hero-title" class="text-white text-5xl md:text-7xl font-serif font-bold leading-tight mb-6 text-shadow-lg animate-fade-in-up hero-text-transition" style="animation-delay: 0.1s;">
                 真心。真意。<br>
-                <span class="text-accent italic relative inline-block">
-                    安心託付。
-                    <span class="absolute -bottom-2 left-0 w-full h-3 bg-accent/30 -skew-x-12"></span>
-                </span>
+                <span class="text-accent italic relative inline-block">安心託付。<span class="absolute -bottom-2 left-0 w-full h-3 bg-accent/30 -skew-x-12"></span></span>
             </h1>
-            <p class="text-white/90 text-lg md:text-xl font-light mb-12 leading-relaxed max-w-lg border-l-4 border-accent pl-6 ml-2 animate-fade-in-up" style="animation-delay: 0.2s;">
+
+            <!-- 可變文字區塊：描述 -->
+            <div id="hero-desc" class="text-white/90 text-lg md:text-xl font-light mb-12 leading-relaxed max-w-lg border-l-4 border-accent pl-6 ml-2 animate-fade-in-up hero-text-transition" style="animation-delay: 0.2s;">
                 <span class="md:hidden">生命的終點，是另一段旅程的開始。<br>華梵守護您最珍貴的回憶。</span>
                 <span class="hidden md:inline">生命的終點不是結束，而是另一段旅程的開始。<br>華梵以溫暖專業，守護您最珍貴的回憶。</span>
-            </p>
+            </div>
+            
             <div class="flex flex-col md:flex-row gap-6 max-w-4xl animate-fade-in-up" style="animation-delay: 0.4s;">
                 <a href="我剛失去親人.html" class="group block bg-surface/95 backdrop-blur-sm p-5 pl-7 rounded-2xl shadow-soft flex-1 hover:-translate-y-2 transition duration-500 cursor-pointer gold-border-left overflow-hidden relative">
                     <div class="absolute right-[-12px] top-[-12px] text-gray-100 text-7xl opacity-20 group-hover:scale-110 transition duration-700 font-serif">心</div>
                     <div class="relative z-10">
                         <div class="flex items-center gap-2.5 mb-2.5">
-                            <div class="bg-warm w-9 h-9 rounded-full flex items-center justify-center text-accent text-xl group-hover:bg-accent group-hover:text-white transition-colors duration-300 shadow-inner">
-                                <i class="fa-solid fa-heart-crack"></i>
-                            </div>
+                            <div class="bg-warm w-9 h-9 rounded-full flex items-center justify-center text-accent text-xl group-hover:bg-accent group-hover:text-white transition-colors duration-300 shadow-inner"><i class="fa-solid fa-heart-crack"></i></div>
                             <h3 class="text-xl font-serif font-bold text-primaryDark">我剛失去親人...</h3>
                         </div>
                         <p class="text-gray-500 text-sm leading-relaxed mb-1.5">如果不確定該做什麼，請讓我們引導您完成第一步。</p>
-                        <div class="flex items-center text-accent font-bold text-sm gap-2 group-hover:gap-4 transition-all">
-                            立即協助 <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
+                        <div class="flex items-center text-accent font-bold text-sm gap-2 group-hover:gap-4 transition-all">立即協助 <i class="fa-solid fa-arrow-right-long"></i></div>
                     </div>
                 </a>
                 <a href="preneed.html" class="group block bg-surface/95 backdrop-blur-sm p-5 pl-7 rounded-2xl shadow-soft flex-1 hover:-translate-y-2 transition duration-500 cursor-pointer gold-border-left overflow-hidden relative">
                     <div class="absolute right-[-12px] top-[-12px] text-gray-100 text-7xl opacity-20 group-hover:scale-110 transition duration-700 font-serif">願</div>
                     <div class="relative z-10">
                         <div class="flex items-center gap-2.5 mb-2.5">
-                            <div class="bg-warm w-9 h-9 rounded-full flex items-center justify-center text-primary text-xl group-hover:bg-primary group-hover:text-white transition-colors duration-300 shadow-inner">
-                                <i class="fa-solid fa-clipboard-list"></i>
-                            </div>
+                            <div class="bg-warm w-9 h-9 rounded-full flex items-center justify-center text-primary text-xl group-hover:bg-primary group-hover:text-white transition-colors duration-300 shadow-inner"><i class="fa-solid fa-clipboard-list"></i></div>
                             <h3 class="text-xl font-serif font-bold text-primaryDark">預先規劃未來</h3>
                         </div>
                         <p class="text-gray-500 text-sm leading-relaxed mb-1.5">了解禮儀服務流程、費用行情，為自己與家人提前安排。</p>
-                        <div class="flex items-center text-primary font-bold text-sm gap-2 group-hover:gap-4 transition-all">
-                            了解方案 <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
+                        <div class="flex items-center text-primary font-bold text-sm gap-2 group-hover:gap-4 transition-all">了解方案 <i class="fa-solid fa-arrow-right-long"></i></div>
                     </div>
                 </a>
             </div>
+            
+            <!-- 主題切換控制面板 - 極簡圓點樣式 (右上角垂直排列) -->
+            <div class="absolute top-0 right-6 md:right-10 flex flex-col items-center gap-4 z-20" style="animation-delay: 0.6s;">
+                 <button onclick="changeHeroTheme(0)" class="theme-btn active" data-index="0" aria-label="主題：森之靜">
+                     <span class="theme-tooltip-left">送別</span>
+                 </button>
+                 <button onclick="changeHeroTheme(1)" class="theme-btn" data-index="1" aria-label="主題：靜心會館">
+                     <span class="theme-tooltip-left">啟靈</span>
+                 </button>
+                 <button onclick="changeHeroTheme(2)" class="theme-btn" data-index="2" aria-label="主題：評鑑特優">
+                     <span class="theme-tooltip-left">辭生</span>
+                 </button>
+            </div>
+
         </div>
         <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-warm to-transparent"></div>
     </section>
@@ -929,10 +1006,10 @@
             <div class="tab-content w-full relative min-h-[500px] mt-2 md:mt-8 bg-warm/60 backdrop-blur-sm rounded-[2.5rem] overflow-hidden border border-white/40 shadow-sm" id="content-awards">
                 
                 <!-- 卡片背景層 (Specific to Awards Tab) -->
-                <div id="award-bg-114" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('114評鑑（浮水印）.png');"></div>
-                <div id="award-bg-111" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('111評鑑.png');"></div>
-                <div id="award-bg-107" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('107評鑑.JPG');"></div>
-                <div id="award-bg-103" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('103評鑑.JPG');"></div>
+                <div id="award-bg-114" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('114評鑑（浮水印）.webp');"></div>
+                <div id="award-bg-111" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('111評鑑.webp');"></div>
+                <div id="award-bg-107" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('107評鑑.webp');"></div>
+                <div id="award-bg-103" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 pointer-events-none mix-blend-multiply opacity-0 z-0" style="background-image: url('103評鑑.webp');"></div>
 
                 <!-- Timeline Content -->
                 <div class="w-full relative z-10">
@@ -953,7 +1030,7 @@
                             <div class="mt-14 w-full bg-gradient-to-br from-[#FFFBF0] to-white p-6 rounded-2xl shadow-gold border-2 border-accent/40 relative hover:-translate-y-2 transition duration-500 group-hover:shadow-gold-lg h-full flex flex-col cursor-pointer"
                                  onmouseenter="setAwardsBg('114')"
                                  onmouseleave="resetAwardsBg()"
-                                 onclick="openImageModal('114評鑑.jpg', '民國 114 年 - 評鑑特優')">
+                                 onclick="openImageModal('114評鑑.webp', '民國 114 年 - 評鑑特優')">
                                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wider whitespace-nowrap z-20 flex items-center gap-1">
                                     <i class="fa-solid fa-crown text-yellow-400"></i> 年度評鑑大滿貫
                                 </div>
@@ -993,7 +1070,7 @@
                             <div class="mt-16 w-full bg-white p-6 rounded-2xl shadow-soft border-t-4 border-[#C08484] relative hover:-translate-y-2 transition duration-500 group-hover:shadow-rose-glow h-full flex flex-col justify-center cursor-pointer"
                                  onmouseenter="setAwardsBg('111')"
                                  onmouseleave="resetAwardsBg()"
-                                 onclick="openImageModal('111評鑑.png', '民國 111 年 - 人文關懷獎')">
+                                 onclick="openImageModal('111評鑑.webp', '民國 111 年 - 人文關懷獎')">
                                 <div class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
                                      <i class="fa-solid fa-heart absolute -right-4 -bottom-4 text-8xl text-[#C08484]/5 rotate-12"></i>
                                 </div>
@@ -1029,7 +1106,7 @@
                             <div class="mt-6 w-full bg-white p-6 rounded-xl shadow-soft border-t-4 border-primary hover:bg-warm/50 transition duration-300 hover:-translate-y-1 h-full relative flex flex-col justify-center items-center cursor-pointer"
                                  onmouseenter="setAwardsBg('107')"
                                  onmouseleave="resetAwardsBg()"
-                                 onclick="openImageModal('107評鑑.JPG', '民國 107 年 - 評鑑優等 (新制首屆)')">
+                                 onclick="openImageModal('107評鑑.webp', '民國 107 年 - 評鑑優等 (新制首屆)')">
                                 <h4 class="text-lg font-bold text-gray-700 text-center mb-1">評鑑優等</h4>
                                 <div class="w-8 h-0.5 bg-gray-200 mb-3"></div>
                                 <p class="text-xs text-gray-400 text-center leading-relaxed">
@@ -1056,7 +1133,7 @@
                             <div class="mt-6 w-full bg-white/60 p-5 rounded-xl shadow-sm border border-white/50 hover:bg-white transition duration-300 hover:-translate-y-1 h-full flex flex-col justify-center items-center cursor-pointer"
                                  onmouseenter="setAwardsBg('103')"
                                  onmouseleave="resetAwardsBg()"
-                                 onclick="openImageModal('103評鑑.JPG', '多年評鑑最高等第')">
+                                 onclick="openImageModal('103評鑑.webp', '多年評鑑最高等第')">
 
 
                                 <h4 class="text-base font-bold text-primary/60 mb-2">榮耀傳承</h4>
@@ -1074,7 +1151,7 @@
                              
                              <!-- 左側水平虛線 (接續上一個節點) -->
                              <!-- 維持在 top-5 (1.25rem = 20px) 的高度 -->
-                             <div class="absolute top-5 left-0 w-1/2 h-0.5 -z-10" 
+                             <div class="absolute top-5 left-0 w-1/3 h-0.5 -z-10" 
                                   style="background-image: linear-gradient(to right, #C5A670 50%, transparent 0%); background-size: 10px 100%; background-repeat: repeat-x;">
                              </div>
 
@@ -1087,7 +1164,7 @@
                              
                              <!-- 按鈕本體 -->
                              <!-- 設定 -mt-3 (負 margin) 讓按鈕上移，使箭頭中心接近 top-5 的虛線高度 -->
-                             <a href="#about" class="group flex flex-col items-center gap-3 p-2 rounded-2xl transition duration-300 cursor-pointer -mt-5">
+                             <a href="關於華梵.html" class="group flex flex-col items-center gap-3 p-2 rounded-2xl transition duration-300 cursor-pointer -mt-5">
                                 <!-- 外圈光暈 -->
                                 <div class="absolute inset-0 bg-accent/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 
@@ -1371,7 +1448,7 @@
                     <div class="relative h-60 w-full bg-gray-900 overflow-hidden group">
                         <!-- 圖片容器 -->
                         <div id="image-container-religion" class="absolute inset-0 w-full h-full">
-                            <img id="religion-image" src="b.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Multi-Religion Service" onerror="this.src='https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=2000&auto=format&fit=crop'">
+                            <img id="religion-image" src="b.webp" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Multi-Religion Service" onerror="this.src='https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=2000&auto=format&fit=crop'">
                         </div>
                         <!-- 漸層遮罩 -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
@@ -1412,7 +1489,7 @@
                         <!-- 圖片容器 (絕對定位疊加) -->
                         <div id="image-container-mobile" class="absolute inset-0 w-full h-full">
                             <!-- 預設第一張圖 -->
-                            <img src="spa.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Service Image" onerror="this.src='https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop'">
+                            <img src="禮體spa3.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Service Image" onerror="this.src='https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop'">
                         </div>
 
                         <!-- 漸層遮罩 -->
@@ -1467,8 +1544,8 @@
                 <div class="group relative h-full rounded-[28px] overflow-hidden cursor-pointer transition-all duration-700 ease-out hover:z-10 border border-white/30 shadow-[0_25px_60px_-40px_rgba(70,91,64,0.55)] before:absolute before:inset-0 before:-z-10 before:rounded-[28px] before:bg-gradient-to-br before:from-white/5 before:via-transparent before:to-black/10" onclick="toggleReligionType(0)">
                     <div id="image-container-religion-desktop" class="absolute inset-0 bg-gray-900">
                         <picture>
-                            <source srcset="b.webp" type="image/webp">
-                            <img src="b.png" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 group-hover:opacity-70" alt="中式傳統禮儀" loading="lazy" decoding="async">
+                            <source srcset="啟靈.jpg" type="image/webp">
+                            <img src="b.png" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 object-[30%_center] group-hover:scale-105 group-hover:opacity-70" alt="中式傳統禮儀" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <!-- 多層漸層效果：創造深度 -->
@@ -1493,10 +1570,10 @@
                             <p id="religion-desc-desktop" class="text-gray-100/90 text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 border-l border-white/30 pl-4">
                                 遵循古禮，莊嚴誦經。引導家屬為逝者積福報，圓滿功德，讓孝思流傳。
                             </p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <button onclick="toggleReligionType(0); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white text-[10px] font-medium tracking-wider hover:bg-white/20 transition duration-300">中式傳統</button>
-                                <button onclick="toggleReligionType(1); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[10px] font-medium tracking-wider hover:bg-white/20 hover:text-white transition duration-300">西式/基督教</button>
-                                <button onclick="toggleReligionType(2); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[10px] font-medium tracking-wider hover:bg-white/20 hover:text-white transition duration-300">環保葬</button>
+                            <div class="mt-4 mb-2 flex flex-wrap md:flex-col gap-2">
+                                <button onclick="toggleReligionType(0); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white text-[13px] font-medium tracking-wider hover:bg-white/20 transition duration-300">中式傳統</button>
+                                <button onclick="toggleReligionType(1); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[13px] font-medium tracking-wider hover:bg-white/20 hover:text-white transition duration-300">西式/基督教</button>
+                                <button onclick="toggleReligionType(2); event.stopPropagation();" data-religion-group="desktop" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[13px] font-medium tracking-wider hover:bg-white/20 hover:text-white transition duration-300">環保葬</button>
                             </div>
                         </div>
                     </div>
@@ -1510,7 +1587,7 @@
                 <div class="group relative h-full rounded-[28px] overflow-hidden cursor-pointer transition-all duration-700 ease-out hover:z-10 md:-translate-y-8 border border-white/30 shadow-[0_25px_60px_-40px_rgba(70,91,64,0.55)] before:absolute before:inset-0 before:-z-10 before:rounded-[28px] before:bg-gradient-to-br before:from-white/5 before:via-transparent before:to-black/10 after:absolute after:inset-0 after:rounded-[28px] after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-700 after:bg-radial-gradient after:pointer-events-none">
                     <div class="absolute inset-0 bg-gray-900">
                         <picture>
-                            <source srcset="spa.webp" type="image/webp">
+                            <source srcset="禮體spa3.png" type="image/webp">
                             <img src="spa.png" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 group-hover:opacity-70" alt="禮體淨身 SPA" loading="lazy" decoding="async">
                         </picture>
                     </div>
@@ -1552,8 +1629,8 @@
                 <div class="group relative h-full rounded-[28px] overflow-hidden cursor-pointer transition-all duration-700 ease-out hover:z-10 border border-white/30 shadow-[0_25px_60px_-40px_rgba(70,91,64,0.55)] before:absolute before:inset-0 before:-z-10 before:rounded-[28px] before:bg-gradient-to-br before:from-white/5 before:via-transparent before:to-black/10">
                     <div class="absolute inset-0 bg-gray-900">
                         <picture>
-                            <source srcset="unnamed.webp" type="image/webp">
-                            <img src="unnamed.png" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 group-hover:opacity-70" alt="靜心私人會館" loading="lazy" decoding="async">
+                            <source srcset="華梵會館.png" type="image/webp">
+                            <img src="unnamed.png" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 object-[95%_center] group-hover:opacity-70" alt="靜心私人會館" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <!-- 多層漸層：綠色調 -->
@@ -1691,110 +1768,154 @@
 
         <div class="container mx-auto px-6 relative z-10">
             
-            <!-- 1. 評論卡片輪播 -->
-            <div class="flex overflow-x-auto gap-6 pb-0 pt-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 mask-gradient-x items-stretch mb-4 md:mb-8">
+            <!-- 1. 評論卡片輪播 (增加 Relative Wrapper 以定位提示箭頭) -->
+            <div class="relative group">
                 
-                <!-- Review Card 1 (Featured) -->
-                <div class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300">
-                    <!-- 金色標籤 -->
-                    <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
-                        圓滿服務專案
-                    </div>
+                <!-- 
+                   ★ UIUX 設計師更新：純淨版無框右滑箭頭 (Clean Swipe Hint)
+                   
+                   修改重點：
+                   1. 移除外框與背景 (bg-white/70, border 等)。
+                   2. 樣式：使用大尺寸 (text-5xl) 的白色箭頭，搭配 drop-shadow 確保在任何背景都清晰可見。
+                   3. id="swipe-hint": 用於 JS 控制顯示/隱藏。
+                   4. 動畫：animate-pulse-right 持續向右律動。
+                -->
+                <div id="swipe-hint" class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 md:hidden pointer-events-none h-full flex items-center transition-opacity duration-500">
+                    <i class="fa-solid fa-chevron-right text-5xl text-white/90 drop-shadow-md animate-pulse-right"></i>
+                </div>
 
-                    <div class="relative z-10 flex-1 flex flex-col">
-                        <!-- Header -->
-                        <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5">
-                            <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">陳</div>
-                            <div>
-                                <h4 class="font-bold text-primaryDark text-lg font-serif">陳小姐</h4>
-                                <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
-                                    <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                    <span>2 週前</span>
-                                </div>
-                            </div>
-                            <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
-                            </div>
+                <!-- 實際卡片捲動區 -->
+                <div class="flex overflow-x-auto gap-6 pb-0 pt-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 mask-gradient-x items-stretch mb-4 md:mb-8" id="review-container">
+                    
+                    <!-- Review Card 1 (Featured) -->
+                    <a href="https://share.google/Un07O9gwWQNt6nTLB" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
+                        <!-- 金色標籤 -->
+                        <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase pointer-events-none">
+                           安心託付推薦
                         </div>
 
-                        <!-- Content -->
-                        <div class="relative mb-6 flex-1">
-                            <!-- 裝飾引號 -->
-                            <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
+                        <div class="relative z-10 flex-1 flex flex-col">
+                            <!-- Header -->
+                            <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5 pointer-events-none">
+                                <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">林</div>
+                                <div>
+                                    <h4 class="font-bold text-primaryDark text-lg font-serif">林先生</h4>
+                                    <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
+                                        <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                        <span>2 週前</span>
+                                    </div>
+                                </div>
+                                <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="relative mb-6 flex-1 pointer-events-none">
+                                <!-- 裝飾引號 -->
+                                <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
+                                
+                                <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">爸爸的離世讓我們措手不及，怡傑與俊翰即便在深夜時分也遠來接爸爸的身軀，在家屬們惶恐不安時，不斷安撫並帶領我們完成各項儀式、手續和打點各種事宜。
+......<span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1">華梵禮儀公司的專業及素養</span>......讓我們為爸爸做身後安排的同時，也接住我們的情緒。
+                                    
+                                </p>
+                            </div>
                             
-                            <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">
-                                <span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1">「感謝華梵禮儀團隊的細心協助」</span>，從一開始的慌亂無助，到禮儀師專業的引導，讓我們能夠安心地送爸爸最後一程。會場佈置非常莊嚴典雅，完全符合爸爸生前喜歡的風格。
-                            </p>
-                        </div>
-                        
-                        <!-- Tags -->
-                        <div class="mt-auto pt-2 flex gap-2 flex-wrap">
-                            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#專業引導</span>
-                            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#莊嚴典雅</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review Card 2 -->
-                <div class="min-w-[80vw] md:min-w-[420px] bg-white p-8 rounded-2xl shadow-card hover:shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300">
-                    <div class="relative z-10 flex-1 flex flex-col">
-                        <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5">
-                            <div class="w-12 h-12 rounded-full bg-[#8B9D87] text-white flex items-center justify-center font-bold font-serif text-xl shadow-sm border border-white">林</div>
-                            <div>
-                                <h4 class="font-bold text-primaryDark text-lg font-serif">林先生</h4>
-                                <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
-                                    <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                    <span>1 個月前</span>
-                                </div>
+                            <!-- Tags -->
+                            <div class="mt-auto pt-2 flex gap-2 flex-wrap pointer-events-none">
+                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#專業引導</span>
+                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#安定家屬</span>
                             </div>
                         </div>
-                        <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide flex-1">
-                            「<span class="border-b-2 border-[#E6D5B8] text-primaryDark font-medium pb-0.5">價格透明實在</span>，沒有任何隱形消費。禮儀人員態度非常親切，對於我們提出的特殊宗教需求也都盡力配合。真心推薦給需要的朋友。」
-                        </p>
-                        <div class="mt-6 pt-2 flex gap-2">
-                            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#價格透明</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review Card 3 -->
-                <div class="min-w-[80vw] md:min-w-[420px] bg-white p-8 rounded-2xl shadow-card hover:shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300">
-                    <div class="relative z-10 flex-1 flex flex-col">
-                        <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5">
-                            <div class="w-12 h-12 rounded-full bg-[#C5A670] text-white flex items-center justify-center font-bold font-serif text-xl shadow-sm border border-white">W</div>
-                            <div>
-                                <h4 class="font-bold text-primaryDark text-lg font-serif">Wang David</h4>
-                                <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
-                                    <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                    <span>3 個月前</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide flex-1">
-                            「半夜突然接到噩耗不知所措，撥打24H專線後，專員很快就抵達現場協助。整個治喪過程非常順利，讓我們能專心地陪伴母親走完最後一程，非常感恩。」
-                        </p>
-                        <div class="mt-6 pt-2 flex gap-2">
-                            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#24H服務</span>
-                            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#臨終諮詢</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Call to Action Card -->
-                <div class="min-w-[240px] bg-[#FAF9F6] p-6 rounded-2xl flex flex-col justify-center items-center text-center snap-center border-2 border-dashed border-[#DBCDA4]/40 hover:border-accent transition-colors group cursor-pointer">
-                    <div class="w-16 h-16 rounded-full bg-white shadow-soft flex items-center justify-center mb-4 text-[#C5A670] text-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fa-brands fa-google"></i>
-                    </div>
-                    <h4 class="font-serif font-bold text-primaryDark text-lg mb-2 group-hover:text-accent transition-colors">更多家屬回饋</h4>
-                    <p class="text-xs text-gray-500 mb-6 px-2 leading-relaxed">在 Google Maps 上<br>閱讀 500+ 則真實評論</p>
-                    <a href="#" class="px-6 py-2.5 bg-white border border-[#E5E7EB] text-primaryDark rounded-full text-xs font-bold shadow-sm group-hover:shadow-md group-hover:border-accent group-hover:text-accent transition-all whitespace-nowrap">
-                        前往 Google Maps <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                     </a>
-                </div>
 
+                    <!-- Review Card 2 -->
+<a href="https://share.google/EJVCpoItOox9I01WS" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
+    <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
+        暖心服務案例
+    </div>
+
+    <div class="relative z-10 flex-1 flex flex-col">
+        <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5 pointer-events-none">
+            <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">JL</div>
+            <div>
+                <h4 class="font-bold text-primaryDark text-lg font-serif">Johnny Lai</h4>
+                <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
+                    <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                    <span>3 天前</span>
+                </div>
+            </div>
+            <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
+            </div>
+        </div>
+
+        <div class="relative mb-6 flex-1">
+            <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
+            <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">
+                「治喪期間禮儀師不僅盡心盡力，最讓我們感動的是暫厝時，<span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1 font-medium">蓓婕踩著板凳、一次次仔細擦拭臨時塔位的鐵門</span>，這份體貼深深撫慰了家屬的心。小粧師姊細心講解佛經涵義，帶領我們向學佛的祖母完整表達敬意。感謝華梵團隊在環境與儀式上的用心，讓我們在面對大事時能感到順心圓滿。」
+            </p>
+        </div>
+        
+        <div class="mt-auto pt-2 flex gap-2 flex-wrap">
+            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#細膩體貼</span>
+            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#佛事圓滿</span>
+            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#環境莊嚴</span>
+        </div>
+    </div>
+</a>
+                    <!-- Review Card 3 -->
+<a href="https://share.google/AKglU8m529gzJMjz7" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
+                        <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
+                            會館環境推薦
+                        </div>
+
+                        <div class="relative z-10 flex-1 flex flex-col">
+                            <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5 pointer-events-none">
+                                <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">Li</div>
+                                <div>
+                                    <h4 class="font-bold text-primaryDark text-lg font-serif">Jessica Li</h4>
+                                    <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
+                                        <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                        <span>1 週前</span>
+                                    </div>
+                                </div>
+                                <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
+                                </div>
+                            </div>
+
+                            <div class="relative mb-6 flex-1">
+                                <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
+                                
+                                <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">
+                                    「爸爸生前就說喜歡安靜優雅的送祂離開... <span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1 font-medium">來華梵環境清幽也沒有煙味，每間隔音都很好</span>... 很適合我爸的9個孫子能常常安心待在這裡陪伴阿公。... 這裡提供的清幽環境讓我們感受到離別也可以讓活著的人心靈平靜。可以很舒服慢慢的陪伴爸爸的離開，沒有殯儀館的吵雜聲跟很複雜的味道。我相信爸爸也一定很喜歡這樣的環境。」
+                                </p>
+                            </div>
+                            
+                            <div class="mt-auto pt-2 flex gap-2 flex-wrap">
+                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#環境清幽</span>
+                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#無煙空間</span>
+                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#心靈平靜</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Call to Action Card -->
+                    <div class="min-w-[240px] bg-[#FAF9F6] p-6 rounded-2xl flex flex-col justify-center items-center text-center snap-center border-2 border-dashed border-[#DBCDA4]/40 hover:border-accent transition-colors group cursor-pointer">
+                        <div class="w-16 h-16 rounded-full bg-white shadow-soft flex items-center justify-center mb-4 text-[#C5A670] text-2xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-brands fa-google"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-primaryDark text-lg mb-2 group-hover:text-accent transition-colors">更多家屬回饋</h4>
+                        <p class="text-xs text-gray-500 mb-6 px-2 leading-relaxed">在 Google Maps 上<br>閱讀 500+ 則真實評論</p>
+                        <a href="#" class="px-6 py-2.5 bg-white border border-[#E5E7EB] text-primaryDark rounded-full text-xs font-bold shadow-sm group-hover:shadow-md group-hover:border-accent group-hover:text-accent transition-all whitespace-nowrap">
+                            前往 Google Maps <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- 2. 標題與 Badge 區塊 (豐富化設計) -->
@@ -2172,7 +2293,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-accent text-secondary flex items-center justify-center rounded-full font-serif font-bold">華</div>
+                    <img src="image_8286fa.webp" alt="華梵LOGO" class="w-10 h-auto object-contain">
                     <h4 class="text-white text-2xl font-serif font-bold tracking-widest">華梵禮儀</h4>
                 </div>
                 <p class="mb-6 max-w-sm leading-loose text-gray-300">
@@ -2243,6 +2364,166 @@
 
 
 <script>
+    const heroThemes = [
+        { 
+            name: '送別', 
+            url: 'hero.webp', 
+            gradient: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(94, 115, 90, 0.65) 100%)',
+            titleHTML: '真心。真意。<br><span class="text-accent italic relative inline-block">安心託付。<span class="absolute -bottom-2 left-0 w-full h-3 bg-accent/30 -skew-x-12"></span></span>',
+            descHTML: '<span class="md:hidden">生命的終點，是另一段旅程的開始。<br>華梵守護您最珍貴的回憶。</span><span class="hidden md:inline">生命的終點不是結束，而是另一段旅程的開始。<br>華梵以溫暖專業，守護您最珍貴的回憶。</span>'
+        },
+        { 
+            name: '啟靈', 
+            url: '花.jpeg', // 溫暖室內
+            gradient: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(60, 50, 40, 0.7) 100%)',
+            position: '40% 20%',
+            titleHTML: '真心。真意。<br><span class="text-accent italic relative inline-block">安心託付。<span class="absolute -bottom-2 left-0 w-full h-3 bg-accent/30 -skew-x-12"></span></span>',
+            descHTML: '<span class="md:hidden">生命的終點，是另一段旅程的開始。<br>華梵守護您最珍貴的回憶。</span><span class="hidden md:inline">生命的終點不是結束，而是另一段旅程的開始。<br>華梵以溫暖專業，守護您最珍貴的回憶。</span>'
+        },
+        { 
+            name: '辭生', 
+            url: '辭生.jpg', // 專業建築/光影
+            gradient: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(40, 50, 60, 0.7) 100%)',
+            position: 'center 0%',
+            titleHTML: '真心。真意。<br><span class="text-accent italic relative inline-block">安心託付。<span class="absolute -bottom-2 left-0 w-full h-3 bg-accent/30 -skew-x-12"></span></span>',
+            descHTML: '<span class="md:hidden">生命的終點，是另一段旅程的開始。<br>華梵守護您最珍貴的回憶。</span><span class="hidden md:inline">生命的終點不是結束，而是另一段旅程的開始。<br>華梵以溫暖專業，守護您最珍貴的回憶。</span>'
+        }
+    ];
+
+    let currentHeroIndex = 0;
+    let heroAutoPlayInterval = null;
+
+    // 產生背景 Slides
+    function initHeroSlides() {
+        const container = document.getElementById('hero-bg-container');
+        if (!container) return;
+        
+        container.innerHTML = ''; // Clear
+        heroThemes.forEach((theme, index) => {
+            const slide = document.createElement('div');
+            slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+            slide.style.backgroundImage = `${theme.gradient}, url('${theme.url}')`;
+            slide.style.backgroundPosition = theme.position || 'center';
+            slide.id = `hero-slide-${index}`;
+            container.appendChild(slide);
+        });
+
+        // 手機滑動切換 hero
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchMoved = false;
+        const heroSection = document.getElementById('hero-section');
+        if (heroSection) {
+            heroSection.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchMoved = false;
+                }
+            });
+            heroSection.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 1) {
+                    touchEndX = e.touches[0].clientX;
+                    touchMoved = true;
+                }
+            });
+            heroSection.addEventListener('touchend', function(e) {
+                if (!touchMoved) return;
+                const dx = touchEndX - touchStartX;
+                if (Math.abs(dx) > 50) {
+                    if (dx < 0) {
+                        // 向左滑，下一張
+                        let next = (currentHeroIndex + 1) % heroThemes.length;
+                        changeHeroTheme(next);
+                    } else {
+                        // 向右滑，上一張
+                        let prev = (currentHeroIndex - 1 + heroThemes.length) % heroThemes.length;
+                        changeHeroTheme(prev);
+                    }
+                }
+            });
+        }
+    }
+
+    function changeHeroTheme(index) {
+        // 防止重複點擊同一張
+        if (index === currentHeroIndex && arguments.length > 0) return; // 手動點擊相同時不重置
+        
+        const prevIndex = currentHeroIndex;
+        currentHeroIndex = index;
+
+        // 1. 切換背景 Active Class (Cross-fade)
+        const slides = document.querySelectorAll('.hero-slide');
+        slides.forEach((slide, i) => {
+            if (i === index) slide.classList.add('active');
+            else slide.classList.remove('active');
+        });
+
+        // 2. 切換按鈕狀態
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+            if (parseInt(btn.dataset.index) === index) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+
+        // 3. 文字切換動畫 (僅當索引改變時)
+        const heroTitle = document.getElementById('hero-title');
+        const heroDesc = document.getElementById('hero-desc');
+        const theme = heroThemes[index];
+
+        if (heroTitle && heroDesc) {
+            heroTitle.classList.add('hero-text-hidden');
+            heroDesc.classList.add('hero-text-hidden');
+
+            setTimeout(() => {
+                heroTitle.innerHTML = theme.titleHTML;
+                heroDesc.innerHTML = theme.descHTML;
+                heroTitle.classList.remove('hero-text-hidden');
+                heroDesc.classList.remove('hero-text-hidden');
+            }, 500); 
+        }
+
+        // 如果是手動觸發 (arguments.length > 0)，重置計時器
+        if (arguments.length > 0) {
+            resetAutoPlay();
+        }
+    }
+
+    function startAutoPlay() {
+        if (heroAutoPlayInterval) clearInterval(heroAutoPlayInterval);
+        heroAutoPlayInterval = setInterval(() => {
+            let nextIndex = (currentHeroIndex + 1) % heroThemes.length;
+            changeHeroTheme(nextIndex); // 不傳參數代表自動切換
+        }, 6000); // 6秒切換
+    }
+
+    function resetAutoPlay() {
+        clearInterval(heroAutoPlayInterval);
+        startAutoPlay();
+    }
+
+        // --- Logic Update: Swipe Hint ---
+        // 邏輯修改：箭頭直到滑動到「最後一張卡片」時才會消失
+        const container = document.getElementById('review-container');
+        const hint = document.getElementById('swipe-hint');
+        
+        if(container && hint) {
+            container.addEventListener('scroll', () => {
+                // container.scrollWidth: 總可滾動寬度
+                // container.scrollLeft: 目前已滾動距離
+                // container.clientWidth: 可視區域寬度
+                
+                // 判斷是否接近底部 (給予 20px 的緩衝區)
+                const isAtEnd = Math.ceil(container.scrollLeft + container.clientWidth) >= (container.scrollWidth - 20);
+
+                if(isAtEnd) {
+                    // 只有滑到底時才隱藏
+                    hint.style.opacity = '0';
+                } else {
+                    // 只要還沒到底部，就顯示箭頭
+                    hint.style.opacity = '1';
+                }
+            });
+        }
 
     // 字體大小調整函數
 function adjustFontSize(change) {
@@ -2710,6 +2991,10 @@ function adjustFontSize(change) {
         // 初始化宗教卡片
         initializeReligionCard();
 
+        // Initialize Hero Slides & AutoPlay
+        initHeroSlides();
+        startAutoPlay();
+
     });
 
     // ============================================
@@ -2718,17 +3003,17 @@ function adjustFontSize(change) {
     const religionTypeData = [
         {
             title: "中式傳統禮儀",
-            image: "b.png",
+            image: "啟靈.jpg",
             desc: "遵循古禮，莊嚴誦經。引導家屬為逝者積福報，圓滿功德，讓孝思流傳。"
         },
         {
             title: "西式/基督教禮儀",
-            image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
+            image: "彌撒.jpg",
             desc: "溫馨感人的追思禮拜。尊重教義，佈置典雅，用詩歌與禱告送別摯愛。"
         },
         {
             title: "環保葬禮",
-            image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070&auto=format&fit=crop",
+            image: "樹葬1.webp",
             desc: "綠色環保的終身大事。親近自然，綠色回歸，留下美好給後代的選擇。"
         }
     ];
@@ -2873,7 +3158,7 @@ function adjustFontSize(change) {
     const serviceDataMobile = [
         {
             title: "禮體淨身 SPA",
-            image: "spa.png",
+            image: "禮體spa3.png",
             fallback: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
             desc: "如同對待生者般的溫柔觸碰，透過專業的SPA淨身技術，洗去病痛，回復安詳容顏。我們使用頂級精油與溫水，細緻地為逝者清潔，展現對生命最後的尊重與呵護。",
             cta: "了解詳細方案"
@@ -2887,7 +3172,7 @@ function adjustFontSize(change) {
         },
         {
             title: "靜心私人會館",
-            image: "unnamed.png",
+            image: "華梵會館.png",
             fallback: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2070&auto=format&fit=crop",
             desc: "遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，溫馨典雅的環境設計，讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感，陪伴摯愛最後一程。",
             cta: "預約參觀會館"
@@ -3050,7 +3335,7 @@ function adjustFontSize(change) {
                 locations: [
                     {
                         id: 5,
-                        name: "林新烏日醫院",
+                        name: "烏日林新醫院",
                         subname: " B3 寧安室",
                         address: "台中市烏日區榮和路168號",
                         phones: [],
@@ -3108,7 +3393,7 @@ function adjustFontSize(change) {
             {
                 id: 5,
                 name: "烏日服務處",
-                subname: "林新烏日醫院 B3 寧安室",
+                subname: "烏日林新醫院 B3 寧安室",
                 address: "台中市烏日區榮和路168號",
                 phones: [],
                 lat: 24.1105, 
@@ -3140,12 +3425,20 @@ function adjustFontSize(change) {
             }
         ];
 
+        function buildMapQuery(location) {
+            if (location && location.name && location.name.includes('健行')) {
+                return '華梵尊榮 台中 健行路';
+            }
+            return `${location.name || ''} ${location.address || ''}`.trim();
+        }
+
         function initMap() {
             try {
                 // 使用 iframe 嵌入地圖
                 const mapContainer = document.getElementById("map");
                 const defaultLocation = locations[0];
                 const mapsLink = document.getElementById("maps-link");
+                const defaultQuery = buildMapQuery(defaultLocation);
                 
                 // 建立 iframe
                 const iframe = document.createElement('iframe');
@@ -3155,10 +3448,10 @@ function adjustFontSize(change) {
                 iframe.loading = 'lazy';
                 iframe.allowFullscreen = true;
                 iframe.referrerPolicy = 'no-referrer-when-downgrade';
-                iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(defaultLocation.name + ' ' + defaultLocation.address)}&output=embed&zoom=13`;
+                iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(defaultQuery)}&output=embed&zoom=13`;
 
                 if (mapsLink) {
-                    mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultLocation.name + ' ' + defaultLocation.address)}`;
+                    mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(defaultQuery)}`;
                 }
                 
                 mapContainer.innerHTML = '';
@@ -3221,8 +3514,8 @@ function adjustFontSize(change) {
                             icon = 'fa-hospital';
                             iconBgClass = 'bg-[#88A5A0]/20 group-hover/item:bg-[#88A5A0]';
                             iconColorClass = 'text-[#88A5A0] group-hover/item:text-white';
-                        } else if (loc.name.includes('烏日') || (loc.subname && loc.subname.includes('林新烏日醫院'))) {
-                            // 林新烏日醫院 - 莫蘭迪紫灰
+                        } else if (loc.name.includes('烏日') || (loc.subname && loc.subname.includes('烏日林新醫院'))) {
+                            // 烏日林新醫院 - 莫蘭迪紫灰
                             icon = 'fa-hospital';
                             iconBgClass = 'bg-[#9B8FA8]/20 group-hover/item:bg-[#9B8FA8]';
                             iconColorClass = 'text-[#9B8FA8] group-hover/item:text-white';
@@ -3251,12 +3544,13 @@ function adjustFontSize(change) {
                         itemDiv.addEventListener('click', () => {
                             const mapContainer = document.getElementById("map");
                             const iframe = mapContainer.querySelector('iframe');
+                            const query = buildMapQuery(loc);
                             if (iframe) {
-                                iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(loc.name + ' ' + loc.address)}&output=embed&zoom=15`;
+                                iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed&zoom=15`;
                             }
 
                             if (mapsLink) {
-                                mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.name + ' ' + loc.address)}`;
+                                mapsLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
                             }
 
                             // 移除所有組別中的 active 狀態
