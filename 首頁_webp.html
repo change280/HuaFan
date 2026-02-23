@@ -1844,15 +1844,15 @@
                    3. id="swipe-hint": 用於 JS 控制顯示/隱藏。
                    4. 動畫：animate-pulse-right 持續向右律動。
                 -->
-                <div id="swipe-hint" class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 md:hidden pointer-events-none h-full flex items-center transition-opacity duration-500">
-                    <i class="fa-solid fa-chevron-right text-5xl text-white/90 drop-shadow-md animate-pulse-right"></i>
-                </div>
+                <button onclick="scrollReviewContainer()" class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 md:hidden h-full flex items-center transition-opacity duration-500 bg-transparent border-none cursor-pointer focus:outline-none" id="swipe-hint">
+                    <i class="fa-solid fa-chevron-right text-5xl text-white/90 drop-shadow-md animate-pulse-right hover:scale-110 transition-transform duration-300"></i>
+                </button>
 
                 <!-- 實際卡片捲動區 -->
                 <div class="flex overflow-x-auto gap-6 pb-0 pt-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 mask-gradient-x items-stretch mb-4 md:mb-8" id="review-container">
                     
                     <!-- Review Card 1 (Featured) -->
-                    <a href="https://share.google/Un07O9gwWQNt6nTLB" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
+                    <div class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <!-- 金色標籤 -->
                         <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase pointer-events-none">
                            安心託付推薦
@@ -1886,52 +1886,79 @@
                                 </p>
                             </div>
                             
-                            <!-- Tags -->
-                            <div class="mt-auto pt-2 flex gap-2 flex-wrap pointer-events-none">
-                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#專業引導</span>
-                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#安定家屬</span>
+                            <!-- Tags, Divider, CTA Button -->
+                            <div class="mt-6 flex items-start justify-between gap-5 relative">
+                                <!-- 左側：標籤與參考線 -->
+                                <div class="flex flex-col flex-1 min-w-0">
+                                    <div class="flex gap-2 flex-wrap mb-[16px]">
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap">#專業引導</span>
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap">#安定家屬</span>
+                                    </div>
+                                    <div class="w-full h-[1.5px] bg-[#EAECE9] rounded-full"></div>
+                                </div>
+                                <!-- 右側：CTA按鈕 -->
+                                <div class="flex-shrink-0 mt-7 relative z-10">
+                                    <a href="https://share.google/Un07O9gwWQNt6nTLB" target="_blank" rel="noopener" class="flex items-center gap-2 px-6 py-2 bg-accent/10 text-accent rounded-xl hover:bg-accent hover:text-white transition-all duration-300 font-bold text-[15px] cursor-pointer border border-accent/20 hover:border-accent shadow-sm group">
+                                        查看評論
+                                        <i class="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                     <!-- Review Card 2 -->
-<a href="https://share.google/EJVCpoItOox9I01WS" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
-    <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
-        暖心服務案例
-    </div>
+                    <div class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
+                            暖心服務案例
+                        </div>
 
-    <div class="relative z-10 flex-1 flex flex-col">
-        <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5 pointer-events-none">
-            <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">JL</div>
-            <div>
-                <h4 class="font-bold text-primaryDark text-lg font-serif">Johnny Lai</h4>
-                <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
-                    <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                    <span>3 天前</span>
-                </div>
-            </div>
-            <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
-            </div>
-        </div>
+                        <div class="relative z-10 flex-1 flex flex-col">
+                            <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-5 pointer-events-none">
+                                <div class="w-12 h-12 rounded-full bg-[#E8EAE6] text-primaryDark flex items-center justify-center font-bold font-serif text-xl border border-white shadow-sm">JL</div>
+                                <div>
+                                    <h4 class="font-bold text-primaryDark text-lg font-serif">Johnny Lai</h4>
+                                    <div class="text-xs text-[#9CA3AF] flex items-center gap-2 mt-1 font-medium">
+                                        <span class="text-[#C5A670] flex gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                        <span>3 天前</span>
+                                    </div>
+                                </div>
+                                <div class="ml-auto opacity-10 grayscale group-hover:opacity-20 group-hover:grayscale-0 transition-all duration-500">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-8 h-8">
+                                </div>
+                            </div>
 
-        <div class="relative mb-6 flex-1">
-            <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
-            <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">
-                「治喪期間禮儀師不僅盡心盡力，最讓我們感動的是暫厝時，<span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1 font-medium">蓓婕踩著板凳、一次次仔細擦拭臨時塔位的鐵門</span>，這份體貼深深撫慰了家屬的心。小粧師姊細心講解佛經涵義，帶領我們向學佛的祖母完整表達敬意。感謝華梵團隊在環境與儀式上的用心，讓我們在面對大事時能感到順心圓滿。」
-            </p>
-        </div>
-        
-        <div class="mt-auto pt-2 flex gap-2 flex-wrap">
-            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#細膩體貼</span>
-            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#佛事圓滿</span>
-            <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#環境莊嚴</span>
-        </div>
-    </div>
-</a>
+                            <div class="relative mb-6 flex-1">
+                                <i class="fa-solid fa-quote-left text-[#F3F0E6] text-5xl absolute -top-4 -left-4 -z-10"></i>
+                                <p class="text-[#525252] leading-[1.8] text-justify text-[15px] font-serif tracking-wide">
+                                    「治喪期間禮儀師不僅盡心盡力，最讓我們感動的是暫厝時，<span class="bg-[#F2EFE5] text-primaryDark px-1 rounded-sm mx-1 font-medium">蓓婕踩著板凳、一次次仔細擦拭臨時塔位的鐵門</span>，這份體貼深深撫慰了家屬的心。小粧師姊細心講解佛經涵義，帶領我們向學佛的祖母完整表達敬意。感謝華梵團隊在環境與儀式上的用心，讓我們在面對大事時能感到順心圓滿。」
+                                </p>
+                            </div>
+                            
+                            <!-- Tags, Divider, CTA Button -->
+                            <div class="mt-6 flex items-start justify-between gap-5 relative">
+                                <!-- 左側：標籤與參考線 -->
+                                <div class="flex flex-col flex-1 min-w-0">
+                                    <div class="flex gap-2 overflow-hidden mb-[16px]">
+                                        <span class="hidden sm:inline-block px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#細膩體貼</span>
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#佛事圓滿</span>
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#環境莊嚴</span>
+                                    </div>
+                                    <div class="w-full h-[1.5px] bg-[#EAECE9] rounded-full"></div>
+                                </div>
+                                <!-- 右側：CTA按鈕 -->
+                                <div class="flex-shrink-0 mt-7 relative z-10">
+                                    <a href="https://share.google/EJVCpoItOox9I01WS" target="_blank" rel="noopener" class="flex items-center gap-2 px-6 py-2 bg-accent/10 text-accent rounded-xl hover:bg-accent hover:text-white transition-all duration-300 font-bold text-[15px] cursor-pointer border border-accent/20 hover:border-accent shadow-sm group">
+                                        查看評論
+                                        <i class="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Review Card 3 -->
-<a href="https://share.google/AKglU8m529gzJMjz7" target="_blank" rel="noopener" class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-transform hover:-translate-y-1 duration-300 cursor-pointer" style="text-decoration: none;">
+                    <div class="min-w-[85vw] md:min-w-[480px] bg-white p-8 rounded-2xl shadow-soft border border-white/60 snap-center relative group flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <div class="absolute -top-3 left-8 bg-[#C5A670] text-white text-[11px] font-bold px-4 py-1.5 rounded-sm shadow-gold tracking-widest uppercase">
                             會館環境推薦
                         </div>
@@ -1960,13 +1987,27 @@
                                 </p>
                             </div>
                             
-                            <div class="mt-auto pt-2 flex gap-2 flex-wrap">
-                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#環境清幽</span>
-                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#無煙空間</span>
-                                <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50">#心靈平靜</span>
+                            <!-- Tags, Divider, CTA Button -->
+                            <div class="mt-6 flex items-start justify-between gap-5 relative">
+                                <!-- 左側：標籤與參考線 -->
+                                <div class="flex flex-col flex-1 min-w-0">
+                                    <div class="flex gap-2 overflow-hidden mb-[16px]">
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#環境清幽</span>
+                                        <span class="px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#無煙空間</span>
+                                        <span class="hidden sm:inline-block px-3 py-1 bg-[#F5F7F5] text-[#788275] text-[11px] font-medium rounded-full border border-gray-100/50 whitespace-nowrap flex-shrink-0">#心靈平靜</span>
+                                    </div>
+                                    <div class="w-full h-[1.5px] bg-[#EAECE9] rounded-full"></div>
+                                </div>
+                                <!-- 右側：CTA按鈕 -->
+                                <div class="flex-shrink-0 mt-7 relative z-10">
+                                    <a href="https://share.google/AKglU8m529gzJMjz7" target="_blank" rel="noopener" class="flex items-center gap-2 px-6 py-2 bg-accent/10 text-accent rounded-xl hover:bg-accent hover:text-white transition-all duration-300 font-bold text-[15px] cursor-pointer border border-accent/20 hover:border-accent shadow-sm group">
+                                        查看評論
+                                        <i class="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                     <!-- Call to Action Card -->
                     <div class="min-w-[240px] bg-[#FAF9F6] p-6 rounded-2xl flex flex-col justify-center items-center text-center snap-center border-2 border-dashed border-[#DBCDA4]/40 hover:border-accent transition-colors group cursor-pointer">
@@ -2589,6 +2630,23 @@
             });
         }
 
+    // 評論卡片區右側箭頭捲動函數
+    function scrollReviewContainer() {
+        const container = document.getElementById('review-container');
+        if (container) {
+            // 取得第一張卡片的寬度作為捲動距離
+            const cardWidth = container.querySelector('a')?.offsetWidth || 400;
+            // 加上卡片間距
+            const scrollDistance = cardWidth + 24; // gap-6 = 24px
+            
+            // 平滑捲動到下一張卡片
+            container.scrollBy({
+                left: scrollDistance,
+                behavior: 'smooth'
+            });
+        }
+    }
+
     // 字體大小調整函數
 function adjustFontSize(change) {
     // 取得根元素 (html)
@@ -2667,14 +2725,8 @@ function adjustFontSize(change) {
             // Rotate icon
             if(icon) icon.classList.add('rotate-90');
         } else {
-            // Collapse
-            submenuContainer.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
-            submenuContainer.classList.add('opacity-0', '-translate-x-4', 'pointer-events-none');
-            setTimeout(() => {
-                submenuList.classList.add('hidden');
-            }, 500); // Wait for transition
-            // Reset icon
-            if(icon) icon.classList.remove('rotate-90');
+            // 如果已展開，再點擊直接跳轉
+            window.location.href = '關於華梵.html';
         }
     }
 
