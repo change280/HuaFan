@@ -61,6 +61,10 @@
             text-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
+        [id] {
+            scroll-margin-top: 80px;
+        }
+
         /* 修改 Hero 背景樣式，支援 JS 切換 */
         .hero-bg {
             background-size: cover;
@@ -451,58 +455,26 @@
             z-index: 10;
         }
 
-        /* --- Header 樣式：米色底 + 綠色網點 --- */
-        .bg-dots-pattern {
-            background-color: #F7F5F0; /* 米色底 */
-            position: relative;
-            overflow: hidden; /* 防止偽元素溢出 */
+        .bg-dots-pattern { 
+            background-color: #F7F5F0; 
+            /* 移除 overflow: hidden 以允許下拉選單顯示 */
+            /* 移除 position: relative 以避免覆蓋 fixed */
         }
-
         .bg-dots-pattern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* 繪製網點：主色綠 #465B40 */
-            background-image: radial-gradient(#465B40 1.2px, transparent 1.2px);
-            background-size: 14px 14px; 
-            opacity: 0.25; /* 降低透明度，變成淡淡的紋理 */
-            
-            /* 關鍵：使用 mask 讓左邊消失，右邊顯現，模擬「疏 -> 密」的過渡 */
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 1.2px, transparent 1.2px); background-size: 14px 14px; 
+            opacity: 0.25; -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
-            
-            pointer-events: none; /* 確保不擋住點擊 */
-            z-index: 0;
+            pointer-events: none; z-index: 0;
         }
 
-        /* --- 選單樣式：綠色底 + 米色網點 (反轉) --- */
-        .bg-dots-pattern-reversed {
-            background-color: rgba(70, 91, 64, 0.95); /* 品牌綠 #465B40 + 95% 不透明度 */
-            position: relative;
-            overflow: hidden;
-        }
-
+        .bg-dots-pattern-reversed { background-color: rgba(70, 91, 64, 0.95); position: relative; overflow: hidden; }
         .bg-dots-pattern-reversed::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* 米色圓點 #F7F5F0 */
-            background-image: radial-gradient(#F7F5F0 1.5px, transparent 1.5px);
-            background-size: 14px 14px; 
-            opacity: 0.15; /* 稍微淡一點，避免過於搶眼 */
-            
-            /* Mask: 同樣左淡右濃 */
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#F7F5F0 1.5px, transparent 1.5px); background-size: 14px 14px; 
+            opacity: 0.15; -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
-            
-            pointer-events: none;
-            z-index: 0;
+            pointer-events: none; z-index: 0;
         }
 
         /* --- 循環卷軸動畫 (從空白文字檔拷貝移植) --- */
@@ -639,6 +611,77 @@
         .hero-text-hidden {
             opacity: 0;
             transform: translateY(10px);
+        }
+
+        /* ===== 新增：桌面下拉選單樣式 ===== */
+        .nav-dropdown-item {
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease-out;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .nav-item-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translate(-6px, -50%);
+            opacity: 0;
+            color: #C5A670;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item-line {
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: #C5A670;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-dropdown-text {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-dropdown-item:hover .nav-item-icon {
+            transform: translate(0, -50%);
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-item-line {
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-dropdown-text {
+            transform: translateX(2px);
+        }
+        
+        .group:hover .nav-dropdown-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 每個項目加入微小延遲，創造階梯式動畫 */
+        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
+        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
+        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
+        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
+        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
+
+        /* 手機版子選單動畫 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .submenu-item-fade {
+            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
         }
     </style>
 </head>
@@ -780,68 +823,63 @@
             </button>
         </div>
 
-        <div class="relative z-10 flex-1 flex flex-col justify-center items-end space-y-8 md:space-y-10 pb-20 pr-10 md:pr-24">
+        <div class="relative z-10 flex-1 w-full flex flex-row overflow-hidden">
+            <!-- 左側：子選單顯示區域 -->
+            <div id="mobile-submenu-area" class="flex-1 flex flex-col justify-center items-start pl-8 md:pl-20 transition-all duration-500 opacity-0 -translate-x-4 pointer-events-none">
+                <!-- 子選單內容 (預設隱藏) -->
+                <div id="submenu-about-list" class="flex flex-col gap-5 hidden w-full pr-4">
+                    <div class="text-[10px] tracking-[0.2em] text-[#C5A670] mb-2 uppercase font-sans opacity-70">About Us</div>
+                    <a href="關於華梵.html#awards-timeline" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.05s;">榮耀歷程</a>
+                    <a href="關於華梵.html#Government_Designated_Partner" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.1s;">政府指定</a>
+                    <a href="關於華梵.html#training" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.15s;">教育訓練</a>
+                    <a href="關於華梵.html#core-philosophy" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.2s;">核心理念</a>
+                    <a href="關於華梵.html#life-care" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.25s;">公益關懷</a>
+                </div>
+            </div>
 
-            <!-- 新增：首頁連結 -->
-            <a href="首頁_webp.html" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    首頁
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Home</span>
-            </a>
+            <!-- 右側：主選單列表 -->
+            <div class="flex-none flex flex-col justify-center items-end space-y-7 md:space-y-9 pb-20 pr-10 md:pr-24 min-w-[200px] z-20">
+                <a href="首頁_webp.html" class="menu-link group text-right cursor-pointer relative">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">首頁</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Home</span>
+                </a>
+                
+                <!-- 手機版：關於華梵 (觸發左側展開) -->
+                <button onclick="toggleMobileSubmenu()" class="menu-link group text-right cursor-pointer relative focus:outline-none w-full">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300 flex items-center justify-end gap-3">
+                        <!-- 箭頭移至左側 -->
+                        <i id="mobile-submenu-icon" class="fa-solid fa-chevron-right text-sm text-[#C5A670] opacity-60 transition-transform duration-300 group-hover:opacity-100"></i>
+                        關於華梵
+                    </span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">About Us</span>
+                </button>
 
-            <!-- 修正英文：關於華梵 (Home -> About Us) -->
-            <a href="關於華梵.html" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    關於華梵
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">About Us</span>
-            </a>
+                <a href="#services" class="menu-link group text-right cursor-pointer relative">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">服務方案</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Services</span>
+                </a>
 
-            <!-- 修正英文：服務方案 (Guideline -> Services) -->
-            <a href="#services" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    服務方案
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Services</span>
-            </a>
+                <a href="preneed.html" class="menu-link group text-right cursor-pointer relative">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">生前契約</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Pre-need</span>
+                </a>
 
-            <!-- 修正英文：生前契約 (Pricing -> Pre-need) -->
-            <a href="preneed.html" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    生前契約
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Pre-need</span>
-            </a>
+                <a href="流程拷貝9.html" class="menu-link group text-right cursor-pointer relative">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">禮儀百科</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Etiquette Guide</span>
+                </a>
 
-            <!-- 修正英文：禮儀百科 (Promise -> Etiquette Guide) -->
-            <a href="流程拷貝9.html" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    禮儀百科
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Etiquette Guide</span>
-            </a>
-
-            <!-- 修正英文：聯絡我們 (Q&A -> Contact) -->
-            <a href="#locations" class="menu-link group text-right cursor-pointer relative">
-                <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                    聯絡我們
-                    <span class="absolute -right-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </span>
-                <span class="block text-[10px] tracking-[0.3em] text-gray-400 mt-2 uppercase group-hover:text-accent/70 transition-colors">Contact</span>
-            </a>
+                <a href="#locations" class="menu-link group text-right cursor-pointer relative">
+                    <span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">聯絡我們</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Contact</span>
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Header -->
     <header class="fixed w-full top-0 z-50 bg-dots-pattern shadow-md transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center relative z-10">
-            
            <a href="首頁_webp.html" class="flex items-center gap-3 group">
                 <picture>
                     <source srcset="image_8286fa.webp" type="image/webp">
@@ -853,9 +891,44 @@
                 </div>
             </a>
 
-            <!-- 電腦版選單 -->
+            <!-- 電腦版選單：新增懸浮下拉選單 -->
             <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
-                <a href="關於華梵.html" class="hover:text-primary relative group transition">關於華梵<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
+                
+                <!-- 關於華梵 Dropdown -->
+                <div class="relative group h-full flex items-center">
+                    <a href="關於華梵.html" class="hover:text-primary relative py-4 flex items-center gap-1 group-hover:text-primary transition-colors font-medium">
+                        關於華梵 
+                        <span class="absolute bottom-2 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                    </a>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform origin-top -translate-y-1 group-hover:translate-y-0 pt-2">
+                        <div class="bg-[#FFFEFA] rounded-sm shadow-xl border border-[#E3EBE5] py-2 overflow-hidden">
+                            <div class="flex flex-col">
+                                <a href="關於華梵.html#awards-timeline" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                    <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">榮耀歷程</span>
+                                </a>
+                                <a href="關於華梵.html#Government_Designated_Partner" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                    <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">政府指定</span>
+                                </a>
+                                <a href="關於華梵.html#training" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                    <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">教育訓練</span>
+                                </a>
+                                <a href="關於華梵.html#core-philosophy" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                    <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">核心理念</span>
+                                </a>
+                                <a href="關於華梵.html#life-care" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                    <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">公益關懷</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <a href="#services" class="hover:text-primary relative group transition">服務方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
                 <a href="preneed.html" class="hover:text-primary relative group transition">生前契約<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
                 <a href="流程拷貝9.html" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>
@@ -867,23 +940,14 @@
                     <i class="fa-solid fa-calculator"></i> 預估費用
                 </a>
                 
-                <!-- 緊急協助按鈕 -->
                 <a href="tel:0800-800818" class="flex items-center gap-2 md:gap-3 px-3 md:px-6 py-2 bg-emergency text-white rounded-full shadow-red-glow hover:bg-[#8a3e3b] transition animate-attention">
                     <i class="fa-solid fa-phone-volume text-xl md:text-2xl"></i>
                     <div class="flex flex-col items-start leading-none">
-                        <span class="text-[9px] md:text-[10px] opacity-90 tracking-widest mb-0.5">
-                            <span class="md:hidden">24H 服務</span>
-                            <span class="hidden md:inline">24H 專人服務</span>
-                        </span>
-
-                        <span class="font-bold tracking-wide text-base md:text-lg font-sans">
-                            <span class="md:hidden">專線</span>
-                            <span class="hidden md:inline">緊急協助專線</span>
-                        </span>
+                        <span class="text-[9px] md:text-[10px] opacity-90 tracking-widest mb-0.5"><span class="md:hidden">24H 服務</span><span class="hidden md:inline">24H 專人服務</span></span>
+                        <span class="font-bold tracking-wide text-base md:text-lg font-sans"><span class="md:hidden">專線</span><span class="hidden md:inline">緊急協助專線</span></span>
                     </div>
                 </a>
 
-                <!-- 手機版漢堡選單按鈕 -->
                 <button id="menu-btn" class="lg:hidden text-primary p-2 focus:outline-none ml-1 relative z-[60] cursor-pointer">
                     <i class="fa-solid fa-bars text-3xl"></i>
                 </button>
@@ -1458,9 +1522,9 @@
                             <h2 id="religion-title" class="text-3xl font-serif font-bold text-white mb-4 drop-shadow-lg tracking-wide content-enter-active">中式傳統禮儀</h2>
                             <!-- 切換按鈕 -->
                             <div class="flex flex-wrap gap-2 relative z-20">
-                                <button onclick="toggleReligionType(0)" data-religion-group="mobile" class="religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-xs font-medium tracking-wider">中式傳統</button>
-                                <button onclick="toggleReligionType(1)" data-religion-group="mobile" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">西式/基督教</button>
-                                <button onclick="toggleReligionType(2)" data-religion-group="mobile" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">環保葬</button>
+                                <button onclick="toggleReligionType(0)" data-religion-group="mobile" class="religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-[13px] font-medium tracking-wider">中式傳統</button>
+                                <button onclick="toggleReligionType(1)" data-religion-group="mobile" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider">西式/基督教</button>
+                                <button onclick="toggleReligionType(2)" data-religion-group="mobile" class="religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider">環保葬</button>
                             </div>
                         </div>
                     </div>
@@ -1505,13 +1569,13 @@
 
                             <!-- 切換按鈕組 -->
                             <div class="flex flex-wrap gap-2 relative z-20">
-                                <button onclick="toggleServiceMobile(0)" class="service-btn-mobile active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-xs font-medium tracking-wider">
+                                <button onclick="toggleServiceMobile(0)" class="service-btn-mobile active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-[13px] font-medium tracking-wider">
                                     禮體淨身
                                 </button>
-                                <button onclick="toggleServiceMobile(1)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">
+                                <button onclick="toggleServiceMobile(1)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider">
                                     花藝佈置
                                 </button>
-                                <button onclick="toggleServiceMobile(2)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider">
+                                <button onclick="toggleServiceMobile(2)" class="service-btn-mobile px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider">
                                     私人會館
                                 </button>
                             </div>
@@ -1910,8 +1974,8 @@
                             <i class="fa-brands fa-google"></i>
                         </div>
                         <h4 class="font-serif font-bold text-primaryDark text-lg mb-2 group-hover:text-accent transition-colors">更多家屬回饋</h4>
-                        <p class="text-xs text-gray-500 mb-6 px-2 leading-relaxed">在 Google Maps 上<br>閱讀 500+ 則真實評論</p>
-                        <a href="#" class="px-6 py-2.5 bg-white border border-[#E5E7EB] text-primaryDark rounded-full text-xs font-bold shadow-sm group-hover:shadow-md group-hover:border-accent group-hover:text-accent transition-all whitespace-nowrap">
+                        <p class="text-xs text-gray-500 mb-6 px-2 leading-relaxed">在 Google Maps 上<br>閱讀 600+ 則真實評論</p>
+                        <a href="https://www.google.com/search?sca_esv=c952a6c0e2fbf0c6&rlz=1C5CHFA_enTW1138TW1139&sxsrf=ANbL-n6OpPw89GALXi1TaAoEogye-MQPsg:1771325322938&si=AL3DRZFIhG6pAqfNLal55wUTwygCG0fClF3UxiOmgw9Hq7nbWWqCUspP8My33UMT9qAvQchcyFT5sKsS7YNhvQ4gzq8myrmbVrXMenGpf34KDW-D9ZV35DHkX58HKbVh-qSYgZBnHA9DTSM8R9-l3B3Hlu8ZQSkXLA%3D%3D&q=%E8%8F%AF%E6%A2%B5%E7%A6%AE%E5%84%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8+%E8%A9%95%E8%AB%96&sa=X&ved=2ahUKEwjm4Z6FreCSAxUV0jQHHaxfHlcQ0bkNegQIKhAH&biw=500&bih=725&dpr=2" class="px-6 py-2.5 bg-white border border-[#E5E7EB] text-primaryDark rounded-full text-xs font-bold shadow-sm group-hover:shadow-md group-hover:border-accent group-hover:text-accent transition-all whitespace-nowrap">
                             前往 Google Maps <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
                         </a>
                     </div>
@@ -2590,6 +2654,30 @@ function adjustFontSize(change) {
         }
     }
 
+    function toggleMobileSubmenu() {
+        const submenuContainer = document.getElementById('mobile-submenu-area');
+        const submenuList = document.getElementById('submenu-about-list');
+        const icon = document.getElementById('mobile-submenu-icon');
+        
+        if (submenuContainer.classList.contains('opacity-0')) {
+            // Expand
+            submenuContainer.classList.remove('opacity-0', '-translate-x-4', 'pointer-events-none');
+            submenuContainer.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            submenuList.classList.remove('hidden');
+            // Rotate icon
+            if(icon) icon.classList.add('rotate-90');
+        } else {
+            // Collapse
+            submenuContainer.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            submenuContainer.classList.add('opacity-0', '-translate-x-4', 'pointer-events-none');
+            setTimeout(() => {
+                submenuList.classList.add('hidden');
+            }, 500); // Wait for transition
+            // Reset icon
+            if(icon) icon.classList.remove('rotate-90');
+        }
+    }
+
     function collapseMobileTrustTabs() {
         const isMobile = window.matchMedia('(max-width: 767px)').matches;
         if (!isMobile) return;
@@ -2792,7 +2880,12 @@ function adjustFontSize(change) {
 
         if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
         if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
-        menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        // 只有非按鈕的 menu-link (即 <a> 標籤) 點擊時才關閉選單
+        menuLinks.forEach(link => {
+            if (link.tagName !== 'BUTTON') {
+                link.addEventListener('click', toggleMenu);
+            }
+        });
 
         // Initial Setup
         setPricingBg('contract');
@@ -3060,16 +3153,16 @@ function adjustFontSize(change) {
                 if (idx === index) {
                     btn.classList.add('active');
                     if (group === 'mobile') {
-                        btn.className = "religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-xs font-medium tracking-wider";
+                        btn.className = "religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 transition duration-300 text-[13px] font-medium tracking-wider";
                     } else {
-                        btn.className = "religion-btn-tag active px-3 py-1 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white text-[10px] font-medium tracking-wider";
+                        btn.className = "religion-btn-tag active px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/10 text-white text-[13px] font-medium tracking-wider hover:bg-white/20 transition duration-300";
                     }
                 } else {
                     btn.classList.remove('active');
                     if (group === 'mobile') {
-                        btn.className = "religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-xs font-medium tracking-wider";
+                        btn.className = "religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-300 hover:bg-white/20 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider";
                     } else {
-                        btn.className = "religion-btn-tag px-3 py-1 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[10px] font-medium tracking-wider";
+                        btn.className = "religion-btn-tag px-4 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-black/30 text-gray-200 text-[13px] font-medium tracking-wider hover:bg-white/20 hover:text-white transition duration-300";
                     }
                 }
             });
@@ -3201,9 +3294,9 @@ function adjustFontSize(change) {
         const buttons = document.querySelectorAll('.service-btn-mobile');
         buttons.forEach((btn, idx) => {
             if (idx === index) {
-                btn.className = "service-btn-mobile active px-4 py-1.5 rounded-full border border-white/60 backdrop-blur-md bg-white/20 text-white shadow-gold transition duration-300 text-xs font-medium tracking-wider transform scale-105";
+                btn.className = "service-btn-mobile active px-4 py-1.5 rounded-full border border-white/60 backdrop-blur-md bg-white/20 text-white shadow-gold transition duration-300 text-[13px] font-medium tracking-wider hover:bg-white/20";
             } else {
-                btn.className = "service-btn-mobile px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-md bg-black/30 text-gray-400 hover:bg-white/10 hover:text-white transition duration-300 text-xs font-medium tracking-wider";
+                btn.className = "service-btn-mobile px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-md bg-black/30 text-gray-400 hover:bg-white/10 hover:text-white transition duration-300 text-[13px] font-medium tracking-wider";
             }
         });
 
@@ -3705,6 +3798,7 @@ function adjustFontSize(change) {
         }
 
         initMap();
+
 </script>
 </body>
 </html>

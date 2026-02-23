@@ -47,6 +47,23 @@
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
         h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
         
+        /* 所有有ID的元素上移100px，除了#life-care */
+        [id]:not(#life-care):not(#core-philosophy):not(#Government_Designated_Partner) {
+            scroll-margin-top: 80px;
+        }
+        
+        /* #core-philosophy 只上移40px */
+        #core-philosophy,#Government_Designated_Partner {
+            scroll-margin-top: 40px;
+        }
+        
+        /* #training 手機版只上移60px */
+        @media (max-width: 768px) {
+            #training {
+                scroll-margin-top: 60px !important;
+            }
+        }
+        
         /* 自然擺動動畫 */
         @keyframes sway {
             0%, 100% { transform: rotate(-2deg) translateX(-10px) scale(1.1); }
