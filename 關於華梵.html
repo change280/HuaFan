@@ -211,10 +211,10 @@
         }
         .modal-overlay.active {
             display: flex;
-            align-items: flex-start; /* 靠上對齊 */
-            justify-content: center;
-            padding-top: 3rem;
-            padding-bottom: 3rem;
+            align-items: center; /* 垂直置中 */
+            justify-content: center; /* 水平置中 */
+            padding-top: 0;
+            padding-bottom: 0;
         }
         
         /* 隱藏背景滾動條 */
@@ -485,8 +485,8 @@
     </header>
 
     <!-- Hero Section (Slider) -->
-    <section class="relative pt-12 z-20 overflow-hidden">
-        <div class="relative w-full h-[85vh] md:h-[80vh] overflow-hidden">
+    <section id="hero-section" class="relative pt-12 z-20 overflow-hidden">
+        <div class="relative w-full h-[80vh] md:h-[80vh] overflow-hidden">
                 <!-- Gradient overlay (優化：三段式，底部米色自然銜接，起點為透明) -->
                 <div class="pointer-events-none absolute inset-0 z-10" style="background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(70,91,64,0.22) 60%, #F8F6F1 100%);"></div>
             <!-- Slides -->
@@ -498,6 +498,54 @@
                         <p class="text-sm md:text-base tracking-[0.3em] mb-4">華梵故事</p>
                         <h2 class="text-4xl md:text-6xl font-serif font-bold">榮耀歷程 · 一路見證</h2>
                         <a href="#awards-timeline" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_20%] bg-cover opacity-0 transition-opacity duration-700 active" style="background-image: url('演習示範.jpg'); pointer-events: auto;">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">臺中市政府 防災演習</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">演習示範單位</h2>
+                        <a href="#official-recognition" onclick="switchGovTab('demo')" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_0%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('聯合奠祭.jpg'); pointer-events: none;">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">臺中市生命禮儀管理處 聯合公祭</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">政府指定特約</h2>
+                        <a href="#official-recognition" onclick="switchGovTab('partner')" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_25%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('教育訓練.png');">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">教育訓練</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">專業養成 · 堅守品質</h2>
+                        <a href="#training" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
                             <div class="relative">
                                 <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
                                 <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
@@ -523,21 +571,6 @@
                 </div>
             </div>
 
-            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_30%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('教育訓練.png');">
-                <div class="absolute inset-0 bg-black/45"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="text-center text-white px-6">
-                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">教育訓練</p>
-                        <h2 class="text-4xl md:text-6xl font-serif font-bold">專業養成 · 堅守品質</h2>
-                        <a href="#training" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
-                            <div class="relative">
-                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
-                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
 
             <!-- Controls -->
             <button class="hero-prev hidden md:block absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/80 hover:text-white text-3xl md:text-4xl z-30 cursor-pointer transition duration-300 hover:scale-110" aria-label="Previous slide">
@@ -552,6 +585,8 @@
                 <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 1"></button>
                 <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 2"></button>
                 <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 3"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 4"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 5"></button>
             </div>
         </div>
 
@@ -932,10 +967,9 @@
                                          onclick="openImageModal('103評鑑.webp', '民國 103 年 - 示範單位')">
                                         <div class="flex items-center justify-center gap-2 mb-4">
                                             <i class="fa-solid fa-building-columns text-accent text-xl"></i>
-                                            <h3 class="text-xl font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                            <h3 class="text-xl font-serif font-bold text-primary">獲邀擔任評鑑【示範單位】</h3>
                                         </div>
                                         <div class="space-y-2 text-sm text-gray-700">
-                                            <p class="text-center">獲邀擔任殯葬禮儀服務業評鑑 <span class="text-accent font-bold">【示範單位】</span></p>
                                             <p class="text-center">103年起承辦「臺中市殯葬生命禮儀管理處」勞務委管</p>
                                         </div>
                                     </div>
@@ -957,10 +991,9 @@
                                          onclick="openImageModal('103評鑑.webp', '民國 103 年 - 示範單位')">
                                         <div class="flex items-center justify-center gap-2 mb-3">
                                             <i class="fa-solid fa-building-columns text-accent"></i>
-                                            <h3 class="text-lg font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                            <h3 class="text-lg font-serif font-bold text-primary">獲邀擔任評鑑【示範單位】</h3>
                                         </div>
                                         <div class="space-y-2 text-xs text-gray-700">
-                                            <p class="text-center">獲邀擔任評鑑 <span class="text-accent font-bold">【示範單位】</span></p>
                                             <p class="text-center">承辦「中市生命禮儀管理處」勞務委管</p>
                                         </div>
                                     </div>
@@ -1732,6 +1765,12 @@
             </div>
             <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
                 <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
+            <div class="relative z-10 mt-6 flex justify-end">
+                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-users"></i>
+                    專業證照團隊
+                </a>
+            </div>
             </div>
         </div>
     </div>
@@ -1844,6 +1883,12 @@
                 </div>
                 <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
                     <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
+            <div class="relative z-10 mt-6 flex justify-end">
+                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-users"></i>
+                    專業證照團隊
+                </a>
+            </div>
                 </div>
             </div>
 
@@ -2316,6 +2361,48 @@ function adjustFontSize(change) {
                     startSlider();
                 });
             });
+
+            // 手機左右滑動切換 hero
+            const heroSection = document.getElementById('hero-section');
+            if (heroSection) {
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let touchEndX = 0;
+                let touchEndY = 0;
+                let touchMoved = false;
+
+                heroSection.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 1) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        touchEndX = touchStartX;
+                        touchEndY = touchStartY;
+                        touchMoved = false;
+                    }
+                }, { passive: true });
+
+                heroSection.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1) {
+                        touchEndX = e.touches[0].clientX;
+                        touchEndY = e.touches[0].clientY;
+                        touchMoved = true;
+                    }
+                }, { passive: true });
+
+                heroSection.addEventListener('touchend', () => {
+                    if (!touchMoved) return;
+                    const dx = touchEndX - touchStartX;
+                    const dy = touchEndY - touchStartY;
+                    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                        if (dx < 0) {
+                            nextSlide();
+                        } else {
+                            prevSlide();
+                        }
+                        startSlider();
+                    }
+                });
+            }
         }
 
         // 公益區塊圖片輪播邏輯（溶接淡入淡出效果）
@@ -2378,6 +2465,48 @@ function adjustFontSize(change) {
                 resetCharityTimer();
             });
         });
+
+        // 手機左右滑動切換公益圖片
+        if (charitySlidesWrapper) {
+            let charityTouchStartX = 0;
+            let charityTouchStartY = 0;
+            let charityTouchEndX = 0;
+            let charityTouchEndY = 0;
+            let charityTouchMoved = false;
+
+            charitySlidesWrapper.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    charityTouchStartX = e.touches[0].clientX;
+                    charityTouchStartY = e.touches[0].clientY;
+                    charityTouchEndX = charityTouchStartX;
+                    charityTouchEndY = charityTouchStartY;
+                    charityTouchMoved = false;
+                }
+            }, { passive: true });
+
+            charitySlidesWrapper.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) {
+                    charityTouchEndX = e.touches[0].clientX;
+                    charityTouchEndY = e.touches[0].clientY;
+                    charityTouchMoved = true;
+                }
+            }, { passive: true });
+
+            charitySlidesWrapper.addEventListener('touchend', () => {
+                if (!charityTouchMoved) return;
+                const dx = charityTouchEndX - charityTouchStartX;
+                const dy = charityTouchEndY - charityTouchStartY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) {
+                        nextCharitySlide();
+                    } else {
+                        const prevIdx = (charityCurrent - 1 + charitySlides.length) % charitySlides.length;
+                        setCharitySlide(prevIdx);
+                    }
+                    resetCharityTimer();
+                }
+            });
+        }
 
         function resetCharityTimer() {
             clearInterval(charityInterval);

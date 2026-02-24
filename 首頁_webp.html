@@ -830,7 +830,7 @@
                 <div id="submenu-about-list" class="flex flex-col gap-5 hidden w-full pr-4">
                     <div class="text-[10px] tracking-[0.2em] text-[#C5A670] mb-2 uppercase font-sans opacity-70">About Us</div>
                     <a href="關於華梵.html#awards-timeline" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.05s;">榮耀歷程</a>
-                    <a href="關於華梵.html#Government_Designated_Partner" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.1s;">政府指定</a>
+                    <a href="關於華梵.html#official-recognition" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.1s;">政府合作</a>
                     <a href="關於華梵.html#training" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.15s;">教育訓練</a>
                     <a href="關於華梵.html#core-philosophy" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.2s;">核心理念</a>
                     <a href="關於華梵.html#life-care" onclick="toggleMenu()" class="text-xl font-serif font-medium text-primary hover:text-accent transition-colors block submenu-item-fade" style="animation-delay: 0.25s;">公益關懷</a>
@@ -908,9 +908,9 @@
                                     <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
                                     <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">榮耀歷程</span>
                                 </a>
-                                <a href="關於華梵.html#Government_Designated_Partner" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
+                                <a href="關於華梵.html#official-recognition" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
                                     <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
-                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">政府指定</span>
+                                    <span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">政府合作</span>
                                 </a>
                                 <a href="關於華梵.html#training" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">
                                     <span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>
@@ -2711,6 +2711,17 @@ function adjustFontSize(change) {
             activeBtn.classList.remove('active');
         }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash;
+        if (hash === '#team' || hash === '#content-team') {
+            const trustTabs = document.getElementById('trust-tabs');
+            if (trustTabs) {
+                trustTabs.scrollIntoView({ behavior: 'smooth' });
+            }
+            setTimeout(() => toggleMobileTrustTab('team'), 50);
+        }
+    });
 
     function toggleMobileSubmenu() {
         const submenuContainer = document.getElementById('mobile-submenu-area');
