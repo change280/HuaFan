@@ -1119,7 +1119,7 @@
                 
                 <!-- 檔案夾式 Tab 開關 (寬度減半、靠右留空、無縫重疊設計) -->
                 <!-- 移除 mb，讓按鈕完全貼齊卡片，由按鈕本身的 translate-y 處理覆蓋 -->
-                <div class="flex w-full relative z-30 pl-6 md:pr-12 lg:pr-16 justify-start md:justify-end">
+                <div class="flex w-full relative z-30 pl-6 md:pr-12 lg:pr-40 justify-start md:justify-end">
                     <div class="flex w-[90%] md:w-[60%] lg:w-[45%] max-w-[420px] items-end">
                         
                         <!-- Tab 1: 演習示範 -->
@@ -1208,6 +1208,38 @@
                                 <div class="backdrop-blur-sm md:hidden absolute -inset-x-8 -bottom-12 -top-16 bg-surface/90  z-0 rounded-b-3xl">
                                     <div class="absolute -top-24 left-0 w-full h-24 bg-gradient-to-t from-surface/90 to-transparent pointer-events-none"></div>
                                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+                                </div>
+
+                                <!-- 📸 視覺衝擊：實紀照片入口 (電影級寬幅設計) -->
+                                <div class="relative w-full h-40 md:h-56 rounded-[2rem] overflow-hidden group cursor-pointer shadow-soft hover:shadow-gold-lg transition-all duration-700 mb-8 md:mb-10 relative z-10 bg-primaryDark"
+                                     onclick="openImageModal('演習示範.jpg', '演習示範實紀')">
+                                    
+                                    <!-- 視差背景層 (替換為您的真實照片，這裡暫用高質感預設圖) -->
+                                    <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-110 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-70 group-hover:opacity-100"
+                                         style="background-image: url('演習示範.jpg');"></div>
+
+                                    <!-- 漸層氛圍遮罩 -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-primaryDark/90 via-primaryDark/50 to-transparent transition-colors duration-700"></div>
+
+                                    <!-- 質感框線 -->
+                                    <div class="absolute inset-0 border border-white/20 rounded-[2rem] group-hover:border-accent/60 transition-colors duration-700 z-10 pointer-events-none"></div>
+
+                                    <!-- 內容區 -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-6 md:p-12 z-20">
+                                        <div class="transform group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <div class="flex items-center gap-3 mb-2 md:mb-3">
+                                                <span class="w-6 md:w-8 h-[1px] bg-accent"></span>
+                                                <span class="text-accent text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">Visual Gallery</span>
+                                            </div>
+                                            <h4 class="text-2xl md:text-4xl font-serif font-bold text-white tracking-widest drop-shadow-md">
+                                                觀看演習實紀
+                                            </h4>
+                                        </div>
+                                        <!-- 探索按鈕 -->
+                                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-accent group-hover:border-accent group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(197,166,112,0.6)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <i class="fa-solid fa-arrow-right -rotate-45 text-lg md:text-xl group-hover:rotate-0 transition-transform duration-500"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
@@ -1331,6 +1363,38 @@
                                 <!-- 手機版滾動實體遮罩 (深色) -->
                                 <div class="backdrop-blur-sm md:hidden absolute -inset-x-8 -bottom-12 -top-16 bg-primaryDark/90 z-0 rounded-b-3xl">
                                     <div class="absolute -top-24 left-0 w-full h-24 bg-gradient-to-t from-primaryDark/90 to-transparent pointer-events-none"></div>
+                                </div>
+
+                                <!-- 📸 視覺衝擊：實紀照片入口 (電影級寬幅設計 - 暗色主題) -->
+                                <div class="relative w-full h-40 md:h-56 rounded-[2rem] overflow-hidden group cursor-pointer shadow-2xl hover:shadow-gold-lg transition-all duration-700 mb-8 md:mb-10 relative z-10 bg-black"
+                                     onclick="openImageModal('聯合奠祭.jpg', '聯合公祭實紀')">
+                                    
+                                    <!-- 視差背景層 -->
+                                    <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-110 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-60 group-hover:opacity-90"
+                                         style="background-image: url('聯合奠祭.jpg');"></div>
+
+                                    <!-- 漸層氛圍遮罩 (暗色版更深邃) -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent transition-colors duration-700"></div>
+
+                                    <!-- 質感框線 -->
+                                    <div class="absolute inset-0 border border-white/10 rounded-[2rem] group-hover:border-accent/50 transition-colors duration-700 z-10 pointer-events-none"></div>
+
+                                    <!-- 內容區 -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-6 md:p-12 z-20">
+                                        <div class="transform group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <div class="flex items-center gap-3 mb-2 md:mb-3">
+                                                <span class="w-6 md:w-8 h-[1px] bg-accent"></span>
+                                                <span class="text-accent text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">Visual Gallery</span>
+                                            </div>
+                                            <h4 class="text-2xl md:text-4xl font-serif font-bold text-white tracking-widest drop-shadow-md">
+                                                觀看公祭實紀
+                                            </h4>
+                                        </div>
+                                        <!-- 探索按鈕 -->
+                                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-accent group-hover:border-accent group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(197,166,112,0.6)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <i class="fa-solid fa-arrow-right -rotate-45 text-lg md:text-xl group-hover:rotate-0 transition-transform duration-500"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
