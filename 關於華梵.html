@@ -48,7 +48,7 @@
         h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
         
         /* 所有有ID的元素上移100px，除了#life-care */
-        [id]:not(#life-care):not(#core-philosophy):not(#Government_Designated_Partner) {
+        [id]:not(#core-philosophy):not(#Government_Designated_Partner) {
             scroll-margin-top: 80px;
         }
         
@@ -1897,7 +1897,7 @@
 
 
     <!-- 核心理念區塊 (Redesigned with Review Section Style) -->
-    <section id="core-philosophy" class="z-10 pt-20 pb-24 relative overflow-hidden bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 to-transparent">
+    <section id="core-philosophy" class="z-10 pt-20 pb-16 relative overflow-hidden bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 to-transparent">
         <!-- Background Elements -->
         <div class="absolute right-[-10%] top-[-20%] w-[500px] h-[500px] bg-accent/5 rounded-full blur-[80px] pointer-events-none -z-10"></div>
         <!-- 花紋SVG裝飾 -->
@@ -2011,104 +2011,110 @@
     </section>
 
 
-    <!-- 生命關懷與公益區塊 (更新後結構：保留單一容器，右側改為活潑相框) -->
-    <section id="life-care" class="pt-20 pb-32 md:pb-48 relative z-20 overflow-hidden bg-gradient-to-b from-transparent to-[#F0F5F2] via-[#F0F5F2] via-80%">
+    <!-- 生命關懷與公益區塊 (單一容器，右側活潑相框) -->
+    <section id="life-care" class="pt-18 md:pt-24 pb-32 md:pb-48 relative z-20 overflow-hidden bg-gradient-to-b from-transparent to-[#F0F5F2] via-[#F0F5F2] via-80%">
         <!-- 背景裝飾字 -->
-        <div class="absolute top-16 left-1/2 -translate-x-1/2 pointer-events-none select-none overflow-hidden w-full flex justify-center">
-            <span class="hidden md:block font-serif font-bold text-[13rem] md:text-[20rem] text-primary/5 tracking-widest leading-none whitespace-nowrap">CARE</span>
+        <div class="absolute -top-6 md:-top-14 left-0 pointer-events-none select-none overflow-hidden w-full flex justify-start">
+            <span class="font-serif font-bold text-[10rem] md:text-[20rem] text-primary/5 tracking-widest leading-none whitespace-nowrap">CARE</span>
         </div>
+    
+        <div class="pt-12 mx-auto px-6 relative z-10">
 
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <div class="flex items-center justify-center gap-4 mb-4">
-                    <span class="h-[1px] w-12 bg-accent"></span>
-                    <span class="text-accent text-sm font-bold tracking-[0.3em]">CHARITY & CARE</span>
-                    <span class="h-[1px] w-12 bg-accent"></span>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">生命關懷與公益</h2>
-                <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
-                    長期關懷弱勢、參與社會公益，用行動讓社會多一點溫暖
-                </p>
-            </div>
-
-            <!-- 單一容器結構 -->
-            <div class="max-w-7xl mx-auto bg-surface rounded-[3rem] p-4 shadow-soft overflow-hidden flex flex-col lg:flex-row border border-white/70 gap-0 animate-fade-in-up">
+            <!-- 單一容器結構 (改為上下結構，標題獨立於上方) -->
+            <div class="max-w-[74rem] mx-auto bg-gradient-to-b from-[#FAF6EE]/70 via-white/80 to-white rounded-[2.5rem] md:rounded-[3rem] p-2 md:p-4 shadow-[0_15px_40px_-10px_rgba(70,91,64,0.08)] overflow-hidden flex flex-col border border-[#EBE4D5] animate-fade-in-up">
                 
-                <!-- 左側：文字內容 -->
-                <div class="p-6 lg:p-10 lg:w-5/12 flex flex-col justify-between z-10">
-                    <div>
+                <!-- ★ 頂部全寬置中標題區 -->
+                <div class="w-full pt-4 md:pt-4 pb-8 px-6 md:px-12 flex flex-col items-center text-center z-10 relative">
+                    <!-- 金色標線與英文 -->
+                    <div class="flex items-center justify-center gap-3 mb-5 mt-2">
+                        <span class="h-[1px] w-12 md:w-16 bg-[#C5A670]"></span>
+                        <span class="text-[#C5A670] text-[0.85rem] md:text-base font-bold tracking-[0.2em] uppercase">Charity & Care</span>
+                        <span class="h-[1px] w-12 md:w-16 bg-[#C5A670]"></span>
+                    </div>
+                    
+                    <!-- 主標題 -->
+                    <h2 class="text-[2.5rem] md:text-5xl font-serif font-bold text-primaryDark mb-4">生命關懷與公益</h2>
+                    
+                    <!-- 副標題 -->
+                    <p class="text-gray-600 text-lg md:text-[1.1rem] leading-relaxed font-medium max-w-2xl">
+                        長期關懷弱勢、參與社會公益<br class=" md:hidden"/>用行動讓社會多一點溫暖
+                    </p>
+                </div>
+
+                <!-- 下半部：左文右圖佈局 -->
+                <div class="flex flex-col lg:flex-row w-full gap-0 pb-4 md:pb-8">
+                    
+                    <!-- 左側：細節文字內容 -->
+                    <div class="p-6 md:p-8 lg:p-12 lg:w-5/12 flex flex-col justify-center z-10 relative pt-6 lg:pt-6">
                         <!-- 關懷理念 -->
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 text-white">
-                                <i class="fa-solid fa-heart text-accent text-2xl"></i>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#EFEBE1] flex items-center justify-center flex-shrink-0 text-[#A68A5E]">
+                                <i class="fa-solid fa-heart text-xl"></i>
                             </div>
-                            <h3 class="text-2xl font-serif font-bold text-primary relative">
-                                <span class="bg-gray-200/50 absolute -left-1 bottom-1 w-full h-3 -z-10"></span>
-                                關懷理念
-                            </h3>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark">關懷理念</h3>
                         </div>
-                        <p class="text-base md:text-lg text-gray-600 leading-relaxed mb-8 pl-4 border-l-2 border-accent/30">
+                        <p class="text-base md:text-[1.05rem] text-gray-600 leading-relaxed pl-4 border-l-[3px] border-[#E8E2D2] mb-10">
                             華梵禮儀公司長期關懷社會弱勢族群、參與社會公益。不論是到安養中心擔任義工、捐贈輪椅物資，以及對於無力殮葬的弱勢家庭，我們都給予喪葬費用的支援與協助。
                         </p>
                         
                         <!-- 邀請您一同傳愛 -->
-                        <div class="flex items-center gap-4 mt-12 mb-6">
-                          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mt-1">
-                                <i class="fa-solid fa-hand-holding-heart text-primary text-2xl"></i>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#E7EDE7] flex items-center justify-center flex-shrink-0 text-[#465B40]">
+                                <i class="fa-solid fa-hand-holding-heart text-xl"></i>
                             </div>
-                            <h3 class="text-2xl font-serif font-bold text-primary">邀請您一同傳愛</h3>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark">邀請您一同傳愛</h3>
                         </div>
-                        <div class="border-l-2 border-accent/30 pl-4 flex flex-col gap-6 mb-8">
-                          <div class="text-gray-700 text-base md:text-lg leading-relaxed">
-                            如果您願意捐助，我們會將這些愛心專款專用，協助弱勢族群購買棺木、骨灰罐及辦理喪葬事宜。
-                          </div>
-                          <div class="text-accent font-bold text-sm md:text-base">
-                            # 每一份愛心，都是溫暖社會的力量
-                          </div>
-                          <a href="tel:0800-800818" class="mt-2 w-full max-w-xs">
-                            <button class="w-full flex items-center justify-center gap-3 bg-[#5B6D5B] text-white font-bold text-lg md:text-xl rounded-full py-4 px-8 hover:bg-[#6d7e6d] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent">
-                              <i class="fa-solid fa-phone text-accent text-2xl"></i>
-                              <span class="tracking-wide">24H 公益服務專線</span>
-                            </button>
-                          </a>
+                        <div class="border-l-[3px] border-[#E7EDE7] pl-4 flex flex-col gap-5">
+                            <p class="text-gray-600 text-base md:text-[1.05rem] leading-relaxed">
+                                如果您願意捐助，我們會將這些愛心專款專用，協助弱勢族群購買棺木、骨灰罐及辦理喪葬事宜。
+                            </p>
+                            <p class="text-[#B3935B] font-bold text-sm md:text-base mb-1">
+                                # 每一份愛心，都是溫暖社會的力量
+                            </p>
+                            <a href="tel:0800-800818" class="inline-block mt-2">
+                                <button class="flex items-center justify-center gap-3 bg-[#5B6D5B] text-white font-bold text-[1.1rem] rounded-full py-3.5 px-8 hover:bg-[#465B40] transition-all duration-300 shadow-md hover:shadow-lg w-fit">
+                                    <i class="fa-solid fa-phone text-[#D1B98D] animate-attention"></i>
+                                    <span class="tracking-wide">24H 公益服務專線</span>
+                                </button>
+                            </a>
                         </div>
                     </div>
-                </div>
 
-                <!-- 右側：圖片區 (恢復活潑圓角線框與嵌入式標題) -->
-                <div class="lg:w-7/12 relative p-4 lg:p-8 flex items-center justify-center">
-                    <!-- 圖片外層容器 -->
-                    <div class="relative w-full aspect-[4/3] max-w-2xl mx-auto mb-10 md:mb-0">
-                        <!-- 外框裝飾 (Lively Border) -->
-                        <div class="absolute inset-0 border-[1.5px] border-accent/40 rounded-organic transform rotate-3 scale-[1.03] pointer-events-none"></div>
-                        
-                        <!-- 圖片本體容器 -->
-                        <div class="relative w-full h-full rounded-organic overflow-hidden shadow-gold-lg group bg-white">
-                            <div id="charity-slides-wrapper" class="absolute inset-0 w-full h-full pb-16 md:pb-0">
-                                <!-- 多圖疊加，溶接淡入淡出 -->
-                                <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide06.jpg" alt="志工參與社會服務" />
-                                <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide10.jpg" alt="捐助輪椅物資" />
-                                <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide09.jpg" alt="社區關懷活動" />
-                                <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide11.jpg" alt="公益捐血活動" />
-                                <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide01.jpg" alt="長者陪伴計畫" />
-                            </div>
-                            <!-- 底部漸層與文字 (Overlay) -->
-                            <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6 z-10">
-                                <!-- 底部 bg-warm 柔和漸層 -->
-                                <div class="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none z-0" style="background: linear-gradient(0deg, #F7F5F0 0%, rgba(247,245,240,0.92) 20%, rgba(247,245,240,0.7) 55%, rgba(247,245,240,0.0) 100%);"></div>
-                                <div class="transform translate-y-1 group-hover:translate-y-0 transition duration-500">
-                                    <div class="flex items-end justify-between relative z-10">
-                                        <div class="pb-2 pl-1 md:pb-4 md:pl-2">
-                                            <span class="text-accent text-[0.92rem] md:text-base font-semibold tracking-[0.18em] uppercase mb-0.5 block drop-shadow-sm" style="letter-spacing:0.18em;">ACTIVITY</span>
-                                            <h4 id="charity-slide-title" class="text-white text-lg md:text-2xl font-serif font-bold tracking-wide leading-snug md:leading-normal drop-shadow-sm md:drop-shadow">志工參與社會服務</h4>
-                                        </div>
-                                        <!-- 控制點 (Inside) -->
-                                        <div class="flex gap-2 mb-1">
-                                            <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="0"></button>
-                                            <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="1"></button>
-                                            <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="2"></button>
-                                            <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="3"></button>
-                                            <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="4"></button>
+                    <!-- 右側：圖片區 -->
+                    <div class="lg:w-7/12 relative p-4 lg:p-8 flex flex-col justify-center lg:pt-6">
+                        <!-- 圖片外層容器 -->
+                        <div class="relative w-full aspect-[4/3] max-w-2xl mx-auto lg:ml-auto lg:mr-0 mb-6 md:mb-0">
+                            <!-- 外框裝飾 (Lively Border) -->
+                            <div class="absolute inset-0 border-[1.5px] border-accent/40 rounded-organic transform rotate-3 scale-[1.03] pointer-events-none"></div>
+                            
+                            <!-- 圖片本體容器 -->
+                            <div class="relative w-full h-full rounded-organic overflow-hidden shadow-gold-lg group bg-white">
+                                <div id="charity-slides-wrapper" class="absolute inset-0 w-full h-full pb-16 md:pb-0">
+                                    <!-- 多圖疊加，溶接淡入淡出 -->
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide06.jpg" alt="志工參與社會服務" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide10.jpg" alt="捐助輪椅物資" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide09.jpg" alt="社區關懷活動" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide11.jpg" alt="公益捐血活動" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide01.jpg" alt="長者陪伴計畫" />
+                                </div>
+                                <!-- 底部漸層與文字 (Overlay) -->
+                                <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6 z-10">
+                                    <!-- 底部 bg-warm 柔和漸層 -->
+                                    <div class="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none z-0" style="background: linear-gradient(0deg, #F7F5F0 0%, rgba(247,245,240,0.92) 20%, rgba(247,245,240,0.7) 55%, rgba(247,245,240,0.0) 100%);"></div>
+                                    <div class="transform translate-y-1 group-hover:translate-y-0 transition duration-500">
+                                        <div class="flex items-end justify-between relative z-10">
+                                            <div class="pb-2 pl-1 md:pb-4 md:pl-2">
+                                                <span class="text-accent text-[0.92rem] md:text-base font-semibold tracking-[0.18em] uppercase mb-0.5 block drop-shadow-sm" style="letter-spacing:0.18em;">ACTIVITY</span>
+                                                <h4 id="charity-slide-title" class="text-white text-lg md:text-2xl font-serif font-bold tracking-wide leading-snug md:leading-normal drop-shadow-sm md:drop-shadow">志工參與社會服務</h4>
+                                            </div>
+                                            <!-- 控制點 (Inside) -->
+                                            <div class="flex gap-2 mb-1">
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="0"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="1"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="2"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="3"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="4"></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
