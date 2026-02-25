@@ -56,6 +56,10 @@
         }
         h1, h2, h3, h4, h5, .serif-font { font-family: 'Noto Serif TC', serif; }
 
+        [id] {
+            scroll-margin-top: 80px;
+        }
+
         /* 有機形狀 (Blobs) */
         .blob-shape-1 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
         
@@ -1080,7 +1084,7 @@
 </section>
 
     <!-- Process Timeline Section -->
-    <section class="py-16 pb-0 relative z-20 bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 via-5% to-transparent">
+    <section id="timeline" class="py-16 pb-0 relative z-20 bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 via-5% to-transparent">
   <!-- max-w-5xl -> max-w-7xl，並加大內距 -->
   <div class="container mx-auto px-4 md:px-8 max-w-7xl relative">
 
@@ -2045,6 +2049,69 @@
 <script>
 
     // 字體大小調整函數
+
+// 🆕 自動展開指定步驟（如網址有 ?card=7）
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    let cardIndex = params.get('card');
+    if (cardIndex) {
+        cardIndex = Number(cardIndex);
+        
+        if (window.innerWidth < 768) {
+            // 手機：自動捲動到卡片，展開details，然後彈出資訊卡
+            setTimeout(function() {
+                const step = document.querySelector('.timeline-step[data-step="' + cardIndex + '"]');
+                if (step) {
+                    // 計算精確的捲動位置（卡片距離視窗頂部 400px，往下移更多）
+                    const rect = step.getBoundingClientRect();
+                    const scrollPosition = window.scrollY + rect.top - 110;
+                    window.scrollTo({top: scrollPosition, behavior: 'smooth'});
+                    
+                    // 展開該卡片的 details
+                    const details = step.querySelector('details');
+                    if (details) {
+                        details.open = true;
+                    }
+                }
+                
+                // 再彈出資訊卡
+                setTimeout(function() {
+                    const modal = document.getElementById('mobile-info-modal');
+                    const modalContent = document.getElementById('modal-content');
+                    if (typeof renderModalContent === 'function') {
+                        modalContent.innerHTML = renderModalContent(cardIndex);
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }, 500);
+            }, 300);
+        } else {
+            // 桌面：自動捲動、展開details、並高亮卡片
+            setTimeout(function() {
+                const step = document.querySelector('.timeline-step[data-step="' + cardIndex + '"]');
+                if (step) {
+                    // 計算精確的捲動位置（卡片距離視窗頂部 80px）
+                    const rect = step.getBoundingClientRect();
+                    const scrollPosition = window.scrollY + rect.top - 85;
+                    window.scrollTo({top: scrollPosition, behavior: 'smooth'});
+                    
+                    // 展開該卡片的 details
+                    const details = step.querySelector('details');
+                    if (details) {
+                        details.open = true;
+                    }
+                    // 高亮該卡片
+                    step.classList.add('ring-4', 'ring-accent', 'ring-offset-2');
+                    // 2秒後移除高亮
+                    setTimeout(() => {
+                        step.classList.remove('ring-4', 'ring-accent', 'ring-offset-2');
+                    }, 2000);
+                }
+            }, 600);
+        }
+    }
+});
 function adjustFontSize(change) {
     // 取得根元素 (html)
     const html = document.documentElement;
