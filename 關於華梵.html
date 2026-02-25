@@ -2466,15 +2466,16 @@ function adjustFontSize(change) {
             });
         });
 
-        // 手機左右滑動切換公益圖片
-        if (charitySlidesWrapper) {
+        // 手機左右滑動切換公益圖片，事件綁定到 section#life-care
+        const lifeCareSection = document.getElementById('life-care');
+        if (lifeCareSection) {
             let charityTouchStartX = 0;
             let charityTouchStartY = 0;
             let charityTouchEndX = 0;
             let charityTouchEndY = 0;
             let charityTouchMoved = false;
 
-            charitySlidesWrapper.addEventListener('touchstart', (e) => {
+            lifeCareSection.addEventListener('touchstart', (e) => {
                 if (e.touches.length === 1) {
                     charityTouchStartX = e.touches[0].clientX;
                     charityTouchStartY = e.touches[0].clientY;
@@ -2484,7 +2485,7 @@ function adjustFontSize(change) {
                 }
             }, { passive: true });
 
-            charitySlidesWrapper.addEventListener('touchmove', (e) => {
+            lifeCareSection.addEventListener('touchmove', (e) => {
                 if (e.touches.length === 1) {
                     charityTouchEndX = e.touches[0].clientX;
                     charityTouchEndY = e.touches[0].clientY;
@@ -2492,7 +2493,7 @@ function adjustFontSize(change) {
                 }
             }, { passive: true });
 
-            charitySlidesWrapper.addEventListener('touchend', () => {
+            lifeCareSection.addEventListener('touchend', () => {
                 if (!charityTouchMoved) return;
                 const dx = charityTouchEndX - charityTouchStartX;
                 const dy = charityTouchEndY - charityTouchStartY;
