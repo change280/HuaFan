@@ -687,6 +687,448 @@
             animation: fadeInUp 0.4s ease-out forwards;
             opacity: 0;
         }
+
+                /* ======================================================================
+                     華梵禮儀｜方案價格展示 v2
+                     視覺重點：幸福方案（熱門推薦）＋尊崇方案（銷售冠軍）
+                     其餘方案僅作價格帶與選擇範圍提示，降低對比、置於景深後方。
+                     ====================================================================== */
+                .hf-price-v2 {
+                    --hf-green: #294330;
+                    --hf-green-soft: #425f49;
+                    --hf-copy: #4e586b;
+                    --hf-gold: #c79548;
+                    --hf-gold-light: #efc56f;
+                    --hf-copper: #b97936;
+                    --hf-paper: #fffefb;
+                    --hf-line: rgba(183, 126, 65, .25);
+                    --hf-calc-scale: .92;
+                    position: relative;
+                    z-index: 20;
+                    isolation: isolate;
+                    overflow: hidden;
+                    min-height: 780px;
+                    padding: clamp(5.25rem, 7vw, 7.5rem) 0 clamp(4.5rem, 6vw, 6.5rem);
+                    background: transparent;
+                }
+                .hf-price-v2::before,
+                .hf-price-v2::after {
+                    content: "";
+                    position: absolute;
+                    z-index: -2;
+                    pointer-events: none;
+                    border: 1px solid rgba(197, 166, 112, .09);
+                    border-radius: 50%;
+                }
+                .hf-price-v2::before {
+                    width: 54rem;
+                    height: 54rem;
+                    left: 17%;
+                    top: -35rem;
+                }
+                .hf-price-v2::after {
+                    width: 46rem;
+                    height: 46rem;
+                    right: -18rem;
+                    bottom: -31rem;
+                }
+                .hf-price-v2__light {
+                    position: absolute;
+                    inset: 0;
+                    z-index: -1;
+                    pointer-events: none;
+                    background:
+                        linear-gradient(113deg, transparent 0 34%, rgba(255,255,255,.68) 42%, transparent 50%),
+                        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.72), transparent 55%);
+                    opacity: .72;
+                }
+                .hf-price-v2__inner {
+                    width: min(94%, 1740px);
+                    min-height: 630px;
+                    margin: 0 auto;
+                    display: grid;
+                    grid-template-columns: minmax(430px, 34%) minmax(0, 66%);
+                    gap: clamp(2.5rem, 4vw, 5rem);
+                    align-items: center;
+                    transform: scale(var(--hf-calc-scale));
+                    transform-origin: top center;
+                }
+
+                /* 左側文案 ----------------------------------------------------------- */
+                .hf-price-v2__copy {
+                    position: relative;
+                    z-index: 30;
+                    max-width: 34rem;
+                    padding-left: clamp(.5rem, 1.8vw, 2rem);
+                }
+                .hf-price-v2__eyebrow {
+                    display: block;
+                    margin-bottom: 1.8rem;
+                    color: #a97631;
+                    font-size: .82rem;
+                    font-weight: 900;
+                    letter-spacing: .34em;
+                    text-transform: uppercase;
+                }
+                .hf-price-v2__title {
+                    margin: 0;
+                    color: var(--hf-green);
+                    font-family: "Noto Serif TC", serif;
+                    font-size: clamp(3.7rem, 5.15vw, 5.65rem);
+                    font-weight: 700;
+                    line-height: 1.05;
+                    letter-spacing: -.045em;
+                }
+                .hf-price-v2__lead {
+                    max-width: 31rem;
+                    margin: 2rem 0 2.2rem;
+                    padding-left: 1.35rem;
+                    border-left: 2px solid rgba(183, 126, 65, .72);
+                    color: var(--hf-copy);
+                    font-size: clamp(1rem, 1.23vw, 1.2rem);
+                    font-weight: 500;
+                    line-height: 1.95;
+                }
+                .hf-price-v2__benefits {
+                    display: grid;
+                    gap: 1.15rem;
+                    max-width: 31rem;
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+                .hf-price-v2__benefits li {
+                    display: grid;
+                    grid-template-columns: 2.25rem minmax(0, 1fr);
+                    align-items: center;
+                    gap: .8rem;
+                    color: #293442;
+                    font-size: clamp(.96rem, 1.08vw, 1.08rem);
+                    font-weight: 800;
+                    line-height: 1.5;
+                }
+                .hf-price-v2__benefits span:first-child {
+                    width: 2.25rem;
+                    height: 2.25rem;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 999px;
+                    color: var(--hf-green);
+                    background: rgba(41, 67, 48, .07);
+                    box-shadow: inset 0 0 0 1px rgba(41, 67, 48, .04);
+                }
+                .hf-price-v2__more {
+                    margin: 1.55rem 0 0;
+                    color: #7b7f83;
+                    font-size: .82rem;
+                    line-height: 1.75;
+                }
+                .hf-price-v2__more strong { color: var(--hf-green-soft); }
+
+                /* 右側卡片舞台 ------------------------------------------------------- */
+                .hf-price-v2__stage {
+                    position: relative;
+                    z-index: 5;
+                    min-width: 0;
+                    min-height: 620px;
+                    align-self: stretch;
+                }
+                .hf-price-card {
+                    position: absolute;
+                    bottom: 2.15rem;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    overflow: visible;
+                    border: 1px solid rgba(183, 126, 65, .27);
+                    border-radius: 1.15rem;
+                    background:
+                        linear-gradient(150deg, rgba(255,255,255,.98), rgba(255,254,250,.92)),
+                        var(--hf-paper);
+                    box-shadow:
+                        0 24px 66px -44px rgba(75, 60, 42, .44),
+                        inset 0 1px 0 rgba(255,255,255,.95);
+                    color: #435066;
+                }
+                .hf-price-card::before {
+                    content: "";
+                    position: absolute;
+                    top: -1px;
+                    left: .55rem;
+                    right: .55rem;
+                    height: .24rem;
+                    border-radius: 999px 999px 0 0;
+                    background: linear-gradient(90deg, #b4763c, #e5b558 52%, #b4763c);
+                }
+                .hf-price-card__level {
+                    display: inline-flex;
+                    align-items: center;
+                    width: fit-content;
+                    min-height: 1.8rem;
+                    padding: .3rem .72rem;
+                    border-radius: 999px;
+                    background: #f4f0ea;
+                    color: #756757;
+                    font-size: .72rem;
+                    font-weight: 800;
+                    letter-spacing: .04em;
+                    white-space: nowrap;
+                }
+                .hf-price-card__title {
+                    margin: 1.1rem 0 0;
+                    color: var(--hf-green);
+                    font-family: "Noto Serif TC", serif;
+                    font-weight: 700;
+                    line-height: 1.2;
+                    letter-spacing: .04em;
+                }
+                .hf-price-card__price {
+                    margin: .75rem 0 0;
+                    color: var(--hf-copper);
+                    font-family: "Noto Sans TC", sans-serif;
+                    font-weight: 900;
+                    line-height: 1;
+                    letter-spacing: -.035em;
+                    white-space: nowrap;
+                }
+                .hf-price-card__line {
+                    width: 100%;
+                    height: 1px;
+                    margin: 1.25rem 0;
+                    background: linear-gradient(90deg, rgba(197, 166, 112, .55), rgba(197, 166, 112, .08));
+                }
+                .hf-price-card__list {
+                    display: grid;
+                    gap: .86rem;
+                    margin: 0 0 1.35rem;
+                    padding: 0;
+                    list-style: none;
+                    line-height: 1.45;
+                }
+                .hf-price-card__list li {
+                    display: grid;
+                    grid-template-columns: 1rem minmax(0, 1fr);
+                    gap: .65rem;
+                    align-items: start;
+                }
+                .hf-price-card__list i {
+                    margin-top: .23rem;
+                    color: #bd813d;
+                    font-size: .76rem;
+                }
+                .hf-price-card__cta {
+                    width: 100%;
+                    min-height: 3.35rem;
+                    margin-top: auto;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .58rem;
+                    border: 2px solid #b77935;
+                    border-radius: 999px;
+                    color: #a56c2f;
+                    background: rgba(255,255,255,.74);
+                    font-size: 1rem;
+                    font-weight: 900;
+                    text-decoration: none;
+                    transition: transform .28s ease, box-shadow .28s ease, color .28s ease, background .28s ease;
+                }
+                .hf-price-card__cta:hover,
+                .hf-price-card__cta:focus-visible {
+                    color: #fff;
+                    background: linear-gradient(135deg, #c18a45, #a9692f);
+                    box-shadow: 0 12px 28px -16px rgba(117, 70, 24, .8);
+                    transform: translateY(-2px);
+                    outline: none;
+                }
+
+                /* 幸福方案 */
+                .hf-price-card--popular {
+                    left: 20%;
+                    z-index: 20;
+                    width: clamp(285px, 25.5%, 330px);
+                    min-height: 520px;
+                    padding: 2rem 1.7rem 1.55rem;
+                }
+                .hf-price-card--popular .hf-price-card__title { font-size: clamp(2rem, 2.35vw, 2.6rem); }
+                .hf-price-card--popular .hf-price-card__price { font-size: clamp(2.5rem, 3.05vw, 3.35rem); }
+                .hf-price-card--popular .hf-price-card__list { font-size: .98rem; }
+
+                /* 尊崇方案 */
+                .hf-price-card--champion {
+                    left: 53%;
+                    z-index: 30;
+                    width: clamp(350px, 32.5%, 405px);
+                    min-height: 575px;
+                    padding: 2.35rem 2.15rem 1.65rem;
+                    bottom: 1.55rem;
+                    border-width: 2px;
+                    border-color: rgba(192, 128, 54, .58);
+                    box-shadow:
+                        0 34px 76px -42px rgba(105, 65, 25, .5),
+                        0 12px 30px -26px rgba(80, 65, 45, .3),
+                        inset 0 1px 0 rgba(255,255,255,.98);
+                }
+                .hf-price-card--champion .hf-price-card__title { font-size: clamp(2.35rem, 2.75vw, 3.05rem); }
+                .hf-price-card--champion .hf-price-card__price { font-size: clamp(3rem, 3.7vw, 4rem); }
+                .hf-price-card--champion .hf-price-card__list { font-size: 1rem; }
+                .hf-price-card--champion .hf-price-card__cta {
+                    border-color: #c68d41;
+                    color: #fff;
+                    background:
+                        linear-gradient(180deg, rgba(255,255,255,.34), transparent 35%),
+                        linear-gradient(135deg, #e1ad58, #b87430 72%);
+                    box-shadow:
+                        inset 0 1px 0 rgba(255,255,255,.75),
+                        0 12px 24px -15px rgba(129, 78, 26, .7);
+                }
+                .hf-price-card--champion .hf-price-card__cta:hover,
+                .hf-price-card--champion .hf-price-card__cta:focus-visible {
+                    background: linear-gradient(135deg, #d79c46, #a96026);
+                }
+
+                /* 立體標章 */
+                .hf-price-badge {
+                    position: absolute;
+                    z-index: 4;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .5rem;
+                    color: #fff;
+                    font-weight: 900;
+                    letter-spacing: .04em;
+                    background:
+                        linear-gradient(180deg, rgba(255,255,255,.33), transparent 34%),
+                        linear-gradient(145deg, #e5ae53 0%, #bd772e 70%, #9f5c22 100%);
+                    border: 1px solid rgba(255, 221, 152, .85);
+                    box-shadow:
+                        inset 0 1px 0 rgba(255,255,255,.65),
+                        0 12px 24px -13px rgba(124, 73, 20, .8),
+                        0 2px 0 rgba(134, 77, 19, .55);
+                }
+                .hf-price-badge--popular {
+                    top: 1rem;
+                    right: 1rem;
+                    min-height: 2.55rem;
+                    padding: .55rem 1rem;
+                    border-radius: 999px;
+                    font-size: .92rem;
+                }
+                .hf-price-badge--champion {
+                    top: -.75rem;
+                    right: 1.1rem;
+                    width: 10.4rem;
+                    min-height: 6.3rem;
+                    flex-direction: column;
+                    border-radius: 0 0 1.45rem 1.45rem;
+                    font-size: 1.2rem;
+                }
+                .hf-price-badge--champion i { font-size: 1.35rem; color: #fff3ce; }
+
+                /* 景深次要卡 */
+                .hf-price-card--ghost {
+                    z-index: 2;
+                    width: 185px;
+                    min-height: 325px;
+                    padding: 1.35rem 1.05rem 1rem;
+                    opacity: .13;
+                    filter: saturate(.45) contrast(.93);
+                    pointer-events: none;
+                    box-shadow: 0 16px 42px -36px rgba(72, 55, 39, .25);
+                }
+                .hf-price-card--ghost .hf-price-card__level { font-size: .6rem; padding: .22rem .5rem; }
+                .hf-price-card--ghost .hf-price-card__title { margin-top: .8rem; font-size: 1.1rem; }
+                .hf-price-card--ghost .hf-price-card__price { font-size: 1.35rem; }
+                .hf-price-card--ghost .hf-price-card__line { margin: .9rem 0; }
+                .hf-price-card--ghost .hf-price-card__list { gap: .48rem; font-size: .62rem; }
+                .hf-price-card--ghost .hf-price-card__list li { grid-template-columns: .7rem 1fr; gap: .35rem; }
+                .hf-price-card--ghost .hf-price-card__cta { min-height: 2rem; border-width: 1px; font-size: .62rem; }
+                .hf-price-card--ghost-1 { left: -2%; bottom: 1rem; transform: scale(.88); opacity: .085; }
+                .hf-price-card--ghost-2 { left: 10%; bottom: 1.55rem; transform: scale(.96); opacity: .16; }
+                .hf-price-card--ghost-3 { left: 86%; bottom: 1.45rem; transform: scale(.96); opacity: .15; }
+                .hf-price-card--ghost-4 { left: 99%; bottom: .95rem; transform: scale(.88); opacity: .09; }
+
+                /* 桌面小互動 */
+                .hf-price-card--popular,
+                .hf-price-card--champion {
+                    transition: transform .35s ease, box-shadow .35s ease;
+                }
+                .hf-price-card--popular:hover { transform: translateY(-.45rem); }
+                .hf-price-card--champion:hover { transform: translateY(-.55rem); }
+
+                /* 響應式 ------------------------------------------------------------- */
+                @media (max-width: 1580px) {
+                    .hf-price-v2__inner { width: min(93%, 1460px); grid-template-columns: minmax(390px, 36%) minmax(0, 64%); gap: 2.75rem; }
+                    .hf-price-card--ghost-1,
+                    .hf-price-card--ghost-4 { display: none; }
+                    .hf-price-card--popular { left: 4%; width: 38%; }
+                    .hf-price-card--champion { left: 46%; width: 47%; }
+                    .hf-price-card--ghost-2 { left: -8%; }
+                    .hf-price-card--ghost-3 { left: 88%; }
+                }
+                @media (max-width: 1260px) {
+                    .hf-price-v2 { --hf-calc-scale: .96; }
+                    .hf-price-v2 { min-height: 0; }
+                    .hf-price-v2__inner {
+                        width: min(92%, 1040px);
+                        min-height: 0;
+                        display: block;
+                    }
+                    .hf-price-v2__copy { max-width: 760px; padding-left: 0; }
+                    .hf-price-v2__title { font-size: clamp(3.6rem, 8vw, 5.2rem); }
+                    .hf-price-v2__lead { max-width: 680px; }
+                    .hf-price-v2__stage {
+                        min-height: 0;
+                        margin-top: 4.25rem;
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+                        gap: 1.5rem;
+                        align-items: stretch;
+                    }
+                    .hf-price-card,
+                    .hf-price-card--popular,
+                    .hf-price-card--champion {
+                        position: relative;
+                        inset: auto;
+                        width: 100%;
+                        min-height: 525px;
+                        transform: none;
+                    }
+                    .hf-price-card--champion { min-height: 560px; order: -1; }
+                    .hf-price-card--ghost { display: none; }
+                }
+                @media (max-width: 760px) {
+                    .hf-price-v2 { --hf-calc-scale: 1; }
+                    .hf-price-v2 { padding: 4.75rem 0 4.25rem; }
+                    .hf-price-v2__inner { width: min(90%, 560px); }
+                    .hf-price-v2__eyebrow { margin-bottom: 1.35rem; font-size: .72rem; }
+                    .hf-price-v2__title { font-size: clamp(3rem, 14vw, 4.35rem); }
+                    .hf-price-v2__lead { margin-top: 1.6rem; padding-left: 1rem; font-size: .98rem; }
+                    .hf-price-v2__benefits { gap: .95rem; }
+                    .hf-price-v2__benefits li { font-size: .94rem; }
+                    .hf-price-v2__stage { grid-template-columns: 1fr; gap: 1.2rem; margin-top: 3rem; }
+                    .hf-price-card--popular,
+                    .hf-price-card--champion {
+                        min-height: 0;
+                        padding: 1.75rem 1.4rem 1.45rem;
+                    }
+                    .hf-price-card--champion { order: -1; padding-top: 2.15rem; }
+                    .hf-price-badge--champion { width: 8.8rem; min-height: 5.35rem; font-size: 1.02rem; }
+                    .hf-price-card--popular .hf-price-card__title,
+                    .hf-price-card--champion .hf-price-card__title { font-size: 2rem; }
+                    .hf-price-card--popular .hf-price-card__price,
+                    .hf-price-card--champion .hf-price-card__price { font-size: clamp(2.45rem, 12vw, 3.2rem); }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .hf-price-card--popular,
+                    .hf-price-card--champion,
+                    .hf-price-card__cta { transition: none !important; }
+                    .hf-price-card--popular:hover,
+                    .hf-price-card--champion:hover,
+                    .hf-price-card__cta:hover { transform: none !important; }
+                }
     </style>
 </head>
 <body class="text-text bg-warm relative">
@@ -1573,94 +2015,137 @@
 
 
 
-    <!-- Calculator Section (Transparency Applied) -->
-    <!-- 移除 bg-warm，改用 relative z-10 -->
-    <section id="calculator" class="pt-36 pb-24 relative z-10">
+        <section class="hf-price-v2" id="calculator" aria-labelledby="hf-price-v2-title">
+            <div class="absolute -top-[1px] left-0 w-full overflow-hidden leading-none opacity-90">
+                <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
+                </svg>
+            </div>
 
-	<!-- 修改顏色為透明度漸層，融入全域背景 -->
-        <div class="absolute -top-[1px] left-0 w-full overflow-hidden leading-none opacity-90">
-            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
-            </svg>
-        </div>
+            <div class="hf-price-v2__light" aria-hidden="true"></div>
 
+            <div class="hf-price-v2__inner">
+                <div class="hf-price-v2__copy">
+                    <span class="hf-price-v2__eyebrow">Transparency</span>
+                    <h2 class="hf-price-v2__title" id="hf-price-v2-title">預算，<br>由您透明掌握</h2>
 
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
-                <div class="lg:w-1/3 pt-8 sticky top-24 lg:static">
-                    <span class="text-accent font-bold tracking-[0.2em] uppercase text-sm block mb-3">Transparency</span>
-                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">預算，<br>由您透明掌握</h2>
-                    <p class="text-gray-600 mb-8 leading-loose text-justify border-l-2 border-gray-200 pl-4">
-                        告別式不該是沉重的經濟負擔。我們提供業界首創的線上試算系統，讓您依照宗教、儀式規模與個人需求，快速獲得精準的費用預估。
+                    <p class="hf-price-v2__lead">
+                        告別式的每一項安排，都應清楚、可比較。<br>
+                        華梵將常見方案的空間規模、服務人力與儀式配置完整列出，讓家屬先掌握預算方向，再由專人逐項確認。
                     </p>
-                    <ul class="space-y-4 mb-8 text-gray-700 font-medium">
-                        <li class="flex items-center gap-4 group"><div class="w-8 h-8 rounded-full bg-primary/10 shadow-sm flex items-center justify-center group-hover:bg-accent group-hover:text-white transition"><i class="fa-solid fa-check text-primary group-hover:text-white text-xs"></i></div> 無隱藏費用，項目條列清晰</li>
-                        <li class="flex items-center gap-4 group"><div class="w-8 h-8 rounded-full bg-primary/10 shadow-sm flex items-center justify-center group-hover:bg-accent group-hover:text-white transition"><i class="fa-solid fa-sliders text-primary group-hover:text-white text-xs"></i></div> 可依預算彈性調整內容</li>
-                        <li class="flex items-center gap-4 group"><div class="w-8 h-8 rounded-full bg-primary/10 shadow-sm flex items-center justify-center group-hover:bg-accent group-hover:text-white transition"><i class="fa-solid fa-file-pdf text-primary group-hover:text-white text-xs"></i></div> 下載完整報價單 (PDF)</li>
+
+                    <ul class="hf-price-v2__benefits" aria-label="方案價格服務特色">
+                        <li>
+                            <span><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <strong>方案內容與項目清楚列示</strong>
+                        </li>
+                        <li>
+                            <span><i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
+                            <strong>可依預算彈性調整服務配置</strong>
+                        </li>
+                        <li>
+                            <span><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>
+                            <strong>正式確認前提供完整書面明細（PDF）</strong>
+                        </li>
                     </ul>
+
+                    <p class="hf-price-v2__more">
+                        <strong>另有其他方案可供選擇。</strong><br>
+                        實際內容將依宗教儀式、場地與家屬需求提供書面確認。
+                    </p>
                 </div>
 
-                <!-- Calculator Container: Increased transparency -->
-                <div class="lg:w-2/3 w-full bg-white/50 backdrop-blur-xl p-6 md:p-12 rounded-[2rem] shadow-lg border border-white/60 relative overflow-hidden">
-                    <!-- 裝飾背景 -->
-                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
-                    
-                    <!-- Calculator Inputs (Same as before) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-10 relative z-10">
-                        <div class="space-y-1 md:space-y-2">
-                            <label class="block text-sm font-bold text-primaryDark">宗教信仰</label>
-                            <div class="relative">
-                                <select class="w-full p-3 md:p-4 bg-white/80 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent outline-none appearance-none cursor-pointer text-gray-700 font-medium shadow-sm hover:shadow transition">
-                                    <option>一般民間信仰 (道教/佛教)</option>
-                                    <option>基督教</option>
-                                    <option>天主教</option>
-                                    <option>無宗教信仰</option>
-                                </select>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-accent pointer-events-none"><i class="fa-solid fa-caret-down"></i></div>
-                            </div>
-                        </div>
-                        <!-- ... other inputs ... -->
-                        <div class="space-y-1 md:space-y-2">
-                            <label class="block text-sm font-bold text-primaryDark">儀式地點</label>
-                            <div class="relative">
-                                <select class="w-full p-3 md:p-4 bg-white/80 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent outline-none appearance-none cursor-pointer text-gray-700 font-medium shadow-sm hover:shadow transition">
-                                    <option>市立殯儀館</option>
-                                    <option>自宅治喪</option>
-                                    <option>私人會館</option>
-                                </select>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-accent pointer-events-none"><i class="fa-solid fa-caret-down"></i></div>
-                            </div>
-                        </div>
-                        <div class="md:col-span-2 mt-2 md:mt-4 space-y-2 md:space-y-4">
-                            <div class="flex justify-between items-end">
-                                <label class="block text-sm font-bold text-primaryDark">預計參與親友 (規模)</label>
-                                <span class="text-white bg-accent px-3 py-1 rounded-md font-serif font-bold tracking-wider shadow-sm" id="guest-count-display">50 人</span>
-                            </div>
-                            <input type="range" min="10" max="300" step="10" value="50" class="w-full accent-accent" oninput="document.getElementById('guest-count-display').innerText = this.value + ' 人'">
-                            <div class="flex justify-between text-xs text-gray-400 px-1">
-                                <span>家祭</span>
-                                <span>中型公祭</span>
-                                <span>大型公祭</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="hf-price-v2__stage" aria-label="華梵禮儀方案價格">
+                    <!-- 次要方案僅作價格帶提示，因此淡化並取消互動。 -->
+                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-1" aria-hidden="true">
+                        <span class="hf-price-card__level">進階方案</span>
+                        <h3 class="hf-price-card__title">樸實方案</h3>
+                        <p class="hf-price-card__price">NT$88,000</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check"></i><span>接體、豎靈、入殮</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>治喪協調、告別式</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>火化、晉塔</span></li>
+                        </ul>
+                        <span class="hf-price-card__cta">了解更多</span>
+                    </article>
 
-                    <div class="bg-primaryDark rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 shadow-2xl relative overflow-hidden group">
-                        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-accent/20 rounded-full blur-2xl group-hover:bg-accent/30 transition duration-700"></div>
-                        
-                        <div class="relative z-10 text-center md:text-left">
-                            <p class="text-accent text-xs mb-2 tracking-widest uppercase">Estimated Cost</p>
-                            <p class="text-4xl md:text-5xl font-serif font-bold text-white tracking-wide">NT$ 158,000 <span class="text-lg font-sans font-light text-gray-400">起</span></p>
-                        </div>
-                        <button class="relative z-10 px-8 py-3 bg-accent text-primaryDark hover:bg-white hover:text-primaryDark transition rounded-full font-bold tracking-wider flex items-center gap-2 shadow-lg transform active:scale-95">
-                            下載報價單 <i class="fa-solid fa-download"></i>
-                        </button>
-                    </div>
+                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-2" aria-hidden="true">
+                        <span class="hf-price-card__level">進階方案</span>
+                        <h3 class="hf-price-card__title">福氣方案</h3>
+                        <p class="hf-price-card__price">NT$128,000</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check"></i><span>告別式場地（24人內）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（8尺）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>樂師1名</span></li>
+                        </ul>
+                        <span class="hf-price-card__cta">了解更多</span>
+                    </article>
+
+                    <article class="hf-price-card hf-price-card--popular">
+                        <span class="hf-price-card__level">進階升級</span>
+                        <span class="hf-price-badge hf-price-badge--popular"><i class="fa-solid fa-fire" aria-hidden="true"></i>熱門推薦</span>
+                        <h3 class="hf-price-card__title">幸福方案</h3>
+                        <p class="hf-price-card__price">NT$188,000</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（60人內）</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>場地佈置升級</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師3名樂團演奏</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞100份</span></li>
+                        </ul>
+                        <a class="hf-price-card__cta" href="tel:0800800818" aria-label="致電諮詢幸福方案">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>立即諮詢
+                        </a>
+                    </article>
+
+                    <!-- TODO：正式上線前，請補充「銷售冠軍」宣稱的統計期間與依據。 -->
+                    <article class="hf-price-card hf-price-card--champion">
+                        <span class="hf-price-card__level">頂級方案</span>
+                        <span class="hf-price-badge hf-price-badge--champion"><i class="fa-solid fa-crown" aria-hidden="true"></i>銷售冠軍</span>
+                        <h3 class="hf-price-card__title">尊崇方案</h3>
+                        <p class="hf-price-card__price">NT$238,000</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（80人內）</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>鮮花式場（20尺）</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師5名、服務人員6名</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞200份</span></li>
+                        </ul>
+                        <a class="hf-price-card__cta" href="tel:0800800818" aria-label="致電了解尊崇方案">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>了解尊崇方案
+                        </a>
+                    </article>
+
+                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-3" aria-hidden="true">
+                        <span class="hf-price-card__level">進階方案</span>
+                        <h3 class="hf-price-card__title">圓融方案</h3>
+                        <p class="hf-price-card__price">NT$168,000</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check"></i><span>告別式場地（40人內）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（15尺）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>誦經人員3名</span></li>
+                        </ul>
+                        <span class="hf-price-card__cta">了解更多</span>
+                    </article>
+
+                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-4" aria-hidden="true">
+                        <span class="hf-price-card__level">旗艦方案</span>
+                        <h3 class="hf-price-card__title">尊榮方案</h3>
+                        <p class="hf-price-card__price">NT$480,000+</p>
+                        <div class="hf-price-card__line"></div>
+                        <ul class="hf-price-card__list">
+                            <li><i class="fa-solid fa-check"></i><span>告別式場地（240人內）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（30尺）</span></li>
+                            <li><i class="fa-solid fa-check"></i><span>專屬接送服務</span></li>
+                        </ul>
+                        <span class="hf-price-card__cta">了解更多</span>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- Google 評論區塊 -->
     <section class="pt-12 pb-16 relative overflow-hidden">
