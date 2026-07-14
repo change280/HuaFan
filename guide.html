@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>臨終關懷與緊急協助｜華梵禮儀 - 24H 隨側陪伴</title>
+    <meta name="description" content="別慌張，我們在這裡陪您。提供24小時臨終關懷與大體接運服務。一通電話，華梵禮儀師團隊將在1小時內抵達協助。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40', 
+                        secondary: '#2F3E2B', 
+                        accent: '#C5A670', 
+                        warm: '#F7F5F0', 
+                        pale: '#E3EBE5', 
+                        surface: '#FFFEFA', 
+                        emergency: '#AD5E5A', 
+                        text: '#3D443B', 
+                        menu: '#E5E7EB', 
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'gold': '0 4px 20px -5px rgba(197, 166, 112, 0.4)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
+        
+        .hero-bg-comfort {
+            background-image:
+                linear-gradient(to bottom, rgba(47, 62, 43, 0.1) 0%, rgba(47, 62, 43, 0.6) 100%),
+                url('/HuaFan/image/guide/hero_hurry.webp'); 
+            
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll; 
+            position: relative;
+        }
+
+/* 針對 FAQ 區塊：在底部疊加一個白色漸層遮罩，從底部往上漸變 */
+        #faq::after {
+            content: '';
+            position: absolute;
+            bottom: 0; /* 修改處：將 top 改為 bottom，讓遮罩定位在底部 */
+            left: 0;
+            width: 100%;
+            height: 250px; /* 您可以調整這個高度，決定白色漸層往上延伸多高 */
+            
+            /* 修改處：將方向改為 to top (往上)，起點(底部 0%)為純白，終點(上方 100%)為透明 */
+            background: linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+            
+            z-index: 1;
+            pointer-events: none;
+        }
+
+/* 針對「家屬真實回饋」區塊：在頂部疊加一個白色漸層 */
+        #feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;      /* 定位在頂部 */
+            left: 0;
+            width: 100%;
+            height: 160px; /* 設定漸層的高度，讓過渡更自然 */
+            
+            /* 從純白 (0%) 漸變到 透明 (100%)，讓白色慢慢消失露出底下的綠色 */
+            background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+            
+            z-index: 1;  /* 層級：蓋在綠色背景之上，但在文字內容(10)之下 */
+            pointer-events: none;
+        }
+
+        /* Header 背景 */
+        .bg-dots-pattern {
+            background-color: #F7F5F0; 
+            position: relative;
+            /* overflow: hidden; 移除，避免下拉選單被裁切 */
+        }
+        .bg-dots-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 1.2px, transparent 1.2px);
+            background-size: 14px 14px; 
+            opacity: 0.25; 
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* 選單背景 */
+        .bg-dots-pattern-reversed {
+            background-color: rgba(70, 91, 64, 0.95); 
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-dots-pattern-reversed::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#F7F5F0 1.5px, transparent 1.5px);
+            background-size: 14px 14px; 
+            opacity: 0.15; 
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            pointer-events: none; z-index: 0;
+        }
+
+/* 針對 FAQ 區塊：將網點分佈反轉 (改為由左而右漸淡) */
+        #faq.bg-dots-pattern::before {
+            /* 解釋：
+               linear-gradient(to right...) 代表從左到右
+               black 0%   = 左邊是黑色 (在遮罩中代表「完全顯示」)
+               transparent 100% = 右邊是透明 (在遮罩中代表「完全隱藏」)
+            */
+            -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 70%, transparent 100%);
+            mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 70%, transparent 100%);
+        }
+
+        .sticky-bottom-bar {
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        /* 隱藏橫向捲軸 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+/* 磨砂玻璃 (Glassmorphism) 核心樣式 */
+.glass-panel {
+    /* 關鍵在這裡！ */
+    background: rgba(255, 255, 255, 0.3); 
+    
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+}
+
+        /* ===== 新增：桌面下拉選單樣式 ===== */
+        .nav-dropdown-item {
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease-out;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .nav-item-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translate(-6px, -50%);
+            opacity: 0;
+            color: #C5A670;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item-line {
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: #C5A670;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-dropdown-text {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-dropdown-item:hover .nav-item-icon {
+            transform: translate(0, -50%);
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-item-line {
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-dropdown-text {
+            transform: translateX(2px);
+        }
+        
+        .group:hover .nav-dropdown-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 每個項目加入微小延遲，創造階梯式動畫 */
+        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
+        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
+        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
+        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
+        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
+
+        /* 手機版子選單動畫 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .submenu-item-fade {
+            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="text-text bg-warm relative pb-20 md:pb-0">
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：右側懸浮按鈕組 -->
+    <div id="hf-floating"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：漢堡全螢幕選單 -->
+    <div id="hf-menu"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Header 頁首 -->
+    <div id="hf-header"></div>
+
+    <!-- 1. Hero Section -->
+    <section class="hero-bg-comfort min-h-[90vh] flex flex-col justify-center relative pt-15 ">
+        <div class="absolute inset-0 bg-black/30"></div> 
+        <div class="container mx-auto px-4 text-center text-white relative z-10">
+            
+            <!-- 修改處：加入 inline-block 與 text-left 實現「整體置中但左緣對齊」的視覺效果 -->
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 md:mb-6 leading-tight animate-fade-in-up text-left md:text-center" style="animation-delay: 0.1s;">
+                <span class="inline-block text-left md:inline md:text-center">
+                    <span class="block text-5xl md:inline md:text-5xl lg:text-6xl mb-2 md:mb-0">別慌張，</span>
+                    <span class="block text-3xl md:inline md:text-5xl lg:text-6xl">我們在這裡陪您</span>
+                </span>
+            </h1>
+            
+
+            <p class="text-lg md:text-2xl font-light mb-10 opacity-90 animate-fade-in-up tracking-wider text-left md:text-center border-l-4 md:border-l-0 border-accent/80 pl-4 md:pl-0" style="animation-delay: 0.2s;">
+                24小時臨終關懷與大體接運<br>
+                一通電話，華梵禮儀師團隊將在<span class="text-accent font-bold border-b border-accent/50 pb-0.5">1 小時內</span>抵達協助
+            </p>
+            <div class="hidden md:flex flex-row justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <a href="tel:0800800818" class="flex items-center justify-center gap-3 px-8 py-4 bg-emergency text-white rounded-full text-lg font-bold shadow-lg hover:bg-[#AD5E5A] transition transform hover:scale-105 animate-attention">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    0800-800-818 (立即通話)
+                </a>
+                <a href="https://line.me/ti/p/@your_line_id" target="_blank" class="flex items-center justify-center gap-3 px-8 py-4 bg-[#3C9E5B] text-white rounded-full text-lg font-bold shadow-lg hover:bg-[#328A4E] transition transform hover:scale-105">
+                    <i class="fa-brands fa-line text-2xl"></i>
+                    加入 LINE 線上諮詢
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 w-full h-40 md:h-64 bg-gradient-to-t from-warm via-warm/40 to-transparent"></div>
+
+        
+        <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[120px]">
+                <!-- 修改處：更換為「向下流動」的波浪路徑 -->
+                <!-- 舊路徑會形成山丘，這個新路徑 (M0,32L48...) 讓米色(fill-warm)只佔據底部一小部分，
+                     視覺上就像是上方的綠色區域大面積地「流」了下來。 -->
+ 		<path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-warm"></path>
+            </svg>
+        </div>
+
+
+
+    </section>
+
+    <!-- 2. SOP Guide (Tabs Design for Cleaner Mobile View) -->
+    <section id="guide" class="py-5 bg-warm relative">
+
+        <div class="absolute top-0 right-20 opacity-5 pointer-events-none">
+            <i class="fa-solid fa-leaf text-9xl transform rotate-45 text-primary"></i>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-12">
+                <span class="text-accent font-bold tracking-[0.2em] text-sm block mb-2">STEP BY STEP</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 decor-line">我現在該做什麼？</h2>
+                <p class="text-gray-500 mt-4">請依照親人所在的場所，點擊下方按鈕查看步驟</p>
+            </div>
+
+            <!-- TAB 切換：像水面上的浮島 -->
+	<div class="relative z-20 flex justify-center gap-8 mb-2">
+    
+    		<button onclick="switchTab('hospital')" id="btn-hospital" class="group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out bg-primary text-white shadow-2xl scale-110 ring-4 ring-offset-2 ring-offset-[#F5F7F8] ring-primary/30">
+        		<div class="flex items-center gap-3">
+            			<i class="fa-solid fa-hospital text-xl"></i> 
+            			<span>在醫院往生</span>
+        		</div>
+        		<div id="arrow-hospital" class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-primary transition-all duration-300"></div>
+    		</button>
+
+    		<button onclick="switchTab('home')" id="btn-home" class="group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out bg-white text-gray-400 shadow-sm hover:bg-gray-50 hover:text-primary hover:shadow-md border border-gray-200">
+        		<div class="flex items-center gap-3">
+            			<i class="fa-solid fa-house-chimney text-xl"></i> 
+            			<span>在家中往生</span>
+        		</div>
+        		<div id="arrow-home" class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-transparent transition-all duration-300"></div>
+    		</button>
+	</div>
+
+            <!-- 內容容器：流體佈局 -->
+            <div class="relative min-h-[600px]"> 
+                <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0 md:-translate-x-1/2 z-10"></div>
+
+                <div id="content-hospital" class="space-y-5 transition-all duration-500 relative overflow-hidden py-12">
+                    
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary/10 pointer-events-none z-0 select-none flex justify-center items-center">
+
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary/10 pointer-events-none z-0 select-none flex justify-center items-center">
+        			<i class="fa-solid fa-hospital text-[80vw] md:text-[500px]"></i>
+    			</div>
+
+                            <path d="M384 96V48c0-17.7-14.3-32-32-32H160c-17.7 0-32 14.3-32 32v48C57.3 96 0 153.3 0 224v240c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32V224c0-70.7-57.3-128-128-128zM176 48h160v48H176V48zM96 224c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v240H96V224zm160 64h48c8.8 0 16 7.2 16 16v48c0 8.8-7.2 16-16 16h-48v48c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16v-48H128c-8.8 0-16-7.2-16-16v-48c0-8.8 7.2-16 16-16h48v-48c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v48z"/>
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between group">
+                        <div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-1">
+                            <div class="glass-panel p-8 rounded-[2rem] rounded-tr-none hover:bg-white shadow-md transition-colors duration-300">
+                                <h3 class="font-serif font-bold text-xl text-primary mb-2">01. 通知與文件</h3>
+                                <p class="text-gray-600 text-sm leading-relaxed">請醫師開立「死亡證明書」。建議申請 <span class="font-bold text-[#AD5E5A]">10-15 份</span>，以備後續辦理各項行政手續。</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-mist z-10 md:-translate-x-1/2 order-1 md:order-2 shadow-lg group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-[45%] order-3"></div> </div>
+
+                    <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between group">
+                        <div class="md:w-[45%] order-3 md:order-1"></div> <div class="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-accent border-4 border-mist z-10 md:-translate-x-1/2 order-1 md:order-2 shadow-lg group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-3">
+                            <div class="glass-panel p-8 rounded-[2rem] rounded-tl-none hover:bg-white shadow-md transition-colors duration-300 border-l-4 border-l-accent">
+                                <h3 class="font-serif font-bold text-xl text-primary mb-2">02. 撥打 24H 專線</h3>
+                                <p class="text-gray-600 text-sm leading-relaxed">告知護理站已委託禮儀公司。我們將派遣專屬接體車與禮儀師，1小時內抵達協助。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between group">
+                        <div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-1">
+                            <div class="glass-panel p-8 rounded-[2rem] rounded-tr-none hover:bg-white shadow-md transition-colors duration-300">
+                                <h3 class="font-serif font-bold text-xl text-primary mb-2">03. 準備證件</h3>
+                                <p class="text-gray-600 text-sm leading-relaxed">準備 <span class="font-bold">逝者與申請人身分證</span>。若有衣服想讓親人穿著，也可一併準備。</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-mist z-10 md:-translate-x-1/2 order-1 md:order-2 shadow-lg group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-[45%] order-3"></div> </div>
+                </div>
+
+                <div id="content-home" class="space-y-5 transition-all duration-500 hidden relative overflow-hidden py-12">
+                    
+                    <div class="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary/10 pointer-events-none z-0 select-none flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-[80vw] md:w-[500px] h-auto" fill="currentColor">
+                            <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128c-1.4 0-2.8 0-4.2-.1c-1.1 0-2.2 .1-3.3 .1H104c-22.1 0-40-17.9-40-40V368 287.6H32c-18 0-32-14.1-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 12 24z"/>
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between group">
+                        <div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-1">
+                            <div class="glass-panel p-8 rounded-[2rem] rounded-tr-none hover:bg-white shadow-md transition-colors duration-300">
+                                <h3 class="font-serif font-bold text-xl text-primary mb-2">01. 保持冷靜與環境降溫</h3>
+                                <p class="text-gray-600 text-sm leading-relaxed">切勿隨意移動遺體。開啟冷氣至最強，保持空氣流通，並為親人蓋上薄被。</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-mist z-10 md:-translate-x-1/2 order-1 md:order-2 shadow-lg"></div>
+                        <div class="md:w-[45%] order-3"></div>
+                    </div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between group">
+                        <div class="md:w-[45%] order-3 md:order-1"></div>
+                        <div class="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-accent border-4 border-mist z-10 md:-translate-x-1/2 order-1 md:order-2 shadow-lg"></div>
+                        <div class="md:w-[45%] mb-4 md:mb-0 order-2 md:order-3">
+                            <div class="glass-panel p-8 rounded-[2rem] rounded-tl-none hover:bg-white shadow-md transition-colors duration-300 border-l-4 border-l-accent">
+                                <h3 class="font-serif font-bold text-xl text-primary mb-2">02. 聯繫行政相驗</h3>
+                                <p class="text-gray-600 text-sm leading-relaxed">撥打專線，我們將協助聯繫衛生所或指定醫師到府進行行政相驗，開立死亡證明。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 4. FAQ -->
+    <section id="faq" class="py-10 bg-dots-pattern relative">
+        <div class="container mx-auto px-4 max-w-3xl relative z-10">
+
+            <div class="text-center mb-12">
+                <span class="text-accent font-bold tracking-[0.2em] text-sm block mb-2">ＦＡＱ</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 decor-line">緊急常見問答</h2>
+            </div>
+
+            <div class="space-y-6">
+                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-6 shadow-float cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            <h3 class="font-bold text-lg text-primary">現在是半夜，你們有人接電話嗎？</h3>
+                        </div>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-primary sm:p-3 transition duration-300 group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="mt-4 px-6 leading-relaxed text-gray-600 bg-white/50 rounded-2xl p-6 border border-white">
+                        <p>是的，我們提供 24 小時全年無休的服務。深夜時刻更需要專業的陪伴，無論何時，只要您撥打電話，我們的專業團隊都會立即回應並前往協助。</p>
+                    </div>
+                </details>
+
+                <!-- ... other FAQ items ... -->
+                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-6 shadow-float cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            <h3 class="font-bold text-lg text-primary">費用不清楚，可以先請你們來接運嗎？</h3>
+                        </div>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-primary sm:p-3 transition duration-300 group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="mt-4 px-6 leading-relaxed text-gray-600 bg-white/50 rounded-2xl p-6 border border-white">
+                        <p>沒問題的。接運大體是當務之急，您可以先讓我們協助安置親人。後續的禮儀方案與費用，我們可以等您心情稍微平復後，再坐下來詳細討論與規劃，絕不強迫推銷。</p>
+                    </div>
+                </details>
+                
+                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-6 shadow-float cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            <h3 class="font-bold text-lg text-primary">只有我一個家屬在現場，該怎麼辦？</h3>
+                        </div>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-primary sm:p-3 transition duration-300 group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="mt-4 px-6 leading-relaxed text-gray-600 bg-white/50 rounded-2xl p-6 border border-white">
+                        <p>請放心，您不需要獨自面對。撥打電話後，專業禮儀師會立刻趕往現場陪同您，從旁協助處理所有流程與細節，成為您此刻最堅強的後盾。</p>
+                    </div>
+                </details>
+
+                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-6 shadow-float cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            <h3 class="font-bold text-lg text-primary">親人剛過世，有什麼禁忌要注意嗎？</h3>
+                        </div>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-primary sm:p-3 transition duration-300 group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="mt-4 px-6 leading-relaxed text-gray-600 bg-white/50 rounded-2xl p-6 border border-white">
+                        <p>A: 習俗上建議<strong>避免在遺體旁爭吵或過度哭泣拉扯</strong>，以免讓逝者掛念。另外，若在家中，貓狗等寵物建議先隔離，避免驚擾。</p>
+                    </div>
+                </details>
+
+                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between gap-4 rounded-[20px] bg-white p-6 shadow-float cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            <h3 class="font-bold text-lg text-primary">需要馬上準備往生者的衣服嗎？</h3>
+                        </div>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-primary sm:p-3 transition duration-300 group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="mt-4 px-6 leading-relaxed text-gray-600 bg-white/50 rounded-2xl p-6 border border-white">
+                        <p>如果方便，您可以先準備一套逝者生前喜歡的便服或正式服裝。如果當下沒有準備也沒關係，我們可以先用覆蓋布，待後續流程再進行更衣。
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 3. 服務承諾 (手機版內縮卡片滑動 / 電腦版網格) -->
+    <section id="promise" class="pt-12 pb-12 md:pb-24 bg-white relative overflow-hidden z-30">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-8 md:mb-16">
+                <span class="text-accent font-bold tracking-[0.2em] text-sm block mb-3">OUR CORE VALUES</span>
+                <h2 class="font-serif font-bold text-primary">
+                    <span class="block md:inline text-xl md:text-4xl mb-1 md:mb-0 translate-x-3 md:translate-x-0">華梵的三大承諾：</span>
+                    <span class="text-3xl md:text-4xl">守護、陪伴、引導</span>
+                </h2>
+
+            </div>
+            
+            <div id="promise-carousel" class="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 lg:mx-0 lg:px-0 pb-12 pt-2 lg:pb-0 no-scrollbar">
+                
+                <!-- 支柱 1 -->
+                <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-0 snap-center bg-surface p-10 rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col items-center text-center group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.1)]">
+                    <div class="w-16 h-16 mb-6 rounded-full bg-primary/5 flex items-center justify-center text-primary text-3xl group-hover:bg-primary group-hover:text-white transition duration-300">
+                         <!-- SVG 1: 盾牌+葉子 (守護) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M12 8a2 2 0 0 1 2 2c0 1.5-1.5 3-3.5 3-2 0-3.5-1.5-3.5-3a2 2 0 0 1 2-2"></path>
+                            <path d="M12 8v5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">專業的守護者</h3>
+                    <p class="text-xs text-accent font-bold tracking-wider mb-4 uppercase">The Professional Guardian</p>
+                    <p class="text-gray-600 text-sm leading-loose mb-6">
+                        「以最高標準的專業，成為家屬最安心的託付。我們是流程的專家，更是尊嚴的守護者。」
+                    </p>
+                    <ul class="text-left w-full space-y-2 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>連續榮獲評鑑優等</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>政府指定協辦廠商 (聯合奠祭/海葬)</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>流程透明化，安心託付</span></li>
+                    </ul>
+                </div>
+
+                <!-- 支柱 2 -->
+                <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-0 snap-center bg-surface p-10 rounded-[2.5rem] shadow-[0_25px_60px_-12px_rgba(197,166,112,0.15)] border-t-8 border-accent flex flex-col items-center text-center group relative lg:-mt-4 hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-16 h-16 mb-6 rounded-full bg-accent/10 flex items-center justify-center text-accent text-3xl group-hover:bg-accent group-hover:text-white transition duration-300">
+                         <!-- SVG 2: 雙手呵護 (陪伴) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">溫暖的陪伴者</h3>
+                    <p class="text-xs text-accent font-bold tracking-wider mb-4 uppercase">The Warm Companion</p>
+                    <p class="text-gray-600 text-sm leading-loose mb-6">
+                        「我們深知家屬的感受，提供客製化、飯店式管理的舒適會館，給予最體貼的關懷。」
+                    </p>
+                    <ul class="text-left w-full space-y-2 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>人文關懷獎肯定</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>客製化溫馨服務</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>專業攝影紀錄，留住回憶</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>社會公益行動 (弱勢扶助、捐血)</span></li>
+                    </ul>
+                </div>
+
+                <!-- 支柱 3 -->
+                <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-0 snap-center bg-surface p-10 rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col items-center text-center group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.1)]">
+                    <div class="w-16 h-16 mb-6 rounded-full bg-primary/5 flex items-center justify-center text-primary text-3xl group-hover:bg-primary group-hover:text-white transition duration-300">
+                         <!-- SVG 3: 指南針+葉子 (引導) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">前瞻的引導者</h3>
+                    <p class="text-xs text-accent font-bold tracking-wider mb-4 uppercase">The Forward-Thinking Guide</p>
+                    <p class="text-gray-600 text-sm leading-loose mb-6">
+                        「在傳統與創新中找到平衡，引領『殯葬自主』與『多元尊重』的時代思潮。」
+                    </p>
+                    <ul class="text-left w-full space-y-2 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>推動殯葬自主權</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>尊重性別平等與多元價值</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>提供自然葬 (環保葬) 選項</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-accent mt-1"></i> <span>推廣生命教育資源</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 手機版滑動提示 -->
+            <div id="promise-dots" class="flex lg:hidden justify-center mt-2 space-x-2">
+                <div class="w-2 h-2 rounded-full bg-primary transition-all duration-300"></div>
+                <div class="w-2 h-2 rounded-full bg-primary/20 transition-all duration-300"></div>
+                <div class="w-2 h-2 rounded-full bg-primary/20 transition-all duration-300"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 5. 情感見證 -->
+	<section id="feedback" class="pt-24 pb-28 md:pb-48 bg-gradient-to-b from-white to-[#F0F5F2] via-[#F0F5F2] via-80% relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-accent font-bold tracking-[0.2em] text-sm block mb-2">Feedback</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 decor-line">家屬真實回饋</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                
+                <div class="bg-white p-8 rounded-3xl rounded-tl-none shadow-sm relative md:mt-4">
+                    <div class="text-accent/20 text-6xl absolute -top-6 right-6 font-serif">,,</div>
+                    <p class="text-gray-600 mt-4 mb-6 leading-relaxed relative z-10">那是個慌亂的半夜，還好有華梵的禮儀師第一時間趕到，溫柔地引導我們，讓我們從無助中安定下來。</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-serif">林</div>
+                        <div>
+                            <span class="block font-bold text-sm text-primary">台中林小姐</span>
+                            <span class="text-xs text-gray-400">治喪期間：2023.12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl rounded-tl-none shadow-sm relative md:mt-12">
+                     <div class="text-accent/20 text-6xl absolute -top-6 right-6 font-serif">,,</div>
+                    <p class="text-gray-600 mt-4 mb-6 leading-relaxed relative z-10">感謝你們對爸爸的禮體 SPA 服務，看到爸爸恢復氣色安詳的樣子，我們心裡的遺憾少了很多。這是一場很美的畢業典禮。</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-serif">陳</div>
+                         <div>
+                            <span class="block font-bold text-sm text-primary">彰化陳先生</span>
+                            <span class="text-xs text-gray-400">治喪期間：2024.01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl rounded-tl-none shadow-sm relative">
+                     <div class="text-accent/20 text-6xl absolute -top-6 right-6 font-serif">,,</div>
+                    <p class="text-gray-600 mt-4 mb-6 leading-relaxed relative z-10">費用真的很透明，完全依照我們的需求規劃，沒有額外加價，這點讓我們很放心。樹葬的安排也很圓滿。</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-serif">張</div>
+                         <div>
+                            <span class="block font-bold text-sm text-primary">南投張先生</span>
+                            <span class="text-xs text-gray-400">治喪期間：2024.02</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
+    <div id="hf-footer"></div>
+
+    <!-- 7. Sticky Footer (Mobile) -->
+    <div class="fixed bottom-0 left-0 w-full z-50 pointer-events-none overflow-hidden h-36 flex items-end md:hidden">
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-[#F7F5F0]/95 via-[#F7F5F0]/70 to-transparent backdrop-blur-[10px]"
+         style="mask-image: linear-gradient(to top, black 0%, black 40%, transparent 90%); -webkit-mask-image: linear-gradient(to top, black 0%, black 40%, transparent 90%); border: none;">
+    </div>
+
+    <div class="absolute inset-0 z-0 opacity-40 pointer-events-none"
+         style="mask-image: linear-gradient(to top, black 0%, black 40%, transparent 90%); -webkit-mask-image: linear-gradient(to top, black 0%, black 40%, transparent 90%);">
+        
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-accent/20 rounded-full blur-[50px]"></div>
+        
+        <svg class="absolute bottom-0 left-0 w-full h-12 text-primary/5 fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="text-accent/10"></path>
+        </svg>
+    </div>
+
+    <div class="relative w-full px-5 pb-6 pt-2 flex gap-4 items-center justify-between pointer-events-auto z-10">
+        
+        <a href="tel:0800800818" class="flex-1 bg-emergency text-white rounded-full flex items-center justify-center gap-3 py-4 shadow-[0_8px_20px_-5px_rgba(199,127,123,0.4)] hover:bg-[#BF8683] active:scale-95 transition-all duration-300 group relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shine_1.5s_infinite]"></div>
+            <i class="fa-solid fa-phone-volume text-lg group-hover:rotate-12 transition-transform"></i>
+            <span class="font-serif font-bold tracking-widest text-base">呼叫禮儀師</span>
+        </a>
+
+        <a href="https://line.me/ti/p/@your_line_id" target="_blank" class="flex-1 bg-[#6B8C70] text-white rounded-full flex items-center justify-center gap-3 py-4 shadow-[0_8px_20px_-5px_rgba(127,169,136,0.4)] hover:bg-[#7FA988] active:scale-95 transition-all duration-300 group">
+            <i class="fa-brands fa-line text-2xl"></i>
+            <span class="font-serif font-bold tracking-widest text-base">諮詢 LINE</span>
+        </a>
+
+    </div>
+</div>
+
+    <script>
+    // 字體大小調整函數
+function adjustFontSize(change) {
+    // 取得根元素 (html)
+    const html = document.documentElement;
+    
+    // 取得當前的字體大小 (預設通常是 16px)
+    let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+    
+    // 計算新的字體大小
+    let newSize = currentSize + change;
+    
+    // 設定限制範圍：最小 12px，最大 24px
+    if (newSize >= 12 && newSize <= 24) {
+        html.style.fontSize = newSize + 'px';
+    }
+}
+
+    function toggleMobileSubmenu() {
+        const submenuContainer = document.getElementById('mobile-submenu-area');
+        const submenuList = document.getElementById('submenu-about-list');
+        const icon = document.getElementById('mobile-submenu-icon');
+        
+        if (submenuContainer.classList.contains('opacity-0')) {
+            // Expand
+            submenuContainer.classList.remove('opacity-0', '-translate-x-4', 'pointer-events-none');
+            submenuContainer.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            submenuList.classList.remove('hidden');
+            // Rotate icon
+            if(icon) icon.classList.add('rotate-90');
+        } else {
+            // 如果已展開，再點擊直接跳轉
+            window.location.href = '關於華梵.html';
+        }
+    }
+
+function switchTab(tabName) {
+    const contentHospital = document.getElementById('content-hospital');
+    const contentHome = document.getElementById('content-home');
+    
+    const btnHospital = document.getElementById('btn-hospital');
+    const btnHome = document.getElementById('btn-home');
+    
+    const arrowHospital = document.getElementById('arrow-hospital');
+    const arrowHome = document.getElementById('arrow-home');
+
+    // 定義樣式 (Active vs Inactive)
+    // Active: 深綠背景、白色文字、放大、陰影、外發光環(Ring)、有箭頭
+    const activeClass = "bg-primary text-white shadow-2xl scale-110 ring-4 ring-offset-2 ring-offset-[#F5F7F8] ring-primary/30 z-10 border-transparent";
+    // Inactive: 白色背景、灰色文字、縮小回原狀、無陰影、無光環、無箭頭
+    const inactiveClass = "bg-white text-gray-400 shadow-sm hover:bg-gray-50 hover:text-primary hover:shadow-md border border-gray-200 z-0";
+
+    if (tabName === 'hospital') {
+        // 1. 切換內容顯示
+        contentHospital.classList.remove('hidden');
+        contentHome.classList.add('hidden');
+        
+        // 2. 設定按鈕樣式
+        btnHospital.className = `group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out ${activeClass}`;
+        btnHome.className = `group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out ${inactiveClass}`;
+
+        // 3. 控制下方小箭頭 (視覺連接)
+        arrowHospital.className = "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-primary transition-all duration-300";
+        arrowHome.className = "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-transparent transition-all duration-300"; // 透明
+
+    } else {
+        // 1. 切換內容顯示
+        contentHospital.classList.add('hidden');
+        contentHome.classList.remove('hidden');
+        
+        // 2. 設定按鈕樣式
+        btnHome.className = `group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out ${activeClass}`;
+        btnHospital.className = `group relative px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 ease-out ${inactiveClass}`;
+
+        // 3. 控制下方小箭頭
+        arrowHome.className = "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-primary transition-all duration-300";
+        arrowHospital.className = "absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-transparent transition-all duration-300"; // 透明
+    }
+}
+        document.addEventListener('DOMContentLoaded', function() {
+        // Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            const isHidden = fullScreenMenu.classList.contains('hidden');
+            if (isHidden) {
+                fullScreenMenu.classList.remove('hidden');
+                fullScreenMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    fullScreenMenu.style.opacity = '1';
+                });
+            } else {
+                fullScreenMenu.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    fullScreenMenu.classList.add('hidden');
+                    fullScreenMenu.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        // 只有非按鈕的 menu-link (即 <a> 標籤) 點擊時才關閉選單
+        menuLinks.forEach(link => {
+            if (link.tagName !== 'BUTTON') {
+                link.addEventListener('click', toggleMenu);
+            }
+        });
+
+            // Scroll Indicator Logic
+            const carousel = document.getElementById('promise-carousel');
+            const dots = document.querySelectorAll('#promise-dots > div');
+            
+            // Function to update active dot
+            function updateDots(activeIndex) {
+                dots.forEach((dot, i) => {
+                    if (i === activeIndex) {
+                        dot.classList.remove('bg-primary/20');
+                        dot.classList.add('bg-primary'); // Active style: darker color
+                    } else {
+                        dot.classList.add('bg-primary/20'); // Inactive style: lighter color
+                        dot.classList.remove('bg-primary');
+                    }
+                });
+            }
+
+            if (carousel && dots.length > 0) {
+                // Initial centering for mobile carousel - Updated Logic
+                if (window.innerWidth < 1024) { // lg breakpoint
+                    // Wait slightly for layout to stabilize if needed, though offsetLeft should be ready
+                    setTimeout(() => {
+                         const cards = carousel.children;
+                         if (cards.length > 1) {
+                            const middleCard = cards[1]; // The second card (index 1)
+                            
+                            // Correct calculation for centering a card in a scroll container
+                            // scrollLeft = card's offsetLeft - (container width - card width) / 2
+                            const scrollPos = middleCard.offsetLeft - (carousel.clientWidth - middleCard.clientWidth) / 2;
+                            
+                            // Scroll immediately
+                            carousel.scrollTo({
+                                left: scrollPos,
+                                behavior: 'instant'
+                            });
+                            
+                            // Manually set the middle dot as active
+                            updateDots(1);
+                         }
+                    }, 100); // Small delay to ensure rendering is complete
+                }
+
+                // Listen for scroll events to update dots dynamically
+                carousel.addEventListener('scroll', () => {
+                    const scrollLeft = carousel.scrollLeft;
+                    // Add half the container width to find the center point
+                    const centerPosition = scrollLeft + (carousel.clientWidth / 2);
+                    
+                    let activeIndex = 0;
+                    let minDistance = Infinity;
+                    
+                    // Find which card is closest to the center
+                    Array.from(carousel.children).forEach((card, index) => {
+                        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                        const distance = Math.abs(centerPosition - cardCenter);
+                        
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            activeIndex = index;
+                        }
+                    });
+
+                    updateDots(activeIndex);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

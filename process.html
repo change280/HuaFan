@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>華梵禮儀｜殯葬服務流程 Service Process - 圓滿生命的最後旅程</title>
+    <meta name="description" content="華梵禮儀協助家屬在正信正知的儀式中，以簡化、節約、惜福、培福的原則，完成隆重、肅穆、整齊、祥和而又莊嚴的最後一段旅程。">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Noto+Serif+TC:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40', 
+                        primaryDark: '#2F3E2B', 
+                        secondary: '#2F3E2B', 
+                        accent: '#C5A670', 
+                        warm: '#F7F5F0', 
+                        pale: '#E3EBE5', 
+                        surface: '#FFFEFA', 
+                        emergency: '#9F4A46', 
+                        text: '#3D443B', 
+                        menu: '#E5E7EB', 
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'gold': '0 4px 20px -5px rgba(197, 166, 112, 0.4)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                        'rose-glow': '0 4px 15px rgba(192, 132, 132, 0.2)', 
+                        'gold-lg': '0 25px 50px -12px rgba(197, 166, 112, 0.5)', 
+                        'glow': '0 0 15px rgba(197, 166, 112, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 自定義樣式 */
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #F7F5F0; 
+            color: #3D443B;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        h1, h2, h3, h4, h5, .serif-font { font-family: 'Noto Serif TC', serif; }
+
+        [id] {
+            scroll-margin-top: 80px;
+        }
+
+        /* 有機形狀 (Blobs) */
+        .blob-shape-1 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        
+        .text-shadow-lg {
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* 動畫 */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(197, 166, 112, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg) translateX(-10px) scale(1.1); }
+            50% { transform: rotate(1deg) translateX(10px) scale(1.2); }
+        }
+        .animate-sway {
+            animation: sway 25s ease-in-out infinite;
+        }
+
+        @keyframes spin-very-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-very-slow {
+            animation: spin-very-slow 200s linear infinite;
+        }
+
+        @keyframes float-particle {
+            0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+            50% { transform: translate(10px, -20px); opacity: 1; }
+        }
+        .animate-float-particle {
+            animation: float-particle 8s ease-in-out infinite;
+        }
+
+        @keyframes global-float-up {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(15vw, -120vh) rotate(360deg); opacity: 0; }
+        }
+        .animate-global-float-up { animation: global-float-up 25s linear infinite; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        /* 流程圖專用樣式 */
+        .timeline-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(197, 166, 112, 0.2);
+        }
+        
+        .step-number-container {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, #465B40, #2F3E2B);
+            color: #C5A670;
+            border: 2px solid #F7F5F0;
+            box-shadow: 0 0 0 4px #C5A670;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            z-index: 20;
+            position: relative;
+        }
+
+        .service-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .service-list li::before {
+            content: '❀';
+            position: absolute;
+            left: 0;
+            color: #C5A670;
+            font-size: 0.8rem;
+            top: 0.2rem;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        /* 連接線動畫 */
+        .timeline-connector {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E5E7EB;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            background: #C5A670;
+            transform: translateX(-50%);
+            z-index: 1;
+            height: 0%;
+            transition: height 0.1s linear;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-connector, .timeline-progress {
+                left: 3.25rem; /* 28px - 調整線的位置 */
+            }
+            
+            /* 手機版步驟編號位置調整 */
+            .timeline-step .step-number-container {
+                position: absolute;
+                left: 0rem; /* 8px - 讓編號圓圈更靠左 */
+            }
+            
+            /* 手機版卡片左邊距調整 */
+            .timeline-step .order-2 {
+                margin-left: 3rem; /* 64px - 讓卡片遠離時間線 */
+                margin-top: 2rem; /* 8px - 增加卡片與編號的間距 */
+            }
+        }
+                /* 自定義樣式 */
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #F7F5F0; 
+            color: #3D443B;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
+
+                /* --- 有機形狀 (Blobs) --- */
+        .blob-shape-1 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        .blob-shape-2 { border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%; }
+        .blob-shape-3 { border-radius: 50% 50% 20% 80% / 25% 25% 75% 75%; }
+        .blob-shape-4 { border-radius: 20% 80% 20% 80% / 50% 50% 50% 50%; }
+
+        
+        .text-shadow-lg {
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+       .hero-bg {
+            background-image:
+                url('/HuaFan/image/process/hero_process.webp'); 
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: scroll; 
+            position: relative;
+        }
+
+        /* --- 隱藏原生卷軸 --- */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 金色脈衝動畫 */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(197, 166, 112, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+        /* 自然擺動動畫 */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg) translateX(-10px) scale(1.1); }
+            50% { transform: rotate(1deg) translateX(10px) scale(1.2); }
+        }
+        .animate-sway {
+            animation: sway 25s ease-in-out infinite;
+        }
+
+        /* 超慢速旋轉 */
+        @keyframes spin-very-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-very-slow {
+            animation: spin-very-slow 200s linear infinite;
+        }
+
+        /* 全域漂浮落下動畫 */
+        @keyframes global-float-down-1 {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(15vw, 110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes global-float-down-2 {
+            0% { transform: translate(0, -10vh) rotate(45deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translate(-15vw, 110vh) rotate(-180deg); opacity: 0; }
+        }
+        
+        @keyframes stream-flow-vertical {
+            0% { stroke-dashoffset: 2000; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        .animate-global-float-1 { animation: global-float-down-1 25s linear infinite; }
+        .animate-global-float-2 { animation: global-float-down-2 35s linear infinite; }
+        .animate-global-float-3 { animation: global-float-down-1 40s linear infinite; animation-delay: -15s; }
+        .animate-global-float-fast { animation: global-float-down-1 15s linear infinite; }
+
+        .animate-stream-flow { 
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: stream-flow-vertical 80s linear infinite; 
+        }
+
+        /* 微塵浮動動畫 */
+        @keyframes float-particle {
+            0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+            50% { transform: translate(10px, -20px); opacity: 1; }
+        }
+        .animate-float-particle {
+            animation: float-particle 8s ease-in-out infinite;
+        }
+
+        /* Tab Transitions */
+        .tab-content {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tab-content.hidden-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        /* Desktop Active State */
+        .tab-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .tab-btn.active {
+                color: #465B40;
+                background-color: white;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                border-bottom: 4px solid #C5A670;
+            }
+            .tab-btn {
+                color: #9CA3AF;
+                border-bottom: 4px solid transparent;
+            }
+            .tab-btn.active::after {
+                content: '';
+                position: absolute;
+                bottom: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 8px;
+                border-style: solid;
+                border-color: #C5A670 transparent transparent transparent;
+            }
+        }
+
+        /* Mobile Active State */
+        @media (max-width: 767px) {
+            .tab-btn {
+                border-radius: 12px;
+                padding: 0.5rem 0.25rem;
+                background-color: transparent; 
+                color: #6B7280; 
+                font-family: 'Noto Sans TC', sans-serif;
+                border: 1px solid transparent;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+            }
+            
+            .tab-btn i {
+                color: #9CA3AF; 
+                font-size: 1.25rem;
+            }
+
+            .tab-btn span.tab-text {
+                font-size: 0.85rem;
+                line-height: 1.2;
+            }
+
+            .tab-btn.active {
+                background-color: #FFFEFA; 
+                color: #465B40 !important;   
+                border: 1px solid #C5A670; 
+                box-shadow: 0 4px 8px rgba(197, 166, 112, 0.15); 
+                font-family: 'Noto Serif TC', serif; 
+                font-weight: 700;
+                position: relative; 
+            }
+            
+            .tab-btn.active i {
+                color: #C5A670; 
+            }
+            
+            .tab-btn.active::after {
+                content: '';
+                position: absolute;
+                bottom: -6px; 
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0; 
+                height: 0; 
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid #C5A670; 
+                display: block;
+            }
+            
+            .tab-btn .mobile-hide-text {
+                display: none;
+            }
+        }
+
+        /* 試算器滑桿 */
+        input[type=range] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #C5A670;
+            border: 2px solid #fff;
+            cursor: pointer;
+            margin-top: -10px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #E5E7EB;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes phone-ring {
+            0% { transform: rotate(0deg) scale(1); }
+            3% { transform: rotate(-5deg) scale(1.05); }
+            6% { transform: rotate(5deg) scale(1.05); }
+            9% { transform: rotate(-5deg) scale(1.05); }
+            12% { transform: rotate(5deg) scale(1.05); }
+            15% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(0deg) scale(1); } 
+        }
+        
+        .animate-attention {
+            animation: phone-ring 3s infinite ease-in-out;
+            transform-origin: center;
+        }
+
+        .gold-border-left {
+            position: relative;
+            overflow: hidden; 
+        }
+        .gold-border-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px; 
+            height: 100%;
+            background: linear-gradient(180deg, #9C8252 0%, #EEDC9A 50%, #9C8252 100%);
+            z-index: 10;
+        }
+
+        /* --- Header 樣式：米色底 + 綠色網點 --- */
+        .bg-dots-pattern {
+            background-color: #F7F5F0;
+            position: relative;
+        }
+
+        .bg-dots-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#465B40 1.2px, transparent 1.2px);
+            background-size: 14px 14px; 
+            opacity: 0.25;
+            
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- 選單樣式：綠色底 + 米色網點 --- */
+        .bg-dots-pattern-reversed {
+            background-color: rgba(70, 91, 64, 0.95);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-dots-pattern-reversed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#F7F5F0 1.5px, transparent 1.5px);
+            background-size: 14px 14px; 
+            opacity: 0.15;
+            
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            
+            pointer-events: none;
+            z-index: 0;
+        }
+
+  /* FAQ 區塊：保留網點、改為透明背景 */
+  #faq {
+    background-color: transparent !important;
+    position: relative;
+  }
+
+  #faq::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#465B40 1.2px, transparent 1.2px);
+    background-size: 14px 14px;
+    opacity: 0.25;
+    
+    /* 🆕 疊加兩層遮罩：左右漸隱 + 上下漸隱 */
+    -webkit-mask-image: 
+      linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 70%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 45%, black 55%, transparent 100%);
+    mask-image: 
+      linear-gradient(to right, black 0%, rgba(0,0,0,0.1) 70%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, black 45%, black 55%, transparent 100%);
+    
+    /* 🔧 必須設定 mask-composite 讓兩層遮罩疊加生效 */
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    
+    pointer-events: none;
+    z-index: 0;
+  }
+
+        /* 循環卷軸動畫 */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            animation: scroll 30s linear infinite;
+        }
+        .hover\:pause:hover {
+            animation-play-state: paused;
+        }
+        
+        /* 左右漸層遮罩 */
+        .mask-gradient-x {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: url('data:image/svg+xml,...') repeat-x;
+            animation: wave 3s linear infinite;
+        }
+
+        /* 🆕 全域向上升華動畫 */
+        @keyframes global-float-up {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(15vw, -120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 替代版本：更柔和的上升 */
+        @keyframes global-float-up-soft {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; filter: blur(8px); }
+            15% { opacity: 0.8; filter: blur(6px); }
+            85% { opacity: 0.6; filter: blur(4px); }
+            100% { transform: translate(10vw, -130vh) rotate(180deg) scale(0.5); opacity: 0; filter: blur(2px); }
+        }
+
+        /* 替代版本：光芒閃爍上升 */
+        @keyframes global-float-up-glow {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 0px rgba(197, 166, 112, 0)); }
+            10% { opacity: 1; filter: drop-shadow(0 0 20px rgba(197, 166, 112, 0.8)); }
+            50% { filter: drop-shadow(0 0 40px rgba(197, 166, 112, 0.6)); }
+            90% { opacity: 0.8; filter: drop-shadow(0 0 20px rgba(197, 166, 112, 0.3)); }
+            100% { transform: translate(20vw, -140vh) rotate(360deg); opacity: 0; filter: drop-shadow(0 0 0px rgba(197, 166, 112, 0)); }
+        }
+
+        .animate-global-float-up { animation: global-float-up 25s linear infinite; }
+        .animate-global-float-up-soft { animation: global-float-up-soft 30s ease-out infinite; }
+        .animate-global-float-up-glow { animation: global-float-up-glow 28s ease-in-out infinite; }
+
+            /* 霧面玻璃效果 */
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 0px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+    
+    /* 時間線層級調整 - 確保在 Alert 上方 */
+    .timeline-connector,
+    .timeline-progress {
+        z-index: 10; /* 從 1 改为 3 */
+    }
+    
+    /* Alert 區塊層級調整 - 低於時間線 */
+    .alert-glass-container {
+        position: relative;
+        z-index: 20; /* 從 5 改為 2，讓時間線穿過 */
+    }
+    
+    /* 確保步驟編號圓圈在最上層 */
+    .step-number-container {
+        z-index: 20;
+    }
+
+    /* --- 針對每個步驟的卡片內部樣式調整 --- */
+    .timeline-card {
+        padding: 2rem 1.5rem; /* 調整內部邊距 */
+    }
+    .timeline-card h3 {
+        font-size: 1.75rem; /* 調整標題字體大小 */
+        margin-bottom: 1rem; /* 調整標題下方間距 */
+    }
+    .timeline-card p {
+        font-size: 1.05rem;   /* 放大說明文字 */
+        line-height: 1.75;
+    }
+    .timeline-card ul.service-list {
+        font-size: 0.95rem;   /* 放大列表文字 */
+        color: #4B5563;
+    }
+
+
+    /* --- 流程時間線樣式調整 --- */
+    .timeline-card {
+        padding: 2rem 1.5rem;
+        border-radius: 1.5rem;
+    }
+    .timeline-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .timeline-card p {
+        font-size: 1.05rem;   /* 放大說明文字 */
+        line-height: 1.75;
+    }
+    .timeline-card ul.service-list {
+        font-size: 0.95rem;   /* 放大列表文字 */
+        color: #4B5563;
+    }
+
+    /* --- 按鈕樣式調整 --- */
+    .btn-primary {
+        background-color: #C5A670;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #B5944A;
+    }
+
+    /* --- 表單樣式調整 --- */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        padding: 0.75rem 1rem;
+        border: 1px solid #E5E7EB;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        color: #3D443B;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus {
+        border-color: #C5A670;
+        outline: none;
+    }
+    textarea {
+        resize: vertical;
+    }
+
+    /* --- 螢幕尺寸調整 --- */
+    @media (max-width: 768px) {
+        .timeline-card {
+            padding: 1.5rem 1rem;
+        }
+        .timeline-card h3 {
+            font-size: 1.25rem;
+        }
+        .timeline-card p {
+            font-size: 0.875rem;
+        }
+    }
+
+    /* 高雅漸層卡片 */
+.timeline-card {
+  background: linear-gradient(135deg, #FFFEFA 0%, #F7F1E5 55%, #F1E4D0 100%);
+  border: 1px solid #E8DEC8;
+  box-shadow: 0 14px 40px -12px rgba(70, 91, 64, 0.16), 0 0 0 1px rgba(255,255,255,0.6);
+  position: relative;
+  overflow: hidden;
+}
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(197,166,112,0.12), transparent 40%),
+              radial-gradient(circle at 80% 0%, rgba(255,255,255,0.25), transparent 45%);
+  pointer-events: none;
+}
+.timeline-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px -12px rgba(70, 91, 64, 0.22), 0 0 0 1px rgba(255,255,255,0.7);
+}
+
+/* 🆕 模態框動畫 */
+#mobile-info-modal {
+    transition: opacity 0.3s ease;
+}
+#mobile-info-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#mobile-info-modal.flex {
+    opacity: 1;
+}
+
+/* 手機版步驟編號增加視覺提示 */
+@media (max-width: 767px) {
+    .step-number-container {
+        position: relative;
+    }
+    .step-number-container::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border: 2px dashed #C5A670;
+        border-radius: 9999px;
+        opacity: 0;
+        animation: dash-rotate 3s linear infinite;
+    }
+    .step-number-container:active::after {
+        opacity: 0.5;
+    }
+    
+    @keyframes dash-rotate {
+        to { transform: rotate(360deg); }
+    }
+}
+
+        /* ===== 新增：桌面下拉選單樣式 ===== */
+        .nav-dropdown-item {
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease-out;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .nav-item-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translate(-6px, -50%);
+            opacity: 0;
+            color: #C5A670;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item-line {
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: #C5A670;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-dropdown-text {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-dropdown-item:hover .nav-item-icon {
+            transform: translate(0, -50%);
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-item-line {
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-dropdown-text {
+            transform: translateX(2px);
+        }
+        
+        .group:hover .nav-dropdown-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 每個項目加入微小延遲，創造階梯式動畫 */
+        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
+        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
+        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
+        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
+        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
+
+        /* 手機版子選單動畫 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .submenu-item-fade {
+            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body class="text-text bg-warm relative">
+
+    <!-- 1. 全域背景層 -->
+    <div id="global-bg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        
+        <!-- 動態極光 -->
+        <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-warm via-[#F0EFE9] to-[#E6E2D6] opacity-60 animate-spin-very-slow"></div>
+
+        <!-- 光之河 -->
+        <svg class="absolute top-0 left-0 w-full h-full opacity-30" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="globalStreamGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#C5A670; stop-opacity:0" />
+                    <stop offset="20%" style="stop-color:#C5A670; stop-opacity:0.2" />
+                    <stop offset="50%" style="stop-color:#C5A670; stop-opacity:0.1" />
+                    <stop offset="80%" style="stop-color:#C5A670; stop-opacity:0.2" />
+                    <stop offset="100%" style="stop-color:#C5A670; stop-opacity:0" />
+                </linearGradient>
+            </defs>
+            <path d="M30,0 C50,20 10,40 30,60 S50,80 30,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.8" vector-effect="non-scaling-stroke" />
+            <path d="M70,0 C50,30 90,50 70,70 S50,90 70,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.5" vector-effect="non-scaling-stroke" style="opacity: 0.7;" />
+            <path d="M50,0 C60,20 40,50 50,70 S40,100 50,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.2" vector-effect="non-scaling-stroke" style="opacity: 0.4;" />
+        </svg>
+
+        <!-- 樹影紋理 -->
+        <div class="absolute inset-0 w-[120%] h-[120%] opacity-[0.03] animate-sway pointer-events-none mix-blend-darken bg-repeat"
+             style="background-image: url('https://www.transparenttextures.com/patterns/shattered-island.png');">
+        </div>
+
+        <!-- 空氣感光束 -->
+        <div class="absolute -top-[20%] left-[5%] w-[40vw] h-[150vh] bg-gradient-to-b from-white/30 via-white/5 to-transparent -rotate-12 blur-[80px]"></div>
+        <div class="absolute -top-[20%] right-[10%] w-[50vw] h-[150vh] bg-gradient-to-b from-[#C5A670]/15 via-[#C5A670]/5 to-transparent rotate-12 blur-[100px]"></div>
+    </div>
+
+    <!-- 2. 全域前景層 -->
+    <div id="global-fg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
+    <!-- 懸浮微塵與光點 -->
+    <div class="absolute top-[15%] left-[25%] w-3 h-3 bg-[#FFD700] rounded-full blur-[2px] animate-float-particle drop-shadow-[0_0_8px_rgba(255,215,0,0.8)] opacity-90"></div>
+    <div class="absolute top-[45%] right-[25%] w-2 h-2 bg-white rounded-full blur-[1px] animate-float-particle drop-shadow-[0_0_5px_rgba(255,255,255,0.9)] opacity-90" style="animation-delay: -3s;"></div>
+    <div class="absolute bottom-[25%] left-[15%] w-4 h-4 bg-[#C5A670] rounded-full blur-[3px] animate-float-particle drop-shadow-lg opacity-80" style="animation-delay: -5s;"></div>
+    <div class="absolute top-[60%] right-[40%] w-2 h-2 bg-[#F3E5AB] rounded-full blur-[1px] animate-float-particle drop-shadow-md opacity-90" style="animation-delay: -2s;"></div>
+    
+    <!-- 大型光斑 -->
+    <div class="absolute top-[35%] left-[8%] w-48 h-48 bg-[#C5A670]/20 rounded-full blur-[80px] animate-pulse-gold mix-blend-screen" style="animation-duration: 9s;"></div>
+
+    <!-- 🆕 向上升華的光芒元素 - 改為星星、光點、光束而非葉子 -->
+    
+    <!-- 大型漸變光芒圓球 -->
+    <div class="absolute bottom-[-5%] left-[8%] w-24 h-24 bg-gradient-to-br from-[#FFD700] via-[#F0EAD6] to-[#C5A670] rounded-full blur-[12px] animate-global-float-up drop-shadow-xl opacity-80" style="animation-duration: 16s; box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);"></div>
+    
+    <!-- 中型光芒圓球 -->
+    <div class="absolute bottom-[-10%] right-[-5%] w-32 h-32 bg-gradient-to-tl from-[#F7F5F0] via-[#FFE4B5] to-[#FFF] rounded-full blur-[16px] animate-global-float-up drop-shadow-xl opacity-75" style="animation-duration: 20s; animation-delay: -5s; box-shadow: 0 0 50px rgba(255, 255, 255, 0.8);"></div>
+
+    <!-- 星星圖標升華 -->
+    
+    <!-- 小星點群 -->
+
+    <!-- 光束圖標 -->
+    
+    <!-- 微光粒子 -->
+    <i class="fa-solid fa-sparkles absolute bottom-[-12%] left-[55%] text-[#FFFACD] text-3xl animate-global-float-up drop-shadow-sm opacity-90" style="animation-delay: -8s; filter: drop-shadow(0 0 8px rgba(255, 250, 205, 0.8));"></i>
+
+    <!-- 大型光暈 -->
+    <div class="absolute bottom-[-25%] right-[18%] w-40 h-40 bg-gradient-radial from-[#FFD700] via-[#FFF] to-transparent rounded-full blur-[20px] animate-global-float-up drop-shadow-lg opacity-80 hidden md:block" style="animation-duration: 35s; box-shadow: 0 0 60px rgba(255, 215, 0, 0.7);"></div>
+    
+    <!-- 小光芒點 -->
+
+    <!-- 微光粒子群 1 -->
+    <div class="absolute bottom-[-5%] left-[85%] w-4 h-4 bg-[#C5A670] rounded-full blur-[2px] animate-global-float-up opacity-70" style="filter: drop-shadow(0 0 8px rgba(197, 166, 112, 0.6));"></div>
+    
+    <!-- 微光粒子群 2 -->
+    <div class="absolute bottom-[-8%] left-[30%] w-3 h-3 bg-white rounded-full blur-[1px] animate-global-float-up opacity-80" style="animation-duration: 22s; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));"></div>
+    
+    <!-- 中型光芒粒子 -->
+    <div class="absolute bottom-[-15%] right-[10%] w-6 h-6 bg-[#F3E5AB] rounded-full blur-[3px] animate-global-float-up opacity-75" style="animation-duration: 20s; filter: drop-shadow(0 0 10px rgba(243, 229, 171, 0.7));"></div>
+        
+    <!-- 大型緩慢光暈 -->
+    <div class="absolute bottom-[-18%] left-[5%] w-32 h-32 bg-gradient-to-tr from-[#FFD700]/40 via-[#FFF]/20 to-transparent rounded-full blur-[24px] animate-global-float-up opacity-60" style="animation-duration: 40s; animation-delay: -10s; box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);"></div>
+    
+    <!-- 光芒網絡點 -->
+    <div class="absolute bottom-[-12%] right-[55%] w-5 h-5 bg-white rounded-full blur-[2px] animate-global-float-up opacity-70" style="animation-delay: -15s; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));"></div>
+
+</div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：右側懸浮按鈕組 -->
+    <div id="hf-floating"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：漢堡全螢幕選單 -->
+    <div id="hf-menu"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Header 頁首 -->
+    <div id="hf-header"></div>
+
+
+    <!-- NEW Hero Section: 重新設計的區域 -->
+    <section class="hero-bg [90vh] flex flex-col justify-center items-center pt-32 pb-24 relative overflow-hidden">
+        
+        <!-- 背景裝飾：更優雅的流動光影 -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <!-- 右上金光 -->
+            <div class="absolute -top-20 -right-20 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[100px] animate-float-slow"></div>
+            <!-- 左下深綠沈澱 -->
+            <div class="absolute bottom-0 -left-20 w-[700px] h-[700px] bg-primary/5 rounded-full blur-[120px] animate-float-delayed"></div>
+            <!-- 中央微光 -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/40 rounded-full blur-[80px]"></div>
+        </div>
+
+        <div class="relative z-10 text-center max-w-5xl px-4 animate-fade-in-up flex flex-col items-center">
+            
+            <!-- 裝飾性的小標題 (Eyebrow Text) -->
+            <span class="inline-block text-accent tracking-[0.4em] text-xs md:text-sm font-medium mb-6 uppercase border-b border-accent/30 pb-2">
+                Solemnity & Serenity
+            </span>
+
+            <!-- 主標題：優化字距與斷行，強調空氣感 -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-primaryDark mb-8 leading-[1.15] tracking-wide">
+                讓告別，<br class="md:hidden">成為<span class="text-accent relative inline-block mx-2 font-semibold">
+                    最後的溫柔
+                    <!-- 裝飾底線 -->
+                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                        <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="2" fill="none" />
+                    </svg>
+                </span>
+            </h1>
+            
+            <!-- 裝飾性分隔線 -->
+            <div class="flex items-center gap-4 mb-8 opacity-60">
+                <div class="w-12 h-[1px] bg-primaryDark"></div>
+                <div class="w-2 h-2 rounded-full border border-accent rotate-45"></div>
+                <div class="w-12 h-[1px] bg-primaryDark"></div>
+            </div>
+
+            <!-- 副標題：精簡、充滿詩意 -->
+            <p class="text-lg md:text-xl text-gray-600 mb-12 leading-loose max-w-2xl mx-auto font-light tracking-noble">
+                生命是一場漫長的旅途，而終點值得最慎重的對待。<br>
+                我們以<span class="text-primary font-medium">正信、惜福、莊嚴</span>為引，<br class="hidden md:block">
+                為摯愛寫下最圓滿的句點。
+            </p>
+
+
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 w-full h-full bg-gradient-to-t from-warm/60 via-warm/20 to-transparent"></div>
+    
+    <!-- 波浪分隔線 -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[120px]">
+            <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F0ECE4]"></path>
+        </svg>
+    </div>
+</section>
+
+    <!-- Process Timeline Section -->
+    <section id="timeline" class="py-16 pb-0 relative z-20 bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 via-5% to-transparent">
+  <!-- max-w-5xl -> max-w-7xl，並加大內距 -->
+  <div class="container mx-auto px-4 md:px-8 max-w-7xl relative">
+
+        <div class="absolute -top-40 right-40 opacity-5 pointer-events-none hidden md:block">
+            <i class="fa-solid fa-leaf text-[14rem] transform rotate-45 text-primary"></i>
+        </div>
+
+            
+            <!-- Central Line Container -->
+            <div class="absolute left-0 top-0 bottom-0 w-full pointer-events-none hidden md:block">
+                <div class="timeline-connector"></div>
+                <div class="timeline-progress" id="progress-bar" style="height: 0%;"></div>
+            </div>
+            
+            <!-- Mobile Line -->
+            <div class="absolute left-0 top-0 bottom-0 w-full pointer-events-none md:hidden">
+                <div class="timeline-connector"></div>
+                <div class="timeline-progress" id="progress-bar-mobile" style="height: 0%;"></div>
+            </div>
+
+            <!-- Steps -->
+            <div class="space-y-24 md:space-y-16" id="timeline-steps">
+                
+                <!-- Step 1: 臨終諮詢 -->
+                <div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="1">
+                    <!-- 左側：原有卡片 -->
+                    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+                        <div class="timeline-card bg-white p-8 md:p-10 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+                            <div class="w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden mb-6 relative">
+                                <img src="/HuaFan/image/process/process1.webp" alt="臨終諮詢" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">臨終諮詢</h3>
+                            <p class="text-gray-600 mb-4 text-justify text-sm">
+                                突遇變故時，我們關心的是您與親人心靈上所受到的創傷，因此，當我們提供專業的諮詢服務時，完全針對您的需要，適時提供服務。
+                            </p>
+                            <details class="group/details">
+                                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                                    <span>查看服務內容</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                                </summary>
+                                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                                    <li>設立廿四小時臨終諮詢專線，提供臨終時禮儀、證件辦理及相關事宜解答，全年無休。</li>
+                                    <li>提供臨終逢喪應進行之禮儀流程及準備用品。</li>
+                                    <li>提醒家屬臨終者逝世後應辦理文件等各種注意事項。</li>
+                                    <li>提供完整的追思喪禮服務流程說明與本公司會員權益說明。</li>
+                                    <li>介紹本公司所提供之各項整合性週邊服務。公司處理的行程。</li>
+                                </ul>
+                            </details>
+                        </div>
+                    </div>
+                    
+                    <!-- 中央：編號 -->
+                    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+                        <div class="step-number-container">1</div>
+                    </div>
+                    
+                    <!-- 🆕 右側：詩意元素 -->
+                    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                        <!-- 裝飾圖騰 -->
+                        <div class="relative mb-6">
+                            <i class="fa-solid fa-phone-volume text-[80px] text-accent/10 absolute -left-8 -top-4"></i>
+                            <i class="fa-solid fa-heart text-[40px] text-primary/20 absolute -left-2 top-8"></i>
+                        </div>
+                        
+                        <!-- 詩意短句 -->
+                        <blockquote class="relative pl-6 py-4">
+                            <p class="text-2xl font-serif text-primaryDark/60 leading-relaxed italic mb-2">
+                                「當生命的鐘聲響起」
+                            </p>
+                            <p class="text-sm text-gray-500 leading-loose">
+                                我們傾聽您的心聲，<br>
+                                陪伴走過最初的慌亂。
+                            </p>
+                        </blockquote>
+                        
+                        <!-- 裝飾線條 -->
+                        <svg class="mt-6 w-32 h-2 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 0 100 5" stroke="#C5A670" stroke-width="1" fill="none" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Alert Section: 突逢變故 -->
+                <div class="alert-glass-container relative max-w-2xl mx-auto my-12 animate-fade-in-up  ml-1 md:ml-auto">
+                    <div class="glass-effect bg-gradient-to-r from-emergency/10 to-transparent p-6 rounded-2xl shadow-lg">
+                        <h4 class="text-emergency font-bold text-lg mb-2 flex items-center gap-2 md:justify-center md:text-center">
+                            <i class="fa-solid fa-bell"></i> 突逢變故，難免心慌失措
+                        </h4>
+                        <p class="text-gray-700 text-sm leading-relaxed ml-8 md:ml-8">
+                            ※在醫師宣佈噩耗或不幸意外發生， <a href="tel:0800800818" class="font-bold text-emergency hover:underline">0800-800-818</a> 為公司24H客服專線，您可放心託付，由我們做最完善的禮儀服務服務。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2: 大體安置 -->
+                <div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="2">
+                    
+                    <!-- 🆕 左側：數據與亮點 -->
+                    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                        
+                        <!-- 服務時效標籤 -->
+                        <div class="mb-8 flex flex-col items-end gap-4 w-full max-w-xs">
+        
+                            <!-- 卡片 1：到達時間 -->
+                            <div class="w-full bg-gradient-to-r from-accent/10 to-transparent px-6 py-4 rounded-2xl border border-accent/30 group/stat hover:border-accent/60 transition">
+                                <div class="flex items-end justify-between">
+                                    <div class="text-right">
+                                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">平均到達</p>
+                                        <p class="text-3xl font-serif font-bold text-accent">30 分</p>
+                                    </div>
+                                    <i class="fa-solid fa-clock text-accent/30 text-4xl group-hover/stat:text-accent/60 transition-all"></i>
+                                </div>
+                            </div>
+        
+                            <!-- 卡片 2：待命狀態 -->
+                            <div class="w-full bg-gradient-to-r from-primary/10 to-transparent px-6 py-4 rounded-2xl border border-primary/30 group/stat hover:border-primary/60 transition">
+                                <div class="flex items-end justify-between">
+                                    <div class="text-right">
+                                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">專業禮儀師</p>
+                                        <p class="text-2xl font-bold text-primary">24H 待命</p>
+                                    </div>
+                                    <i class="fa-solid fa-shield-halved text-primary/30 text-4xl group-hover/stat:text-primary/60 transition-all"></i>
+                                </div>
+                            </div>
+
+                            <!-- 卡片 3：服務網絡 -->
+                            <div class="w-full bg-gradient-to-r from-emerald-500/10 to-transparent px-6 py-4 rounded-2xl border border-emerald-500/30 group/stat hover:border-emerald-500/60 transition">
+                                <div class="flex items-end justify-between">
+                                    <div class="text-right">
+                                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">服務覆蓋</p>
+                                        <p class="text-xl font-bold text-emerald-700">全省據點</p>
+                                    </div>
+                                    <i class="fa-solid fa-map-location-dot text-emerald-500/30 text-4xl group-hover/stat:text-emerald-500/60 transition-all"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 核心價值 -->
+                        <div class="bg-gradient-to-l from-warm to-transparent p-6 rounded-2xl">
+                            <h5 class="text-lg font-serif text-primaryDark mb-3 text-right">核心價值</h5>
+                            <ul class="space-y-2 text-sm text-gray-600 text-right">
+                                <li class="flex items-center justify-end gap-2">
+                                    <span>全省服務網絡</span>
+                                    <i class="fa-solid fa-location-dot text-accent"></i>
+                                </li>
+                                <li class="flex items-center justify-end gap-2">
+                                    <span>溫度與專業兼具</span>
+                                    <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 中央：編號 -->
+                    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+                        <div class="step-number-container">2</div>
+                    </div>
+                    
+                    <!-- 右側：原有卡片 -->
+                    <div class="md:w-5/12 order-2 md:order-3">
+                        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+                            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                                <img src="/HuaFan/image/process/process2.webp" alt="大體安置" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">大體安置</h3>
+                            <p class="text-gray-600 mb-4 text-justify text-sm">
+                                在中國傳統「落葉歸根」的觀念影響下，有些病人會要求醫生在其宣告不治時為其帶上氧氣罩保留最後一口氣運送回家，設水舖於正廳。現在由於住宅形態改變，多於私人會館或殯儀館安置。
+                            </p>
+                            <details class="group/details">
+                                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                                    <span>查看服務內容</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                                </summary>
+                                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                                    <li>全省廿四小時0800客服專線，全年無休。</li>
+                                    <li>專任專業禮儀師一名，協助家屬處理各種初終禮儀事宜。</li>
+                                    <li>安排接體車一輛及接體人員一名前往接送遺體至喪家、或家屬指定之殯儀館中安置。</li>
+                                    <li>協助辦理殯儀館入館手續，將逝者遺體安置在冰庫室中。</li>
+                                    <li>若將遺體接運回喪家，則代訂活動式冰櫃，將逝者遺體妥善冷藏保存，或立即舉行入殮儀式。</li>
+                                    <li>協助會員客戶辦理本公司之契約認証，請求履約相關手續，免去家屬親自至公司處理的行程。</li>
+                                </ul>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+
+<!-- Step 3: 靈位設立 - 使用方案 A（詩意元素） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="3">
+    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process3.webp" alt="靈位設立" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">靈位設立</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                在難捨與親人別離時，協助您將悲傷情緒轉換為思念的禮儀，並代為安排相關宗教禮儀，莊嚴、寧靜地留下完整的思念空間給您。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>誦經人員為逝者豎靈誦經，安置逝者靈位。</li>
+                    <li>為家屬規劃、設立孝堂，讓家屬於居喪期間早晚奠拜。</li>
+                    <li>專業禮儀師提供居喪期間應注意事項之說明。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">3</div>
+    </div>
+    
+    <!-- 🆕 右側：詩意元素 -->
+    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        <div class="relative mb-6">
+            <i class="fa-solid fa-landmark text-[80px] text-accent/10 absolute -left-8 -top-4"></i>
+            <i class="fa-solid fa-candle-holder text-[40px] text-primary/20 absolute -left-2 top-8"></i>
+        </div>
+        
+        <blockquote class="relative pl-6 py-4">
+            <p class="text-2xl font-serif text-primaryDark/60 leading-relaxed italic mb-2">
+                「思念化作靈位前的香火」
+            </p>
+            <p class="text-sm text-gray-500 leading-loose">
+                莊嚴寧靜的空間，<br>
+                讓您的愛永遠陪伴。
+            </p>
+        </blockquote>
+        
+        <svg class="mt-6 w-32 h-2 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q 50 0 100 5" stroke="#C5A670" stroke-width="1" fill="none" />
+        </svg>
+    </div>
+</div>
+
+<!-- Step 4: 協調輔導 - 使用方案 B（數據與價值） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="4">
+    
+    <!-- 🆕 左側：核心價值 -->
+    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="mb-8 flex flex-col items-end gap-4 w-full max-w-xs">
+            <div class="w-full bg-gradient-to-r from-accent/10 to-transparent px-6 py-4 rounded-2xl border border-accent/30 group/stat hover:border-accent/60 transition">
+                <div class="flex items-end justify-between">
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">專屬規劃</p>
+                        <p class="text-2xl font-serif font-bold text-accent">一對一</p>
+                    </div>
+                    <i class="fa-solid fa-user-tie text-accent/30 text-4xl group-hover/stat:text-accent/60 transition-all"></i>
+                </div>
+            </div>
+            
+            <div class="w-full bg-gradient-to-r from-primary/10 to-transparent px-6 py-4 rounded-2xl border border-primary/30 group/stat hover:border-primary/60 transition">
+                <div class="flex items-end justify-between">
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">客製化服務</p>
+                        <p class="text-xl font-bold text-primary">量身打造</p>
+                    </div>
+                    <i class="fa-solid fa-heart text-primary/30 text-4xl group-hover/stat:text-primary/60 transition-all"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-l from-warm to-transparent p-6 rounded-2xl border border-warm/50 w-full max-w-xs">
+            <h5 class="text-lg font-serif text-primaryDark mb-3 text-right">核心承諾</h5>
+            <ul class="space-y-2 text-sm text-gray-600 text-right">
+                <li class="flex items-center justify-end gap-2">
+                    <span>尊重家屬意願</span>
+                    <i class="fa-solid fa-check text-accent"></i>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>專業禮儀建議</span>
+                    <i class="fa-solid fa-check text-accent"></i>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>完整流程說明</span>
+                    <i class="fa-solid fa-check text-accent"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">4</div>
+    </div>
+    
+    <div class="md:w-5/12 order-2 md:order-3">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process4.webp" alt="協調輔導" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">協調輔導</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                針對個人設計，並與家屬規劃一個屬於往生者的喪禮，以追憶舊時往事之心，整理往生者的生平行誼，留給親友一份難忘的回憶。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>禮儀師建議家屬選擇入殮、奠禮、火化及晉塔等時辰。</li>
+                    <li>說明契約之服務內容明細，及家屬要求履約時應有之權益。</li>
+                    <li>根據家屬需求協議奠禮舉行之流程並提供應準備治喪期間相關用品、事宜之建議。</li>
+                    <li>根據逝者身份及孝眷情況協助家屬撰寫訃聞，經家屬確認後印製(家屬應提供孝眷名單)。</li>
+                    <li>家屬提供逝者平生事略資料，以供奠禮現場司儀撰讀祭文及逝者生平事略。</li>
+                    <li>為逝者將遺相放大錶框；處理骨灰罐描金刻字及瓷像製作。 (家屬提供逝者底片或照片)</li>
+                    <li>針對逝者宗教、當地特定風俗民情及家屬需要提出專業之治喪事宜建議，並解答及解決家屬提出之問題。</li>
+                    <li>代訂奠禮禮廳、火化爐等公共硬體設備，並協助家屬辦理火化許可證。</li>
+                    <li>協助家屬選定孝服款式並指導帶孝。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</div>
+
+<!-- Step 5: 用品挑選 - 使用方案 C（流程視覺化） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="5">
+    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process5.webp" alt="用品挑選" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">用品挑選</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                在這階段，我們將以專業慎密的態度與您溝通，按照原先規劃的典禮儀式來完成所有籌備的工作。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>奠禮現場整體設計包含現場硬體裝飾、燈光、音響、弔唁品擺設等相關物品之建議與溝通，並由禮儀師指導佈置人員一組佈置奠禮整體會場，與家屬最後確認奠禮現場佈置無誤。</li>
+                    <li>奠禮相關明細用品準備完全，請家屬確認奠禮當天時間及時程表。</li>
+                    <li>代結算各項政府規費(於日後依收據實報實銷)。</li>
+                    <li>於治喪期間專任禮儀師提供廿四小時全時段的諮詢服務，為家屬解答任何治喪事宜相關問題。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">5</div>
+    </div>
+    
+    <!-- 🆕 右側：流程迷你圖 -->
+    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="relative mb-8 pl-8">
+            <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent to-transparent"></div>
+            
+            <div class="mb-6 relative group/mini">
+                <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full bg-accent border-2 border-white shadow-sm group-hover/mini:scale-150 transition-transform"></div>
+                <h6 class="text-sm font-bold text-primary mb-1 group-hover/mini:text-accent transition">場地設計</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">整體會場佈置與氛圍營造</p>
+            </div>
+            
+            <div class="mb-6 relative group/mini">
+                <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full bg-accent/50 border-2 border-white shadow-sm group-hover/mini:bg-accent group-hover/mini:scale-150 transition"></div>
+                <h6 class="text-sm font-medium text-gray-600 mb-1 group-hover/mini:text-accent transition">用品確認</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">所有明細用品完整準備</p>
+            </div>
+            
+            <div class="relative group/mini">
+                <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full bg-accent/30 border-2 border-white shadow-sm group-hover/mini:bg-accent group-hover/mini:scale-150 transition"></div>
+                <h6 class="text-sm font-medium text-gray-600 mb-1 group-hover/mini:text-accent transition">時程確認</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">奠禮當天流程完整規劃</p>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-xs bg-primary/5 border-l-4 border-primary px-5 py-4 rounded-r-lg">
+            <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">💡 專業堅持</p>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                每個細節都經過仔細確認，確保奠禮當天完美無瑕。
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Step 6: 法事關懷 - 使用方案 A（詩意元素） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="6">
+    
+    <!-- 🆕 左側：詩意元素 -->
+    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        <div class="relative mb-6">
+            <i class="fa-solid fa-book-open-reader text-[80px] text-accent/10 absolute -right-8 -top-4"></i>
+        </div>
+        
+        <blockquote class="relative pr-6 py-4 text-right">
+            <p class="text-2xl font-serif text-primaryDark/60 leading-relaxed italic mb-2">
+                「誦經聲中的寧靜」
+            </p>
+            <p class="text-sm text-gray-500 leading-loose">
+                以虔誠的心，<br>
+                為逝者送上最後的祝福。
+            </p>
+        </blockquote>
+        
+        <svg class="mt-6 w-32 h-2 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q 50 0 100 5" stroke="#C5A670" stroke-width="1" fill="none" />
+        </svg>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">6</div>
+    </div>
+    
+    <div class="md:w-5/12 order-2 md:order-3">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process6.webp" alt="法事關懷" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">法事關懷</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                在這階段，我們將以專業慎密的態度與您溝通，按照原先規劃的典禮儀式來完成所有籌備的工作。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>禮儀師在治喪期間中引導家屬配合法師進行宣經禮懺儀式，並為家屬解答相關問題。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</div>
+
+<!-- Step 7: 禮體SPA - 使用方案 B（數據與特色） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="7">
+    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process7.webp" alt="禮體SPA" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">禮體SPA</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                禮體SPA以專業淨身與美容技巧，為逝者打造自然安詳的服務，並讓家屬參與最後的孝思禮，寄託思念與感恩。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>禮體SPA前流程說明。</li>
+                    <li>專業淨身及遺體美容，恢復逝者自然風采。</li>
+                    <li>使用一次性美容耗材與精選SPA用品，確保衛生與品質。</li>
+                    <li>提供獨立空間，維護隱私與尊嚴。</li>
+                    <li>家屬可參與孝思禮儀式，表達最後的孝道。</li>
+                    <li>全程90-120分鐘，由專業禮體師細心操作。</li>
+                    <li>根據逝者喜好，打造個性化妝容與儀容。</li>
+                    <li>提供三種套組選擇，另有其他服務，詳情請洽專業人員。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">7</div>
+    </div>
+    
+    <!-- 🆕 右側：服務特色 -->
+    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="mb-8 flex flex-col items-start gap-4 w-full max-w-xs">
+            <div class="w-full bg-gradient-to-l from-accent/10 to-transparent px-6 py-4 rounded-2xl border border-accent/30 group/stat hover:border-accent/60 transition">
+                <div class="flex items-end justify-between">
+                    <i class="fa-solid fa-spa text-accent/30 text-4xl group-hover/stat:text-accent/60 transition-all"></i>
+                    <div class="text-left">
+                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">專業時長</p>
+                        <p class="text-2xl font-serif font-bold text-accent">90-120 分</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w-full bg-gradient-to-l from-primary/10 to-transparent px-6 py-4 rounded-2xl border border-primary/30 group/stat hover:border-primary/60 transition">
+                <div class="flex items-end justify-between">
+                    <i class="fa-solid fa-shield-heart text-primary/30 text-4xl group-hover/stat:text-primary/60 transition-all"></i>
+                    <div class="text-left">
+                        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wider">衛生標準</p>
+                        <p class="text-xl font-bold text-primary">一次性耗材</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-warm to-transparent p-6 rounded-2xl border border-warm/50 w-full max-w-xs">
+            <h5 class="text-lg font-serif text-primaryDark mb-3">核心價值</h5>
+            <ul class="space-y-2 text-sm text-gray-600">
+                <li class="flex items-center gap-2">
+                    <i class="fa-solid fa-heart text-accent"></i>
+                    <span>恢復自然風采</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-heart text-accent"></i>
+                    <span>家屬參與孝思禮</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-accent"></i>
+                    <span>維護隱私尊嚴</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Step 8: 奠禮進行 - 使用方案 C（流程視覺化） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="8">
+    
+    <!-- 🆕 左側：流程迷你圖 -->
+    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="relative mb-8 pr-8">
+            <div class="absolute right-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent to-transparent"></div>
+            
+            <div class="mb-6 relative group/mini text-right">
+                <div class="absolute -right-3.5 top-1 w-3 h-3 rounded-full bg-accent border-2 border-white shadow-sm group-hover/mini:scale-150 transition-transform"></div>
+                <h6 class="text-sm font-bold text-primary mb-1 group-hover/mini:text-accent transition">入殮接靈</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">協助辦理手續與接靈位儀式</p>
+            </div>
+            
+            <div class="mb-6 relative group/mini text-right">
+                <div class="absolute -right-3.5 top-1 w-3 h-3 rounded-full bg-accent/50 border-2 border-white shadow-sm group-hover/mini:bg-accent group-hover/mini:scale-150 transition"></div>
+                <h6 class="text-sm font-medium text-gray-600 mb-1 group-hover/mini:text-accent transition">家公奠禮</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">司儀主持與樂隊演奏</p>
+            </div>
+            
+            <div class="relative group/mini text-right">
+                <div class="absolute -right-3.5 top-1 w-3 h-3 rounded-full bg-accent/30 border-2 border-white shadow-sm group-hover/mini:bg-accent group-hover/mini:scale-150 transition"></div>
+                <h6 class="text-sm font-medium text-gray-600 mb-1 group-hover/mini:text-accent transition">奠拜儀式</h6>
+                <p class="text-xs text-gray-500 leading-snug max-w-[160px]">家奠與公奠依序進行</p>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-xs bg-primary/5 border-r-4 border-primary px-5 py-4 rounded-l-lg text-right">
+            <p class="text-xs font-bold text-primary uppercase tracking-widest mb-2">💡 專業陪伴</p>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                在親人最後的告別時刻，我們全程守護每個環節。
+            </p>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">8</div>
+    </div>
+    
+    <div class="md:w-5/12 order-2 md:order-3">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process8.webp" alt="奠禮進行" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">奠禮進行</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                在親人最後一次輓別時，常悲慟得無法自抑，此時，您可以放心將一切喪禮儀式交給專業的我們。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>協助家屬辦理遺体認領手續，接運遺體至入殮室入殮（館內）。</li>
+                    <li>偕同誦經人員引導家屬舉行接靈位儀式，準備進行奠禮。</li>
+                    <li>請司儀或誦經人員引導家屬行告靈禮。</li>
+                    <li>誦經人員引導家屬進行奠禮誦經，為逝者超渡。</li>
+                    <li>五人西樂隊一組現場演奏，營造整體氣氛，專業司儀一名主持家公奠禮，順利進行整場奠禮。</li>
+                    <li>兩名專業襄儀協助司儀掌握現場狀況，進行奠禮相關拜奠儀式。</li>
+                    <li>在家奠儀式中引導家屬及親戚依序奠拜。</li>
+                    <li>在公奠儀式中引導公奠團體依序奠弔。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</div>
+
+<!-- Step 9: 火化儀式 - 使用方案 A（詩意元素） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="9">
+    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process9.webp" alt="火化儀式" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">火化儀式</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                送君千里終須一別，在最後離別的時候尤其不捨，我們以感同身受的心情，協助您整理火化後的往生者靈灰。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>禮儀師陪同至火化場，並擺設祭品。</li>
+                    <li>誦經人員引導家屬進行火化前奠拜。</li>
+                    <li>禮儀師陪同家屬目送靈柩進入火化爐。</li>
+                    <li>靈柩進火化爐之後由誦經人員引導家屬進行除服儀式。</li>
+                    <li>由禮儀師協助家屬全程參與撿骨封罐儀式。</li>
+                    <li>工作人員撿骨、裝罐、封蓋包裝並由家屬確認後領回。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">9</div>
+    </div>
+    
+    <!-- 🆕 右側：詩意元素 -->
+    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        <div class="relative mb-6">
+            <i class="fa-solid fa-fire text-[80px] text-accent/10 absolute -left-8 -top-4"></i>
+            <i class="fa-solid fa-dove text-[40px] text-primary/20 absolute -left-2 top-8"></i>
+        </div>
+        
+        <blockquote class="relative pl-6 py-4">
+            <p class="text-2xl font-serif text-primaryDark/60 leading-relaxed italic mb-2">
+                「送君千里，終須一別」
+            </p>
+            <p class="text-sm text-gray-500 leading-loose">
+                在火光中化作永恆，<br>
+                我們陪您走完最後一程。
+            </p>
+        </blockquote>
+        
+        <svg class="mt-6 w-32 h-2 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q 50 0 100 5" stroke="#C5A670" stroke-width="1" fill="none" />
+        </svg>
+    </div>
+</div>
+
+<!-- Step 10: 安奉香火 - 使用方案 D（榮譽與成就） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="10">
+    
+    <!-- 🆕 左側：榮譽徽章 -->
+    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="grid grid-cols-2 gap-4 mb-8 max-w-xs">
+            <div class="aspect-square rounded-2xl border-2 border-accent/30 bg-gradient-to-br from-accent/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-accent/60 hover:shadow-gold transition">
+                <i class="fa-solid fa-hands-praying text-accent/60 text-3xl mb-2 group-hover/badge:text-accent group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-primary leading-tight">虔誠守護</p>
+            </div>
+            
+            <div class="aspect-square rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-primary/60 hover:shadow-soft transition">
+                <i class="fa-solid fa-hand-holding-heart text-primary/60 text-3xl mb-2 group-hover/badge:text-primary group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-primary leading-tight">溫暖陪伴</p>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-xs space-y-3 text-right">
+            <div class="bg-warm/60 p-4 rounded-xl border border-warm">
+                <p class="text-xs text-gray-600 mb-1">莊嚴儀式</p>
+                <p class="text-lg font-serif font-bold text-primary">香火永續</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">10</div>
+    </div>
+    
+    <div class="md:w-5/12 order-2 md:order-3">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process10.webp" alt="安奉香火" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">安奉香火</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                當一切塵埃落定，我們為您置妥先人的靈位，此刻起，請拋開悲傷的情緒，化作生命積極的動力，生活起居回歸正常坐息。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>禮儀師及法師帶領家屬安奉往生者之香火。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</div>
+
+<!-- Step 11: 進塔安靈 - 使用方案 A（詩意元素） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="11">
+    <div class="md:w-5/12 order-2 md:order-1 flex justify-end">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process11.webp" alt="進塔安靈" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3">進塔安靈</h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                完成莊嚴的奠禮儀式後，以虔誠的心及專業的服務，協助您將往生者的靈體或靈灰安奉在預定之處供日後追思。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <div class="mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <h5 class="font-bold text-primary mb-2">晉塔：</h5>
+                    <ul class="service-list mb-3">
+                        <li>安排高級禮車一輛接送靈灰至家屬指定之晉塔地點永久安息。</li>
+                    </ul>
+                    <h5 class="font-bold text-primary mb-2">安葬：</h5>
+                    <ul class="service-list">
+                        <li>禮儀人員協助家屬擺設安葬祭品。</li>
+                        <li>誦經人員引導家屬為逝者行安葬禮。</li>
+                        <li>誦經人員引導家屬行祀后土禮。</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">11</div>
+    </div>
+    
+    <!-- 🆕 右側：詩意元素 -->
+    <div class="md:w-5/12 order-3 md:order-3 hidden md:flex flex-col items-start justify-center pl-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        <div class="relative mb-6">
+            <i class="fa-solid fa-dharmachakra text-[80px] text-accent/10 absolute -left-8 -top-4"></i>
+            <i class="fa-solid fa-mountain text-[40px] text-primary/20 absolute -left-2 top-8"></i>
+        </div>
+        
+        <blockquote class="relative pl-6 py-4">
+            <p class="text-2xl font-serif text-primaryDark/60 leading-relaxed italic mb-2">
+                「安息之所，永恆之地」
+            </p>
+            <p class="text-sm text-gray-500 leading-loose">
+                以虔誠的心，<br>
+                為摯愛找到最後的歸宿。
+            </p>
+        </blockquote>
+        
+        <svg class="mt-6 w-32 h-2 opacity-30" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q 50 0 100 5" stroke="#C5A670" stroke-width="1" fill="none" />
+        </svg>
+    </div>
+</div>
+
+<!-- Step 12: 後續關懷 - 使用方案 D（榮譽與成就） -->
+<div class="timeline-step relative flex flex-col md:flex-row items-center md:justify-between gap-8 group" data-step="12">
+    
+    <!-- 🆕 左側：榮譽徽章與成就 -->
+    <div class="md:w-5/12 order-1 md:order-1 hidden md:flex flex-col items-end justify-center pr-12 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        
+        <div class="grid grid-cols-2 gap-4 mb-8 max-w-xs">
+            <div class="aspect-square rounded-2xl border-2 border-accent/30 bg-gradient-to-br from-accent/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-accent/60 hover:shadow-gold transition">
+                <i class="fa-solid fa-heart-pulse text-accent/60 text-3xl mb-2 group-hover/badge:text-accent group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-primary leading-tight">持續關懷</p>
+            </div>
+            
+            <div class="aspect-square rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-primary/60 hover:shadow-soft transition">
+                <i class="fa-solid fa-calendar-check text-primary/60 text-3xl mb-2 group-hover/badge:text-primary group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-primary leading-tight">定期提醒</p>
+            </div>
+            
+            <div class="aspect-square rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-emerald-500/60 hover:shadow-soft transition">
+                <i class="fa-solid fa-phone text-emerald-600/60 text-3xl mb-2 group-hover/badge:text-emerald-600 group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-emerald-700 leading-tight">免費諮詢</p>
+            </div>
+            
+            <div class="aspect-square rounded-2xl border-2 border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-transparent flex flex-col items-center justify-center p-4 group/badge hover:border-blue-500/60 hover:shadow-soft transition">
+                <i class="fa-solid fa-star text-blue-600/60 text-3xl mb-2 group-hover/badge:text-blue-600 group-hover/badge:scale-110 transition-all"></i>
+                <p class="text-xs font-bold text-center text-blue-700 leading-tight">滿意服務</p>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-xs space-y-3 text-right">
+            <div class="bg-warm/60 p-4 rounded-xl border border-warm">
+                <p class="text-2xl font-serif font-bold text-primary">3 年+</p>
+                <p class="text-xs text-gray-600 mt-1">持續關懷服務</p>
+            </div>
+            <div class="bg-warm/40 p-4 rounded-xl border border-warm/70">
+                <p class="text-2xl font-serif font-bold text-primaryDark">百日·對年·合爐</p>
+                <p class="text-xs text-gray-600 mt-1">完整追思提醒</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="absolute left-2 md:left-1/2 transform md:-translate-x-1/2 order-1 md:order-2 flex flex-col items-center justify-center z-10 top-0 md:top-auto">
+        <div class="step-number-container">12</div>
+    </div>
+    
+    
+    <!-- 🔧 修正：右側卡片 - 改用 bg-white -->
+    <div class="md:w-5/12 order-2 md:order-3">
+        <div class="timeline-card bg-white p-6 rounded-2xl shadow-soft border border-white/60 w-full relative overflow-hidden">
+            <div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative">
+                <img src="/HuaFan/image/process/process12.webp" alt="後續關懷" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <h3 class="text-2xl font-serif font-bold text-primaryDark mb-3 flex items-center gap-2">
+                後續關懷 <i class="fa-solid fa-heart text-accent text-lg"></i>
+            </h3>
+            <p class="text-gray-600 mb-4 text-justify text-sm">
+                陪伴往生者走完最後一段路程後，在相關的節日裡，我們將持續以關懷的心，提供您必要的諮詢及追思協助。
+            </p>
+            <details class="group/details">
+                <summary class="cursor-pointer text-accent font-bold hover:text-primary transition flex items-center gap-2 text-sm select-none">
+                    <span>查看服務內容</span>
+                    <i class="fa-solid fa-chevron-down transition-transform group-open/details:rotate-180"></i>
+                </summary>
+                <ul class="service-list mt-4 text-sm text-gray-600 bg-warm/50 p-4 rounded-lg">
+                    <li>核對確認各項費用,由禮儀師向家屬說明費用明細並結清日後由公司寄送發票給家屬。</li>
+                    <li>請家屬親自填寫服務滿意度調查表，表達受服務之滿意度及相關建言之提出。</li>
+                    <li>設立客戶申訴專線，處理受服務期間所發生之任何問題。</li>
+                    <li>客訴問題經查證後向家屬說明稽核處理結果。</li>
+                    <li>於百日、對年將近時寄發卡片提醒家屬，並免費提供諮詢服務，解答相關流程之進行、應準備項目及應注意事項。</li>
+                    <li>提供三年、合爐及四時祭享等相關資訊免費諮詢服務，解答相關流程之進行、應準備項目及應注意事項。</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</div>          
+    </section>
+
+
+
+    <!-- 🆕 修正後：高雅過渡區塊 -->
+    <div class="relative w-full h-96 md:h-96 -mt-32 z-10 overflow-visible">
+        
+        <!-- 底部金色光暈 -->
+        <div class="absolute bottom-0 w-full h-full pointer-events-none"></div>
+        <!-- 網點遮罩效果：越接近底部網點越明顯 -->
+            <div class="absolute bottom-0 w-full h-full opacity-40 mix-blend-multiply" style="background-image: radial-gradient(#465B40 1.5px, transparent 1.5px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, transparent 20%, black 90%); -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 90%);">
+            </div>
+    </div>
+
+    
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
+    <div id="hf-footer"></div>
+
+    <!-- 🆕 手機版彈窗模態框 -->
+<div id="mobile-info-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden flex items-center justify-center p-4 md:hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up">
+        <!-- 關閉按鈕 -->
+        <button id="close-modal-btn" class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition shadow-md z-10">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        
+        <!-- 內容區域 -->
+        <div id="modal-content" class="p-6">
+            <!-- 動態插入內容 -->
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function toggleMobileSubmenu() {
+        const submenuContainer = document.getElementById('mobile-submenu-area');
+        const submenuList = document.getElementById('submenu-about-list');
+        const icon = document.getElementById('mobile-submenu-icon');
+        
+        if (submenuContainer.classList.contains('opacity-0')) {
+            // Expand
+            submenuContainer.classList.remove('opacity-0', '-translate-x-4', 'pointer-events-none');
+            submenuContainer.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            submenuList.classList.remove('hidden');
+            // Rotate icon
+            if(icon) icon.classList.add('rotate-90');
+        } else {
+            // 如果已展開，再點擊直接跳轉
+            window.location.href = '關於華梵.html';
+        }
+    }
+
+    
+    // 字體大小調整函數
+
+// 🆕 自動展開指定步驟（如網址有 ?card=7）
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    let cardIndex = params.get('card');
+    if (cardIndex) {
+        cardIndex = Number(cardIndex);
+        
+        if (window.innerWidth < 768) {
+            // 手機：自動捲動到卡片，展開details，然後彈出資訊卡
+            setTimeout(function() {
+                const step = document.querySelector('.timeline-step[data-step="' + cardIndex + '"]');
+                if (step) {
+                    // 計算精確的捲動位置（卡片距離視窗頂部 400px，往下移更多）
+                    const rect = step.getBoundingClientRect();
+                    const scrollPosition = window.scrollY + rect.top - 110;
+                    window.scrollTo({top: scrollPosition, behavior: 'smooth'});
+                    
+                    // 展開該卡片的 details
+                    const details = step.querySelector('details');
+                    if (details) {
+                        details.open = true;
+                    }
+                }
+                
+                // 再彈出資訊卡
+                setTimeout(function() {
+                    const modal = document.getElementById('mobile-info-modal');
+                    const modalContent = document.getElementById('modal-content');
+                    if (typeof renderModalContent === 'function') {
+                        modalContent.innerHTML = renderModalContent(cardIndex);
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }, 500);
+            }, 300);
+        } else {
+            // 桌面：自動捲動、展開details、並高亮卡片
+            setTimeout(function() {
+                const step = document.querySelector('.timeline-step[data-step="' + cardIndex + '"]');
+                if (step) {
+                    // 計算精確的捲動位置（卡片距離視窗頂部 80px）
+                    const rect = step.getBoundingClientRect();
+                    const scrollPosition = window.scrollY + rect.top - 85;
+                    window.scrollTo({top: scrollPosition, behavior: 'smooth'});
+                    
+                    // 展開該卡片的 details
+                    const details = step.querySelector('details');
+                    if (details) {
+                        details.open = true;
+                    }
+                    // 高亮該卡片
+                    step.classList.add('ring-4', 'ring-accent', 'ring-offset-2');
+                    // 2秒後移除高亮
+                    setTimeout(() => {
+                        step.classList.remove('ring-4', 'ring-accent', 'ring-offset-2');
+                    }, 2000);
+                }
+            }, 600);
+        }
+    }
+});
+function adjustFontSize(change) {
+    // 取得根元素 (html)
+    const html = document.documentElement;
+    
+    // 取得當前的字體大小 (預設通常是 16px)
+    let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+    
+    // 計算新的字體大小
+    let newSize = currentSize + change;
+    
+    // 設定限制範圍：最小 12px，最大 24px
+    if (newSize >= 12 && newSize <= 24) {
+        html.style.fontSize = newSize + 'px';
+    }
+}
+
+// 🆕 手機版步驟資訊卡功能
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('mobile-info-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeBtn = document.getElementById('close-modal-btn');
+    
+    // 步驟資訊數據（與桌面版右側卡片對應）
+    const stepInfoData = {
+        1: {
+            type: 'quote',
+            icon: 'fa-phone-volume',
+            title: '「當生命的鐘聲響起」',
+            subtitle: '我們傾聽您的心聲，<br>陪伴走過最初的慌亂。',
+            color: 'accent'
+        },
+        2: {
+            type: 'stats',
+            cards: [
+                { label: '平均到達', value: '30 分', icon: 'fa-clock', color: 'accent' },
+                { label: '專業禮儀師', value: '24H 待命', icon: 'fa-shield-halved', color: 'primary' },
+                { label: '服務網絡', value: '全省據點', icon: 'fa-map-location-dot', color: 'emerald-600' }
+            ],
+            values: ['全省服務網絡', '溫度與專業兼具']
+        },
+        3: {
+            type: 'quote',
+            icon: 'fa-landmark',
+            title: '「思念化作靈位前的香火」',
+            subtitle: '莊嚴寧靜的空間，<br>讓您的愛永遠陪伴。',
+            color: 'accent'
+        },
+        4: {
+            type: 'stats',
+            cards: [
+                { label: '專屬規劃', value: '一對一', icon: 'fa-user-tie', color: 'accent' },
+                { label: '客製化服務', value: '量身打造', icon: 'fa-heart', color: 'primary' }
+            ],
+            values: ['尊重家屬意願', '專業禮儀建議', '完整流程說明']
+        },
+        5: {
+            type: 'process',
+            steps: [
+                { title: '場地設計', desc: '整體會場佈置與氛圍營造' },
+                { title: '用品確認', desc: '所有明細用品完整準備' },
+                { title: '時程確認', desc: '奠禮當天流程完整規劃' }
+            ],
+            tip: '每個細節都經過仔細確認，確保奠禮當天完美無瑕。'
+        },
+        6: {
+            type: 'quote',
+            icon: 'fa-book-open-reader',
+            title: '「誦經聲中的寧靜」',
+            subtitle: '以虔誠的心，<br>為逝者送上最後的祝福。',
+            color: 'accent'
+        },
+        7: {
+            type: 'stats',
+            cards: [
+                { label: '專業時長', value: '90-120 分', icon: 'fa-spa', color: 'accent' },
+                { label: '衛生標準', value: '一次性耗材', icon: 'fa-shield-heart', color: 'primary' }
+            ],
+            values: ['恢復自然風采', '家屬參與孝思禮', '維護隱私尊嚴']
+        },
+        8: {
+            type: 'process',
+            steps: [
+                { title: '入殮接靈', desc: '協助辦理手續與接靈位儀式' },
+                { title: '家公奠禮', desc: '司儀主持與樂隊演奏' },
+                { title: '奠拜儀式', desc: '家奠與公奠依序進行' }
+            ],
+            tip: '在親人最後的告別時刻，我們全程守護每個環節。'
+        },
+        9: {
+            type: 'quote',
+            icon: 'fa-fire',
+            title: '「送君千里，終須一別」',
+            subtitle: '在火光中化作永恆，<br>我們陪您走完最後一程。',
+            color: 'accent'
+        },
+        10: {
+            type: 'badges',
+            items: [
+                { icon: 'fa-hands-praying', label: '虔誠守護' },
+                { icon: 'fa-hand-holding-heart', label: '溫暖陪伴' }
+            ],
+            highlight: { label: '莊嚴儀式', value: '香火永續' }
+        },
+        11: {
+            type: 'quote',
+            icon: 'fa-dharmachakra',
+            title: '「安息之所，永恆之地」',
+            subtitle: '以虔誠的心，<br>為摯愛找到最後的歸宿。',
+            color: 'accent'
+        },
+        12: {
+            type: 'badges',
+            items: [
+                { icon: 'fa-heart-pulse', label: '持續關懷' },
+                { icon: 'fa-calendar-check', label: '定期提醒' },
+                { icon: 'fa-phone', label: '免費諮詢' },
+                { icon: 'fa-star', label: '滿意服務' }
+            ],
+            stats: [
+                { value: '3 年+', label: '持續關懷服務' },
+                { value: '百日·對年·合爐', label: '完整追思提醒' }
+            ]
+        }
+    };
+
+    // 渲染模態框內容
+    function renderModalContent(stepNumber) {
+        const data = stepInfoData[stepNumber];
+        if (!data) return '';
+
+        let html = `<div class="text-center mb-6">
+        </div>`;
+
+        if (data.type === 'quote') {
+            html += `
+                <div class="text-center mb-6">
+                    <i class="fa-solid ${data.icon} text-6xl text-${data.color}/20 mb-4"></i>
+                </div>
+                <blockquote class="border-l-4 border-${data.color}/30 pl-6 py-4 mb-6">
+                    <p class="text-2xl font-serif text-primaryDark/70 italic mb-3">${data.title}</p>
+                    <p class="text-sm text-gray-500 leading-loose">${data.subtitle}</p>
+                </blockquote>
+            `;
+        } 
+        else if (data.type === 'stats') {
+            html += '<div class="space-y-4 mb-6">';
+            data.cards.forEach(card => {
+                html += `
+                    <div class="bg-gradient-to-r from-${card.color}/10 to-transparent p-4 rounded-xl border border-${card.color}/30">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1 uppercase">${card.label}</p>
+                                <p class="text-2xl font-serif font-bold text-${card.color}">${card.value}</p>
+                            </div>
+                            <i class="fa-solid ${card.icon} text-4xl text-${card.color}/30"></i>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            if (data.values) {
+                html += '<div class="bg-warm/60 p-4 rounded-xl border border-warm"><h5 class="font-bold text-primary mb-3">核心承諾</h5><ul class="space-y-2 text-sm">';
+                data.values.forEach(val => {
+                    html += `<li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i><span>${val}</span></li>`;
+                });
+                html += '</ul></div>';
+            }
+        }
+        else if (data.type === 'process') {
+            html += '<div class="space-y-4 mb-6">';
+            data.steps.forEach((step, idx) => {
+                html += `
+                    <div class="flex items-start gap-4 p-4 bg-warm/40 rounded-xl">
+                        <div class="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold flex-shrink-0">${idx + 1}</div>
+                        <div>
+                            <h6 class="font-bold text-primary mb-1">${step.title}</h6>
+                            <p class="text-xs text-gray-600">${step.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            html += `<div class="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg"><p class="text-xs font-bold text-primary mb-2">💡 專業堅持</p><p class="text-sm text-gray-600">${data.tip}</p></div>`;
+        }
+        else if (data.type === 'badges') {
+            html += '<div class="grid grid-cols-2 gap-3 mb-6">';
+            data.items.forEach(item => {
+                html += `
+                    <div class="aspect-square rounded-xl border-2 border-accent/30 bg-gradient-to-br from-accent/10 to-transparent flex flex-col items-center justify-center p-4">
+                        <i class="fa-solid ${item.icon} text-3xl text-accent/60 mb-2"></i>
+                        <p class="text-xs font-bold text-center">${item.label}</p>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            if (data.highlight) {
+                html += `<div class="bg-warm/60 p-4 rounded-xl border border-warm text-center mb-4"><p class="text-xs text-gray-600 mb-1">${data.highlight.label}</p><p class="text-lg font-serif font-bold text-primary">${data.highlight.value}</p></div>`;
+            }
+            
+            if (data.stats) {
+                html += '<div class="space-y-3">';
+                data.stats.forEach(stat => {
+                    html += `<div class="bg-warm/40 p-4 rounded-xl border border-warm/70 text-center"><p class="text-xl font-serif font-bold text-primaryDark">${stat.value}</p><p class="text-xs text-gray-600 mt-1">${stat.label}</p></div>`;
+                });
+                html += '</div>';
+            }
+        }
+
+        return html;
+    }
+
+    // 為所有步驟編號綁定點擊事件（僅手機版）
+    const stepNumbers = document.querySelectorAll('.step-number-container');
+    stepNumbers.forEach((stepNum, index) => {
+        stepNum.addEventListener('click', (e) => {
+            // 只在手機版觸發
+            if (window.innerWidth >= 768) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const stepNumber = index + 1;
+            const content = renderModalContent(stepNumber);
+            
+            if (content) {
+                modalContent.innerHTML = content;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+        
+        // 手機版添加點擊提示
+        if (window.innerWidth < 768) {
+            stepNum.style.cursor = 'pointer';
+            stepNum.classList.add('animate-pulse-gold');
+        }
+    });
+
+    // 關閉模態框
+    function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // ESC 鍵關閉
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const progressBar = document.getElementById('progress-bar');
+    const progressBarMobile = document.getElementById('progress-bar-mobile');
+    const steps = document.querySelectorAll('.timeline-step');
+    const timelineSection = document.getElementById('timeline-steps');
+
+    function handleScroll() {
+        if (!timelineSection) return;
+        
+        const rect = timelineSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const totalHeight = rect.height;
+        
+        // 計算已滾動距離（以區塊中線為基準）
+        let scrolled = -rect.top + (windowHeight / 2);
+        if (scrolled < 0) scrolled = 0;
+        if (scrolled > totalHeight) scrolled = totalHeight;
+        
+        const percentage = (scrolled / totalHeight) * 100;
+        
+        // 更新進度條
+        if (progressBar) progressBar.style.height = `${Math.min(100, percentage)}%`;
+        if (progressBarMobile) progressBarMobile.style.height = `${Math.min(100, percentage)}%`;
+
+        // 高亮可視範圍內的步驟編號
+        steps.forEach((step) => {
+            const stepRect = step.getBoundingClientRect();
+            const circle = step.querySelector('.step-number-container');
+            if (!circle) return;
+            if (stepRect.top < windowHeight * 0.8) {
+                circle.classList.add('bg-accent', 'text-white');
+                circle.classList.remove('bg-white', 'text-accent');
+            } else {
+                circle.classList.remove('bg-accent', 'text-white');
+                circle.classList.add('bg-white', 'text-accent');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // 初始化
+});
+
+// 全螢幕選單開關功能
+document.addEventListener('DOMContentLoaded', function () {
+        // Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            const isHidden = fullScreenMenu.classList.contains('hidden');
+            if (isHidden) {
+                fullScreenMenu.classList.remove('hidden');
+                fullScreenMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    fullScreenMenu.style.opacity = '1';
+                });
+            } else {
+                fullScreenMenu.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    fullScreenMenu.classList.add('hidden');
+                    fullScreenMenu.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        // 只有非按鈕的 menu-link (即 <a> 標籤) 點擊時才關閉選單
+        menuLinks.forEach(link => {
+            if (link.tagName !== 'BUTTON') {
+                link.addEventListener('click', toggleMenu);
+            }
+        });
+});
+</script>
+
+<style>
+/* 🆕 模態框動畫 */
+#mobile-info-modal {
+    transition: opacity 0.3s ease;
+}
+#mobile-info-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#mobile-info-modal.flex {
+    opacity: 1;
+}
+
+/* 手機版步驟編號增加視覺提示 */
+@media (max-width: 767px) {
+    .step-number-container {
+        position: relative;
+    }
+    .step-number-container::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border: 2px dashed #C5A670;
+        border-radius: 9999px;
+        opacity: 0;
+        animation: dash-rotate 3s linear infinite;
+    }
+    .step-number-container:active::after {
+        opacity: 0.5;
+    }
+    
+    @keyframes dash-rotate {
+        to { transform: rotate(360deg); }
+    }
+}
+</style>

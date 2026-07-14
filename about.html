@@ -1,0 +1,2583 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>關於華梵｜真心·真意·真誠敬 - 華梵禮儀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40', 
+                        primaryDark: '#2F3E2B', 
+                        secondary: '#2F3E2B', 
+                        accent: '#C5A670', 
+                        warm: '#F7F5F0', 
+                        pale: '#E3EBE5', 
+                        surface: '#FFFEFA', 
+                        emergency: '#9F4A46', 
+                        text: '#3D443B', 
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'gold': '0 4px 20px -5px rgba(197, 166, 112, 0.4)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                        'rose-glow': '0 4px 15px rgba(192, 132, 132, 0.2)', 
+                        'gold-lg': '0 25px 50px -12px rgba(197, 166, 112, 0.5)', 
+                        'glow': '0 0 15px rgba(197, 166, 112, 0.3)',
+                    },
+                    borderRadius: {
+                        'organic': '2rem 5rem 2rem 5rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
+        
+        /* 所有有ID的元素上移100px，除了#life-care */
+        [id]:not(#core-philosophy):not(#Government_Designated_Partner):not(#life-care) {
+            scroll-margin-top: 80px;
+        }
+        /* #core-philosophy 只上移40px */
+        #core-philosophy,#Government_Designated_Partner {
+            scroll-margin-top: 40px;
+        }
+
+        #life-care {
+            scroll-margin-top: 0px;
+        }
+
+        
+        /* #training 手機版只上移60px */
+        @media (max-width: 768px) {
+            #training {
+                scroll-margin-top: 60px !important;
+            }
+        }
+        
+        /* 自然擺動動畫 */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg) translateX(-10px) scale(1.1); }
+            50% { transform: rotate(1deg) translateX(10px) scale(1.2); }
+        }
+        .animate-sway {
+            animation: sway 25s ease-in-out infinite;
+        }
+
+        /* 超慢速旋轉 */
+        @keyframes spin-very-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-very-slow {
+            animation: spin-very-slow 200s linear infinite;
+        }
+
+        /* 全域漂浮落下動畫 */
+        @keyframes global-float-down-1 {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(15vw, 110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes global-float-down-2 {
+            0% { transform: translate(0, -10vh) rotate(45deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translate(-15vw, 110vh) rotate(-180deg); opacity: 0; }
+        }
+        
+        .animate-global-float-1 { animation: global-float-down-1 25s linear infinite; }
+        .animate-global-float-2 { animation: global-float-down-2 35s linear infinite; }
+        .animate-global-float-3 { animation: global-float-down-1 40s linear infinite; animation-delay: -15s; }
+        .animate-global-float-fast { animation: global-float-down-1 15s linear infinite; }
+
+        /* 微塵浮動動畫 */
+        @keyframes float-particle {
+            0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+            50% { transform: translate(10px, -20px); opacity: 1; }
+        }
+        .animate-float-particle {
+            animation: float-particle 8s ease-in-out infinite;
+        }
+
+        /* 金色脈衝動畫 */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(197, 166, 112, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 166, 112, 0); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+
+        /* 柔和彈跳動畫 - 用於向下箭頭 */
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+        .animate-gentle-bounce {
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Header 樣式：米色底 + 綠色網點 */
+        .bg-dots-pattern {
+            background-color: #F7F5F0;
+            position: relative;
+        }
+        .bg-dots-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#465B40 1.2px, transparent 1.2px);
+            background-size: 14px 14px; 
+            opacity: 0.25;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 選單樣式：綠色底 + 米色網點 */
+        .bg-dots-pattern-reversed {
+            background-color: rgba(70, 91, 64, 0.95);
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-dots-pattern-reversed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#F7F5F0 1.5px, transparent 1.5px);
+            background-size: 14px 14px; 
+            opacity: 0.15;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 30%, black 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes phone-ring {
+            0% { transform: rotate(0deg) scale(1); }
+            3% { transform: rotate(-5deg) scale(1.05); }
+            6% { transform: rotate(5deg) scale(1.05); }
+            9% { transform: rotate(-5deg) scale(1.05); }
+            12% { transform: rotate(5deg) scale(1.05); }
+            15% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(0deg) scale(1); } 
+        }
+        .animate-attention {
+            animation: phone-ring 3s infinite ease-in-out;
+            transform-origin: center;
+        }
+        /* Modal 樣式優化 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            overflow-y: auto; 
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+            align-items: center; /* 垂直置中 */
+            justify-content: center; /* 水平置中 */
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        /* 隱藏背景滾動條 */
+        .no-scroll {
+            overflow: hidden;
+        }
+
+        /* Tab 切換樣式 - 客製化配色 */
+        .tab-btn {
+            background-color: #E5E7EB; /* 未選中時為淺灰色 */
+            color: #6B7280;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover {
+            background-color: #D1D5DB;
+        }
+        
+        /* 定期教育訓練 Active: 米色背景 + 深綠文字 */
+        #tab-btn-training.active {
+            background-color: #FFFEFA; /* surface color */
+            color: #465B40; /* primary color */
+            border-top-left-radius: 1.5rem;
+        }
+
+        /* 團隊優勢 Active: 深綠背景 + 白色文字 */
+        #tab-btn-team.active {
+            background-color: #2F3E2B; /* primaryDark */
+            color: #FFFFFF;
+        }
+
+        .tab-content {
+            display: none;
+            height: 100%;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* 關鍵 CSS：在寬螢幕 (lg) 下強制顯示所有 Tab 內容 
+           這樣就能實現「並排顯示」的效果，而不需要 JS 介入
+        */
+        @media (min-width: 1024px) {
+            .tab-content {
+                display: block !important;
+                height: auto !important; /* 解除高度限制，讓內容自然撐開 */
+            }
+        }
+
+        /* ===== 新增：桌面下拉選單樣式 ===== */
+        .nav-dropdown-item {
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease-out;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .nav-item-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translate(-6px, -50%);
+            opacity: 0;
+            color: #C5A670;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item-line {
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: #C5A670;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-dropdown-text {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-dropdown-item:hover .nav-item-icon {
+            transform: translate(0, -50%);
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-item-line {
+            opacity: 0.9;
+        }
+
+        .nav-dropdown-item:hover .nav-dropdown-text {
+            transform: translateX(2px);
+        }
+        
+        .group:hover .nav-dropdown-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 每個項目加入微小延遲，創造階梯式動畫 */
+        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
+        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
+        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
+        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
+        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
+
+        /* 手機版子選單動畫 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .submenu-item-fade {
+            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body class="text-text bg-warm relative">
+
+    <!-- 1. 全域背景層 (Global Background Layer) - Z-0 -->
+    <div id="global-bg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <!-- 動態極光/光暈背景 -->
+        <div class="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-warm via-[#F0EFE9] to-[#E6E2D6] opacity-60 animate-spin-very-slow"></div>
+
+        <!-- 光之河 (Stream of Light) -->
+        <svg class="absolute top-0 left-0 w-full h-full opacity-30" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="globalStreamGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#C5A670; stop-opacity:0" />
+                    <stop offset="20%" style="stop-color:#C5A670; stop-opacity:0.2" />
+                    <stop offset="50%" style="stop-color:#C5A670; stop-opacity:0.1" />
+                    <stop offset="80%" style="stop-color:#C5A670; stop-opacity:0.2" />
+                    <stop offset="100%" style="stop-color:#C5A670; stop-opacity:0" />
+                </linearGradient>
+            </defs>
+            <path d="M30,0 C50,20 10,40 30,60 S50,80 30,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.8" vector-effect="non-scaling-stroke" />
+            <path d="M70,0 C50,30 90,50 70,70 S50,90 70,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.5" vector-effect="non-scaling-stroke" style="opacity: 0.7;" />
+            <path d="M50,0 C60,20 40,50 50,70 S40,100 50,100" fill="none" stroke="url(#globalStreamGradient)" stroke-width="0.2" vector-effect="non-scaling-stroke" style="opacity: 0.4;" />
+        </svg>
+
+        <!-- 全域樹影紋理 -->
+        <div class="absolute inset-0 w-[120%] h-[120%] opacity-[0.03] animate-sway pointer-events-none mix-blend-darken bg-repeat"
+             style="background-image: url('https://www.transparenttextures.com/patterns/shattered-island.png');">
+        </div>
+
+        <!-- 空氣感光束 -->
+        <div class="absolute -top-[20%] left-[5%] w-[40vw] h-[150vh] bg-gradient-to-b from-white/30 via-white/5 to-transparent -rotate-12 blur-[80px]"></div>
+        <div class="absolute -top-[20%] right-[10%] w-[50vw] h-[150vh] bg-gradient-to-b from-[#C5A670]/15 via-[#C5A670]/5 to-transparent rotate-12 blur-[100px]"></div>
+    </div>
+
+    <!-- 2. 全域前景層 (Global Foreground Layer) - Z-10 -->
+    <div id="global-fg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
+        <!-- 懸浮微塵與光點 -->
+        <div class="absolute top-[15%] left-[25%] w-3 h-3 bg-[#FFD700] rounded-full blur-[2px] animate-float-particle drop-shadow-[0_0_8px_rgba(255,215,0,0.8)] opacity-90"></div>
+        <div class="absolute top-[45%] right-[25%] w-2 h-2 bg-white rounded-full blur-[1px] animate-float-particle drop-shadow-[0_0_5px_rgba(255,255,255,0.9)] opacity-90" style="animation-delay: -3s;"></div>
+        <div class="absolute bottom-[25%] left-[15%] w-4 h-4 bg-[#C5A670] rounded-full blur-[3px] animate-float-particle drop-shadow-lg opacity-80" style="animation-delay: -5s;"></div>
+        <div class="absolute top-[60%] right-[40%] w-2 h-2 bg-[#F3E5AB] rounded-full blur-[1px] animate-float-particle drop-shadow-md opacity-90" style="animation-delay: -2s;"></div>
+        
+        <!-- 大型光斑 -->
+        <div class="absolute top-[35%] left-[8%] w-48 h-48 bg-[#C5A670]/20 rounded-full blur-[80px] animate-pulse-gold mix-blend-screen" style="animation-duration: 9s;"></div>
+
+        <!-- 豐富飄落元素 -->
+        <!-- 前景大葉 -->
+        <i class="fa-brands fa-canadian-maple-leaf absolute -top-20 left-[8%] text-[#E8DCC0] text-[10rem] animate-global-float-fast blur-[4px] drop-shadow-xl opacity-90 rotate-12 z-50 hidden md:block" style="animation-duration: 14s;"></i>
+        <i class="fa-solid fa-leaf absolute top-[30%] right-[-5%] text-[#F7F5F0] text-[12rem] animate-global-float-fast blur-[5px] drop-shadow-xl opacity-80 -rotate-45 z-50 hidden md:block" style="animation-duration: 18s; animation-delay: -5s;"></i>
+
+        <!-- 中景清晰元素 -->
+        <i class="fa-solid fa-leaf absolute -top-10 left-[20%] text-[#FFFFFF] text-5xl animate-global-float-1 drop-shadow-lg opacity-95"></i>
+        <i class="fa-brands fa-envira absolute top-[10%] left-[12%] text-[#FFE4B5] text-6xl animate-global-float-2 drop-shadow-md opacity-90" style="animation-delay: -2s;"></i>
+        <i class="fa-solid fa-feather absolute -top-32 left-[48%] text-[#F0EAD6] text-7xl animate-global-float-3 drop-shadow-md opacity-90"></i>
+        <i class="fa-solid fa-leaf absolute top-[25%] left-[55%] text-[#E6D8B5] text-4xl animate-global-float-1 drop-shadow-sm opacity-85" style="animation-delay: -8s;"></i>
+        <i class="fa-brands fa-pagelines absolute -top-5 right-[18%] text-[#FFF] text-8xl animate-global-float-2 drop-shadow-lg opacity-90 hidden md:block" style="animation-duration: 35s;"></i>
+        <i class="fa-solid fa-seedling absolute top-[15%] right-[28%] text-[#D4AF37] text-5xl animate-global-float-3 drop-shadow-md opacity-90" style="animation-delay: -4s;"></i>
+
+        <!-- 後景細碎元素 -->
+        <i class="fa-solid fa-leaf absolute top-[45%] left-[85%] text-[#C5A670]/40 text-4xl animate-global-float-1 blur-[1px]"></i>
+        <i class="fa-regular fa-circle absolute top-[55%] left-[30%] text-white/40 text-2xl animate-global-float-2 blur-[1px]" style="animation-duration: 22s;"></i>
+        <i class="fa-solid fa-leaf absolute top-[70%] right-[10%] text-[#F3E5AB]/50 text-5xl animate-global-float-fast blur-[2px]" style="animation-duration: 20s;"></i>
+        <i class="fa-solid fa-feather-pointed absolute top-[5%] left-[35%] text-[#E6E2D6]/60 text-5xl animate-global-float-3 blur-[1px]" style="animation-delay: -12s;"></i>
+        <i class="fa-solid fa-leaf absolute top-[85%] left-[5%] text-[#FFD700]/30 text-6xl animate-global-float-1 blur-[2px]" style="animation-duration: 40s; animation-delay: -10s;"></i>
+        <i class="fa-brands fa-envira absolute top-[65%] right-[55%] text-[#FFFFFF]/30 text-4xl animate-global-float-2 blur-[1px]" style="animation-delay: -15s;"></i>
+    </div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：右側懸浮按鈕組 -->
+    <div id="hf-floating"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：漢堡全螢幕選單 -->
+    <div id="hf-menu"></div>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Header 頁首 -->
+    <div id="hf-header"></div>
+
+
+    <!-- Hero Section (Slider) -->
+    <section id="hero-section" class="relative pt-12 z-20 overflow-hidden">
+        <div class="relative w-full h-[80vh] md:h-[80vh] overflow-hidden">
+                <!-- Gradient overlay (優化：三段式，底部米色自然銜接，起點為透明) -->
+                <div class="pointer-events-none absolute inset-0 z-10" style="background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(70,91,64,0.22) 60%, #F8F6F1 100%);"></div>
+            <!-- Slides -->
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_10%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('/HuaFan/image/about/114評鑑.webp');">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">華梵故事</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">榮耀歷程 · 一路見證</h2>
+                        <a href="#awards-timeline" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_20%] bg-cover opacity-0 transition-opacity duration-700 active" style="background-image: url('/HuaFan/image/about/演習示範.webp'); pointer-events: auto;">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">臺中市政府 防災演習</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">演習示範單位</h2>
+                        <a href="#official-recognition" onclick="switchGovTab('demo')" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_0%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('/HuaFan/image/about/聯合奠祭.webp'); pointer-events: none;">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">臺中市生命禮儀管理處 聯合公祭</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">政府指定特約</h2>
+                        <a href="#official-recognition" onclick="switchGovTab('partner')" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_25%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('/HuaFan/image/about/教育訓練.webp');">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">教育訓練</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">專業養成 · 堅守品質</h2>
+                        <a href="#training" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-slide absolute inset-0 bg-center md:bg-[center_20%] bg-cover opacity-0 transition-opacity duration-700" style="background-image: url('/HuaFan/image/about/charity-slide10.webp');">
+                <div class="absolute inset-0 bg-black/45"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-6">
+                        <p class="text-sm md:text-base tracking-[0.3em] mb-4">生命關懷與公益</p>
+                        <h2 class="text-4xl md:text-6xl font-serif font-bold">讓溫暖延續</h2>
+                        <a href="#life-care" class="group inline-block mt-4 transition-all duration-500 hover:-translate-y-2">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-accent/40 blur-2xl rounded-full animate-pulse group-hover:bg-accent/60 transition-all duration-500"></div>
+                                <div class="relative text-7xl md:text-8xl text-white/70 group-hover:text-accent group-hover:scale-125 transition-all duration-500 leading-none font-light animate-gentle-bounce" style="text-shadow: 0 0 30px rgba(197, 166, 112, 0.5);">﹀</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Controls -->
+            <button class="hero-prev hidden md:block absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-white/80 hover:text-white text-3xl md:text-4xl z-30 cursor-pointer transition duration-300 hover:scale-110" aria-label="Previous slide">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="hero-next hidden md:block absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-white/80 hover:text-white text-3xl md:text-4xl z-30 cursor-pointer transition duration-300 hover:scale-110" aria-label="Next slide">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Dots -->
+            <div class="absolute bottom-8 md:bottom-20 left-1/2 -translate-x-1/2 flex gap-3 z-30">
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 1"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 2"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 3"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 4"></button>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white" aria-label="Slide 5"></button>
+            </div>
+        </div>
+
+                <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-10 translate-y-[1px]">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[120px]">
+                <!-- 修改處：更換為「向下流動」的波浪路徑 -->
+                <!-- 舊路徑會形成山丘，這個新路徑 (M0,32L48...) 讓米色(fill-warm)只佔據底部一小部分，
+                     視覺上就像是上方的綠色區域大面積地「流」了下來。 -->
+ 		<path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F0ECE4]"></path>
+            </svg>
+        </div>
+
+    </section>
+
+
+
+
+    <!-- 榮譽認證區塊 -->
+    <section id="awards-timeline" class="pt-0 pb-20 relative z-20 bg-gradient-to-b from-[#F0ECE4]/100 via-[#F0ECE4]/60 via-60% to-transparent overflow-hidden">
+        <!-- 背景裝飾 -->
+        <div class="absolute -top-15 left-1/2 -translate-x-1/2 pointer-events-none select-none w-full flex justify-center z-20">
+            <span class="hidden md:block top-0 absolute z-40 font-serif font-bold text-[15rem] md:text-[22rem] text-primary/5 tracking-widest leading-none whitespace-nowrap">HONOR</span>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="text-center mb-16">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <span class="h-[1px] w-12 bg-accent"></span>
+                    <span class="text-accent text-sm font-bold tracking-[0.3em]">AWARDS & HONOR</span>
+                    <span class="h-[1px] w-12 bg-accent"></span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">
+                    榮獲政府評鑑<span class="text-accent">特優</span>
+                </h2>
+                <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
+                    華梵禮儀堅持以客為尊，竭誠盡力優質服務<br>
+                    除了受到家屬們的肯定，也獲得政府考評單位認同
+                </p>
+            </div>
+
+            <!-- 全新設計：垂直時間軸 (加入跨列聯動動畫) -->
+            <div class="max-w-6xl mx-auto mb-16">
+                <!-- 垂直時間軸容器 -->
+                <div class="relative">
+                    <!-- 中央連接線 (桌面版) -->
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-accent/40 via-accent/60 to-accent/20 transform -translate-x-1/2"></div>
+                    
+                    <!-- 左側連接線 (手機版) -->
+                    <div class="md:hidden absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent/40 via-accent/60 to-accent/20"></div>
+                    
+                    <div class="space-y-12 md:space-y-20">
+                        
+                        <!-- ════════════════════════════════════════════════════
+                            114年 - 最新評鑑特優 + 三大獎項  
+                        ════════════════════════════════════════════════════ -->
+                        <div class="pt-2 relative md:min-h-[500px]" data-bg-id="114">
+                            <!-- 桌面版：使用 group/row 將整列綁定，觸發聯動動畫 -->
+                            <div class="mt-12 hidden md:flex items-center justify-between group/row">
+                                <!-- 年份標籤與照片浮出區（左側） -->
+                                <div class="w-5/12 text-right pr-12 relative h-full flex items-center justify-end min-h-[200px]">
+                                    
+                                    <!-- 標題文字區 (Hover 時向左滑出並模糊消失) -->
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:-translate-x-8 group-hover/row:blur-sm group-hover/row:scale-95">
+                                        <div class="text-accent font-extrabold tracking-widest text-2xl mb-2">民國 114 年</div>
+                                        <div class="text-xs text-white font-bold tracking-wider bg-gradient-to-r from-[#d4af37] to-accent px-4 py-1.5 rounded-full shadow-md inline-block">
+                                            最新年度評鑑
+                                        </div>
+                                    </div>
+
+                                    <!-- 照片浮出區 (Hover 時從時間軸起點向左滑入並顯示) -->
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 translate-x-16 opacity-0 pointer-events-none transition-all duration-700 ease-out group-hover/row:translate-x-0 group-hover/row:opacity-100 z-30 w-[110%] max-w-[400px]">
+                                        <div class="bg-white/90 backdrop-blur p-2 rounded-2xl shadow-2xl transform rotate-3 group-hover/row:rotate-[-2deg] transition-transform duration-700 border border-white/60">
+                                            <img src="/HuaFan/image/about/114評鑑.webp" alt="114年評鑑" class="w-full h-auto rounded-xl object-contain shadow-sm" onerror="this.src='https://via.placeholder.com/400x300?text=114年評鑑'" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 核心圖標（中央） -->
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-white to-[#FFF9E6] text-accent flex items-center justify-center border-4 border-white shadow-xl ring-2 ring-accent/30 group-hover/row:ring-accent/80 transition-all duration-500">
+                                        <i class="fa-solid fa-trophy text-3xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- 內容卡片（右側）保持顯示，不再被照片覆蓋 -->
+                                <div class="w-5/12 pl-12">
+                                    <div class="bg-gradient-to-br from-[#FFFBF0] via-white to-[#FFF9E6] p-8 rounded-2xl shadow-gold border-2 border-accent/40 group-hover/row:border-accent group-hover/row:-translate-y-2 group-hover/row:shadow-gold-lg transition-all duration-500 cursor-pointer relative"
+                                         onclick="openImageModal('/HuaFan/image/about/114評鑑.webp', '民國 114 年 - 評鑑特優')">
+                                        
+                                        <!-- 頂部標籤 -->
+                                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wider whitespace-nowrap flex items-center gap-2 z-20">
+                                            <i class="fa-solid fa-crown text-yellow-300 animate-pulse"></i> 
+                                            年度評鑑大滿貫
+                                        </div>
+                                        
+                                        <!-- 文字內容 (移除 Hover 消失設定，改為常駐顯示) -->
+                                        <div class="text-center mb-4 mt-2 relative z-10">
+                                            <h3 class="text-3xl font-serif font-bold text-primary mb-3 tracking-wide">評鑑特優</h3>
+                                            <div class="flex items-center justify-center gap-2 mb-2">
+                                                <span class="text-accent font-bold text-base">華梵禮儀</span>
+                                                <span class="text-accent/40">•</span>
+                                                <span class="text-accent/70 font-medium text-sm">子公司</span>
+                                                <span class="text-accent font-bold text-base">青山禮儀</span>
+                                            </div>
+                                            <p class="text-gray-400 text-xs tracking-widest">雙雙入選 · 集團榮耀</p>
+                                        </div>
+                                        
+                                        <div class="border-t border-accent/20 my-4 relative z-10"></div>
+                                        
+                                        <!-- 三大獎項 -->
+                                        <div class="relative z-10">
+                                            <p class="text-gray-700 text-sm font-bold mb-3 text-center flex items-center justify-center gap-2">
+                                                <i class="fa-solid fa-award text-accent"></i>
+                                                榮獲三大特殊榮譽獎項
+                                            </p>
+                                            <div class="space-y-2">
+                                                <div class="w-full px-3 py-2.5 bg-white/80 backdrop-blur-sm border border-accent/30 rounded-lg text-sm text-primary font-bold shadow-sm flex items-center justify-center gap-2">
+                                                    <i class="fa-solid fa-venus-mars text-accent text-base"></i> 
+                                                    <span>性別平等獎</span>
+                                                </div>
+                                                <div class="w-full px-3 py-2.5 bg-white/80 backdrop-blur-sm border border-accent/30 rounded-lg text-sm text-primary font-bold shadow-sm flex items-center justify-center gap-2">
+                                                    <i class="fa-solid fa-leaf text-accent text-base"></i> 
+                                                    <span>環保永續獎</span>
+                                                </div>
+                                                <div class="w-full px-3 py-2.5 bg-white/80 backdrop-blur-sm border border-accent/30 rounded-lg text-sm text-primary font-bold shadow-sm flex items-center justify-center gap-2">
+                                                    <i class="fa-solid fa-lightbulb text-accent text-base"></i> 
+                                                    <span>創新服務獎</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 手機版：單欄式佈局 (移除照片覆蓋，保持簡潔) -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-white to-[#FFF9E6] text-accent flex items-center justify-center border-4 border-white shadow-xl ring-2 ring-accent/30">
+                                        <i class="fa-solid fa-trophy text-2xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-accent font-extrabold tracking-widest text-xl mb-1">民國 114 年</div>
+                                        <div class="text-[10px] text-white font-bold tracking-wider bg-gradient-to-r from-[#d4af37] to-accent px-3 py-1 rounded-full shadow-md inline-block">
+                                            最新年度評鑑
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-gradient-to-br from-[#FFFBF0] via-white to-[#FFF9E6] p-6 rounded-2xl shadow-gold border-2 border-accent/40 active:scale-95 transition-transform cursor-pointer relative"
+                                         onclick="openImageModal('/HuaFan/image/about/114評鑑.webp', '民國 114 年 - 評鑑特優')">
+                                        
+                                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg tracking-wider whitespace-nowrap flex items-center gap-1">
+                                            <i class="fa-solid fa-crown text-yellow-300 animate-pulse text-xs"></i> 
+                                            大滿貫
+                                        </div>
+                                        
+                                        <div class="text-center mb-4 mt-2">
+                                            <h3 class="text-2xl font-serif font-bold text-primary mb-2">評鑑特優</h3>
+                                            <div class="flex items-center justify-center gap-2 mb-2 text-sm">
+                                                <span class="text-accent font-bold">華梵禮儀</span>
+                                                <span class="text-accent/40">•</span>
+                                                <span class="text-accent font-bold">青山禮儀</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="border-t border-accent/20 my-3"></div>
+                                        
+                                        <p class="text-gray-700 text-xs font-bold mb-2 text-center flex items-center justify-center gap-1">
+                                            <i class="fa-solid fa-award text-accent"></i>
+                                            三大特殊榮譽獎項
+                                        </p>
+                                        <div class="space-y-2">
+                                            <div class="w-full px-3 py-2 bg-white/80 border border-accent/30 rounded-lg text-xs text-primary font-bold flex justify-center gap-2">
+                                                <i class="fa-solid fa-venus-mars text-accent"></i> <span>性別平等獎</span>
+                                            </div>
+                                            <div class="w-full px-3 py-2 bg-white/80 border border-accent/30 rounded-lg text-xs text-primary font-bold flex justify-center gap-2">
+                                                <i class="fa-solid fa-leaf text-accent"></i> <span>環保永續獎</span>
+                                            </div>
+                                            <div class="w-full px-3 py-2 bg-white/80 border border-accent/30 rounded-lg text-xs text-primary font-bold flex justify-center gap-2">
+                                                <i class="fa-solid fa-lightbulb text-accent"></i> <span>創新服務獎</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════════════════
+                             111年 - 人文關懷獎 (反向佈局)
+                        ════════════════════════════════════════════════════ -->
+                        <div class="mt-16 relative md:min-h-[300px]" data-bg-id="111">
+                            <!-- 桌面版：反向佈局 group/row -->
+                            <div class="hidden md:flex items-center justify-between flex-row-reverse group/row">
+                                <!-- 年份標籤與照片浮出區（右側） -->
+                                <div class="w-5/12 text-left pl-12 relative h-full flex items-center justify-start min-h-[200px]">
+                                    
+                                    <!-- 標題文字區 (向右滑出並模糊) -->
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:translate-x-8 group-hover/row:blur-sm group-hover/row:scale-95">
+                                        <div class="text-[#C08484] font-extrabold tracking-widest text-2xl mb-2">民國 111 年</div>
+                                        <div class="text-xs text-gray-500 font-medium bg-white/80 backdrop-blur px-4 py-1.5 rounded-full shadow-sm border border-gray-200 inline-block">
+                                            新制實施後第二屆
+                                        </div>
+                                    </div>
+
+                                    <!-- 照片浮出區 (從中心線向右滑出) -->
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 -translate-x-16 opacity-0 pointer-events-none transition-all duration-700 ease-out group-hover/row:translate-x-0 group-hover/row:opacity-100 z-30 w-[110%] max-w-[400px]">
+                                        <div class="bg-white/90 backdrop-blur p-2 rounded-2xl shadow-2xl transform -rotate-3 group-hover/row:rotate-[2deg] transition-transform duration-700 border border-[#C08484]/30">
+                                            <img src="/HuaFan/image/about/111評鑑.webp" alt="111年評鑑" class="w-full h-auto rounded-xl object-contain shadow-sm" onerror="this.src='https://via.placeholder.com/400x300?text=111年評鑑'" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 核心圖標（中央） -->
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-white to-[#F5E6E6] text-[#B48484] flex items-center justify-center border-4 border-white shadow-xl ring-2 ring-[#C08484]/30 group-hover/row:ring-[#C08484]/80 transition-all duration-500">
+                                        <i class="fa-solid fa-hand-holding-heart text-3xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- 內容卡片（左側） -->
+                                <div class="w-5/12 pr-12">
+                                    <div class="bg-white p-8 rounded-2xl shadow-soft border-t-4 border-[#C08484] group-hover/row:-translate-y-2 group-hover/row:shadow-rose-glow transition-all duration-500 cursor-pointer relative"
+                                         onclick="openImageModal('/HuaFan/image/about/111評鑑.webp', '民國 111 年 - 人文關懷獎')">
+                                        
+                                        <!-- 背景裝飾常駐 -->
+                                        <div class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-0">
+                                            <i class="fa-solid fa-heart absolute -left-4 -bottom-4 text-8xl text-[#C08484]/5 -rotate-12 group-hover/row:scale-110 transition-transform duration-700"></i>
+                                        </div>
+                                        
+                                        <!-- 台中首創標籤 -->
+                                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C08484] to-[#B48484] text-white text-xs px-4 py-1.5 rounded-full shadow-md font-bold tracking-wide flex items-center gap-2 whitespace-nowrap z-20">
+                                            <i class="fa-solid fa-medal"></i> 
+                                            台中首創
+                                        </div>
+                                        
+                                        <div class="text-center mt-2 relative z-10">
+                                            <h3 class="text-3xl font-serif font-bold text-gray-700 mb-3">人文關懷獎</h3>
+                                            <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#C08484]/30 to-transparent mx-auto mb-4"></div>
+                                            <p class="text-gray-600 text-sm leading-relaxed">
+                                                秉持著「親人不在身邊時，<br>
+                                                <span class="font-bold text-[#B48484]">華梵就是您的親人」</span><br>
+                                                貼心為往生者與家屬著想
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 手機版 -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-white to-[#F5E6E6] text-[#B48484] flex items-center justify-center border-4 border-white shadow-xl ring-2 ring-[#C08484]/30">
+                                        <i class="fa-solid fa-hand-holding-heart text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-[#C08484] font-extrabold tracking-widest text-xl mb-1">民國 111 年</div>
+                                        <div class="text-[10px] text-gray-500 font-medium bg-white/80 px-3 py-1 rounded-full shadow-sm border border-gray-200 inline-block">新制實施後第二屆</div>
+                                    </div>
+                                    <div class="bg-white p-6 rounded-2xl shadow-soft border-t-4 border-[#C08484] active:scale-95 transition-transform cursor-pointer relative overflow-hidden"
+                                         onclick="openImageModal('/HuaFan/image/about/111評鑑.webp', '民國 111 年 - 人文關懷獎')">
+                                        <div class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                                            <i class="fa-solid fa-heart absolute -right-4 -bottom-4 text-6xl text-[#C08484]/5 rotate-12"></i>
+                                        </div>
+                                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C08484] to-[#B48484] text-white text-[10px] px-3 py-1 rounded-full shadow-md font-bold flex items-center gap-1">
+                                            <i class="fa-solid fa-medal"></i>台中首創
+                                        </div>
+                                        <div class="text-center mt-2 relative z-10">
+                                            <h3 class="text-2xl font-serif font-bold text-gray-700 mb-3">人文關懷獎</h3>
+                                            <div class="w-10 h-0.5 bg-[#C08484]/30 mx-auto mb-3"></div>
+                                            <p class="text-gray-600 text-xs leading-relaxed">
+                                                「親人不在身邊時，<br>華梵就是您的親人」<br>貼心為家屬著想
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════════════════
+                             107年 - 新制首屆優等 (正向)
+                        ════════════════════════════════════════════════════ -->
+                        <div class="relative md:min-h-[250px]" data-bg-id="107">
+                            <div class="hidden md:flex items-center justify-between group/row">
+                                <!-- 年份標籤與照片（左側） -->
+                                <div class="w-5/12 text-right pr-12 relative h-full flex items-center justify-end min-h-[160px]">
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:-translate-x-8 group-hover/row:blur-sm group-hover/row:scale-95">
+                                        <div class="text-primary font-extrabold tracking-widest text-2xl mb-2">民國 107 年</div>
+                                        <div class="text-xs text-white font-bold tracking-wider bg-primary px-4 py-1.5 rounded-full shadow-md inline-flex items-center gap-1.5">
+                                            <i class="fa-solid fa-gavel"></i>
+                                            評鑑改制：三年一評
+                                        </div>
+                                    </div>
+                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 translate-x-16 opacity-0 pointer-events-none transition-all duration-700 ease-out group-hover/row:translate-x-0 group-hover/row:opacity-100 z-30 w-[110%] max-w-[360px]">
+                                        <div class="bg-white/90 backdrop-blur p-2 rounded-xl shadow-2xl transform rotate-2 group-hover/row:rotate-[-1deg] transition-transform duration-700 border border-primary/20">
+                                            <img src="/HuaFan/image/about/107評鑑.webp" alt="107年評鑑" class="w-full h-auto rounded-lg object-contain" onerror="this.src='https://via.placeholder.com/400x300?text=107年評鑑'" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primaryDark text-white flex items-center justify-center border-4 border-white shadow-xl group-hover/row:bg-accent transition-colors duration-500">
+                                        <i class="fa-solid fa-scale-balanced text-3xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="w-5/12 pl-12">
+                                    <div class="bg-white p-8 rounded-xl shadow-soft border-t-4 border-primary group-hover/row:bg-warm/50 group-hover/row:-translate-y-2 group-hover/row:shadow-gold transition-all duration-500 cursor-pointer relative"
+                                         onclick="openImageModal('/HuaFan/image/about/107評鑑.webp', '民國 107 年 - 評鑑優等 (新制首屆)')">
+                                        <div class="text-center">
+                                            <h3 class="text-3xl font-serif font-bold text-gray-700 mb-2">評鑑優等</h3>
+                                            <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent mx-auto mb-3"></div>
+                                            <div class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-lg mb-3 font-bold text-sm">
+                                                新制首屆
+                                            </div>
+                                            <p class="text-xs text-gray-500 leading-relaxed">
+                                                面對更嚴格的標準<br>
+                                                華梵即獲優等肯定
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 手機版 107 -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primaryDark text-white flex items-center justify-center border-4 border-white shadow-xl">
+                                        <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-primary font-extrabold tracking-widest text-xl mb-1">民國 107 年</div>
+                                        <div class="text-[10px] text-white font-bold bg-primary px-3 py-1 rounded-full shadow-md inline-flex items-center gap-1">改制：三年一評</div>
+                                    </div>
+                                    <div class="bg-white p-6 rounded-xl shadow-soft border-t-4 border-primary active:scale-95 transition-transform cursor-pointer"
+                                         onclick="openImageModal('/HuaFan/image/about/107評鑑.webp', '民國 107 年 - 評鑑優等 (新制首屆)')">
+                                        <div class="text-center">
+                                            <h3 class="text-2xl font-serif font-bold text-gray-700 mb-2">評鑑優等</h3>
+                                            <div class="w-10 h-0.5 bg-gray-300 mx-auto mb-3"></div>
+                                            <div class="inline-block bg-primary/10 text-primary px-3 py-1 rounded-lg mb-2 font-bold text-xs">新制首屆</div>
+                                            <p class="text-xs text-gray-500 leading-relaxed">面對更嚴格標準<br>華梵即獲優等肯定</p>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════════════════
+                             103年 - 示範單位 (反向)
+                        ════════════════════════════════════════════════════ -->
+                        <div class="relative md:min-h-[200px]" data-bg-id="103">
+                            <div class="hidden md:flex items-center justify-between flex-row-reverse group/row">
+                                <div class="w-5/12 text-left pl-12 relative h-full flex items-center justify-start min-h-[140px]">
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:translate-x-8 group-hover/row:blur-sm">
+                                        <div class="text-primary font-extrabold tracking-widest text-2xl mb-2">民國 103 年</div>
+                                        <div class="text-xs text-white font-bold tracking-wider bg-primary px-4 py-1.5 rounded-full shadow-md inline-flex items-center gap-1.5">
+                                            <i class="fa-solid fa-certificate"></i>示範單位
+                                        </div>
+                                    </div>
+                                    <div class="absolute left-4 top-1/2 -translate-y-1/2 -translate-x-16 opacity-0 pointer-events-none transition-all duration-700 ease-out group-hover/row:translate-x-0 group-hover/row:opacity-100 z-30 w-[110%] max-w-[360px]">
+                                        <div class="bg-white/90 backdrop-blur p-2 rounded-xl shadow-xl transform -rotate-2 group-hover/row:rotate-[1deg] transition-transform duration-700 border border-primary/20">
+                                            <img src="/HuaFan/image/about/103評鑑.webp" alt="103年評鑑" class="w-full h-auto rounded-lg object-contain" onerror="this.src='https://via.placeholder.com/400x300?text=103年評鑑'" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 text-primary flex items-center justify-center border-4 border-white shadow-md group-hover/row:border-primary/20 transition-colors duration-500">
+                                        <i class="fa-solid fa-certificate text-3xl"></i>
+                                    </div>
+                                </div>
+                                <div class="w-5/12 pr-12">
+                                    <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-soft border border-primary/20 group-hover/row:shadow-gold group-hover/row:-translate-y-2 transition-all duration-500 cursor-pointer"
+                                         onclick="openImageModal('/HuaFan/image/about/103評鑑.webp', '民國 103 年 - 示範單位')">
+                                        <div class="flex items-center justify-center gap-2 mb-4">
+                                            <i class="fa-solid fa-building-columns text-accent text-xl"></i>
+                                            <h3 class="text-xl font-serif font-bold text-primary">獲邀擔任評鑑【示範單位】</h3>
+                                        </div>
+                                        <div class="space-y-2 text-sm text-gray-700">
+                                            <p class="text-center">103年起承辦「臺中市殯葬生命禮儀管理處」勞務委管</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 手機版 103 -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 text-primary flex items-center justify-center border-4 border-white shadow-md">
+                                        <i class="fa-solid fa-certificate text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-primary font-extrabold tracking-widest text-xl">民國 103 年</div>
+                                        <div class="text-[11px] text-white font-bold bg-primary px-3 py-1 rounded-full shadow-md inline-flex items-center gap-1">示範單位</div>
+                                    </div>
+                                    <div class="bg-white/90 p-6 rounded-2xl shadow-soft border border-primary/20 active:scale-95 transition-transform cursor-pointer"
+                                         onclick="openImageModal('/HuaFan/image/about/103評鑑.webp', '民國 103 年 - 示範單位')">
+                                        <div class="flex items-center justify-center gap-2 mb-3">
+                                            <i class="fa-solid fa-building-columns text-accent"></i>
+                                            <h3 class="text-lg font-serif font-bold text-primary">獲邀擔任評鑑【示範單位】</h3>
+                                        </div>
+                                        <div class="space-y-2 text-xs text-gray-700">
+                                            <p class="text-center">承辦「中市生命禮儀管理處」勞務委管</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════════════════
+                             102年 - 政府評鑑優等 (正向)
+                        ════════════════════════════════════════════════════ -->
+                        <div class="relative md:min-h-[160px]" data-bg-id="102">
+                            <div class="hidden md:flex items-center justify-between group/row">
+                                <div class="w-5/12 text-right pr-12 relative h-full flex items-center justify-end min-h-[120px]">
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:-translate-x-8 group-hover/row:blur-sm">
+                                        <div class="text-primary font-extrabold tracking-widest text-2xl mb-2">民國 102 年</div>
+                                        <div class="text-xs text-white font-bold tracking-wider bg-primary px-4 py-1.5 rounded-full shadow-md inline-flex items-center gap-1.5">
+                                            <i class="fa-solid fa-star"></i>政府評鑑【優等】
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 text-primary flex items-center justify-center border-4 border-white shadow-md">
+                                        <i class="fa-solid fa-star text-3xl"></i>
+                                    </div>
+                                </div>
+                                <div class="w-5/12 pl-12">
+                                    <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-soft border border-primary/20 group-hover/row:shadow-gold group-hover/row:-translate-y-2 transition-all duration-500 cursor-default">
+                                        <div class="flex items-center justify-center gap-2 mb-4">
+                                            <i class="fa-solid fa-landmark text-accent text-xl"></i>
+                                            <h3 class="text-xl font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                        </div>
+                                        <p class="text-gray-700 text-sm leading-relaxed text-center">
+                                            臺中市殯葬禮儀服務業評鑑 <span class="text-accent font-bold">【優等】</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 手機版 102 -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 text-primary flex items-center justify-center border-4 border-white shadow-md">
+                                        <i class="fa-solid fa-star text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-primary font-extrabold tracking-widest text-xl">民國 102 年</div>
+                                        <div class="text-[11px] text-white font-bold bg-primary px-3 py-1 rounded-full shadow-md inline-flex items-center gap-1">評鑑【優等】</div>
+                                    </div>
+                                    <div class="bg-white/90 p-6 rounded-2xl shadow-soft border border-primary/20 cursor-default">
+                                        <div class="flex items-center justify-center gap-2 mb-3">
+                                            <i class="fa-solid fa-landmark text-accent"></i>
+                                            <h3 class="text-lg font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                        </div>
+                                        <p class="text-gray-700 text-xs leading-relaxed text-center">
+                                            臺中市殯葬禮儀服務業評鑑 <span class="text-accent font-bold">【優等】</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════════════════
+                             101年 - 政府評鑑優等 (反向)
+                        ════════════════════════════════════════════════════ -->
+                        <div class="relative md:min-h-[160px]" data-bg-id="101">
+                            <div class="hidden md:flex items-center justify-between flex-row-reverse group/row">
+                                <div class="w-5/12 text-left pl-12 relative h-full flex items-center justify-start min-h-[120px]">
+                                    <div class="inline-block relative z-10 transition-all duration-500 ease-out group-hover/row:opacity-0 group-hover/row:translate-x-8 group-hover/row:blur-sm">
+                                        <div class="text-primary font-extrabold tracking-widest text-2xl mb-2">民國 101 年</div>
+                                        <div class="text-xs text-white font-bold tracking-wider bg-accent px-4 py-1.5 rounded-full shadow-md inline-flex items-center gap-1.5">
+                                            <i class="fa-solid fa-award"></i>政府評鑑【優等】
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative z-20 flex-shrink-0 group-hover/row:scale-110 transition-transform duration-500">
+                                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-accent/25 to-accent/10 text-accent flex items-center justify-center border-4 border-white shadow-md">
+                                        <i class="fa-solid fa-trophy text-3xl"></i>
+                                    </div>
+                                </div>
+                                <div class="w-5/12 pr-12">
+                                    <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-soft border border-accent/30 group-hover/row:shadow-gold group-hover/row:-translate-y-2 transition-all duration-500 cursor-default">
+                                        <div class="flex items-center justify-center gap-2 mb-4">
+                                            <i class="fa-solid fa-landmark text-accent text-xl"></i>
+                                            <h3 class="text-xl font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                        </div>
+                                        <p class="text-gray-700 text-sm leading-relaxed text-center">
+                                            臺中市殯葬禮儀服務業評鑑 <span class="text-accent font-bold">【優等】</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 手機版 101 -->
+                            <div class="md:hidden relative pl-20">
+                                <div class="absolute left-0 top-4 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-accent/25 to-accent/10 text-accent flex items-center justify-center border-4 border-white shadow-md">
+                                        <i class="fa-solid fa-trophy text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <div class="text-primary font-extrabold tracking-widest text-xl">民國 101 年</div>
+                                        <div class="text-[11px] text-white font-bold bg-accent px-3 py-1 rounded-full shadow-md inline-flex items-center gap-1">評鑑【優等】</div>
+                                    </div>
+                                    <div class="bg-white/90 p-6 rounded-2xl shadow-soft border border-accent/30 cursor-default">
+                                        <div class="flex items-center justify-center gap-2 mb-3">
+                                            <i class="fa-solid fa-landmark text-accent"></i>
+                                            <h3 class="text-lg font-serif font-bold text-primary">政府評鑑殊榮</h3>
+                                        </div>
+                                        <p class="text-gray-700 text-xs leading-relaxed text-center">
+                                            臺中市殯葬禮儀服務業評鑑 <span class="text-accent font-bold">【優等】</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 🌟 重構：政府官方認證區塊 (Tab 實體資料夾切換系統) -->
+    <section id="official-recognition" class="pt-2 md:pt-2 pb-20 relative z-20">
+        <!-- 👉 新增：無縫相連的時間軸虛線 (同寬、同色、漸隱消失效果) -->
+        <div class="container mx-auto px-6 relative z-10 pointer-events-none">
+            <div class="max-w-6xl mx-auto relative">
+                <!-- 桌面版：寬度改為 w-1 (4px) 對齊上方時間軸，並加上 mask-image 漸隱效果 -->
+                <div class="hidden md:block absolute left-1/2 -top-[144px] h-[280px] w-1 transform -translate-x-1/2" 
+                     style="background-image: linear-gradient(to bottom, rgba(197, 166, 112, 0.25) 50%, transparent 50%); 
+                            background-size: 4px 16px; 
+                            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%); 
+                            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);">
+                </div>
+                <!-- 手機版：寬度維持 w-[2px] 對齊上方時間軸，並加上 mask-image 漸隱效果 -->
+                <div class="md:hidden absolute left-[32px] -top-[144px] h-[260px] w-[2px]" 
+                     style="background-image: linear-gradient(to bottom, rgba(197, 166, 112, 0.25) 50%, transparent 50%); 
+                            background-size: 2px 16px; 
+                            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%); 
+                            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 全域共用網點背景 -->
+        <div class="pointer-events-none absolute inset-0 z-0"
+             style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiM0NjVCNDAiLz48L3N2Zz4='); 
+                opacity: 0.10;
+                mask-image: linear-gradient(to bottom, transparent 0%, black 90%, black 100%);">
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-5xl mx-auto">
+                
+                <!-- 檔案夾式 Tab 開關 (寬度減半、靠右留空、無縫重疊設計) -->
+                <!-- 移除 mb，讓按鈕完全貼齊卡片，由按鈕本身的 translate-y 處理覆蓋 -->
+                <div class="flex w-full relative z-30 pl-6 md:pr-12 lg:pr-40 justify-start md:justify-end">
+                    <div class="flex w-[90%] md:w-[60%] lg:w-[45%] max-w-[420px] items-end">
+                        
+                        <!-- Tab 1: 演習示範 -->
+                        <button onclick="switchGovTab('demo')" id="btn-demo" class="flex-1 py-3.5 md:py-4 rounded-tl-2xl rounded-tr-lg text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-40 bg-surface text-primary shadow-[0_-5px_20px_-5px_rgba(197,166,112,0.2)] flex items-center justify-center gap-2 border-2 border-white border-b-surface translate-y-[2px]">
+                            <i class="fa-solid fa-helmet-safety"></i> 演習示範
+                        </button>
+                        
+                        <!-- Tab 2: 指定特約 -->
+                        <button onclick="switchGovTab('partner')" id="btn-partner" class="flex-1 py-3 md:py-3.5 rounded-tl-lg rounded-tr-2xl text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-10 bg-[#E5E7EB]/90 text-gray-500 hover:text-primary hover:bg-[#D1D5DB] flex items-center justify-center gap-2 border-t border-r border-gray-300/50 translate-y-0">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-15"></div>
+                            <i class="fa-solid fa-handshake"></i> 指定特約
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- Content 1: 演習示範單位 (Light Mode) -->
+                <!-- ========================================== -->
+                <div id="content-demo" class="relative group block animate-tab-enter z-20">
+                    <!-- 全圓角 rounded-3xl，左上角會露出圓弧，配合 Tab 呈現資料夾感 -->
+                    <div class="bg-surface rounded-3xl shadow-gold-lg p-8 md:p-12 border-2 border-white relative">
+                        
+                        <!-- 亮色背景裝飾層 -->
+                        <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+                            <div class="absolute bottom-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                            <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+                        </div>
+                        
+                        <div class="relative z-20">
+                            <!-- 標題區塊 (精緻化 Icon 與裝飾線) -->
+                            <div class="text-center mb-12 relative z-20">
+                                <div class="inline-flex items-center justify-center gap-3 mb-4">
+                                    <span class="h-[1px] w-12 bg-accent/30"></span>
+                                    <div class="w-9 h-9 rounded-full bg-[#F0F2ED] flex items-center justify-center border border-[#E3EBE5] shadow-sm">
+                                        <i class="fa-solid fa-helmet-safety text-primary text-[15px]"></i>
+                                    </div>
+                                    <span class="h-[1px] w-12 bg-accent/30"></span>
+                                </div>
+                                <h3 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 tracking-widest">
+                                    演習示範單位
+                                </h3>
+                                <p class="text-accent text-[11px] md:text-xs tracking-[0.4em] uppercase font-bold">
+                                    Demonstration Unit
+                                </p>
+                            </div>
+
+                            <!-- 核心內容：演習示範 (Sticky 卡片) -->
+                            <div class="sticky top-[80px] md:static z-10 bg-white rounded-2xl border border-accent/20 p-6 md:p-8 mb-8 shadow-soft transition duration-500">
+                                <div class="flex flex-col md:flex-row gap-8 items-center">
+                                    <div class="w-full md:w-2/5 text-center md:text-left border-b md:border-b-0 md:border-r border-gray-100 pb-6 md:pb-0 md:pr-8">
+                                        <div class="inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-md">
+                                            <i class="fa-solid fa-certificate mr-1"></i> 官方權威認證
+                                        </div>
+                                        <h4 class="text-2xl md:text-3xl font-serif font-bold text-gray-800 mb-4 leading-tight">
+                                            臺中市政府<br>
+                                            <span class="text-primary">防災演習</span> 指定特約
+                                        </h4>
+                                        <p class="text-gray-500 text-sm leading-relaxed">
+                                            憑藉卓越的團隊素質與嚴謹的標準作業程序，獲市府指定負責重大災害之遺體處理演練。
+                                        </p>
+                                    </div>
+
+                                    <div class="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-3 gap-2">
+                                        <div class="bg-warm/80 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center transition duration-300 hover:border-accent/30 hover:bg-white">
+                                            <i class="fa-solid fa-house-chimney-crack text-primary text-2xl mb-2"></i>
+                                            <span class="text-gray-500 text-xs mb-1">情境設定</span>
+                                            <span class="text-primaryDark font-bold text-base">重大災害應變</span>
+                                        </div>
+                                        <div class="bg-warm/80 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center transition duration-300 hover:border-accent/30 hover:bg-white">
+                                            <i class="fa-solid fa-clipboard-list text-primary text-2xl mb-2"></i>
+                                            <span class="text-gray-500 text-xs mb-1">任務編組</span>
+                                            <span class="text-primaryDark font-bold text-base">遺體處理安置</span>
+                                        </div>
+                                        <div class="bg-warm/80 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center transition duration-300 hover:border-accent/30 hover:bg-white">
+                                            <i class="fa-solid fa-hand-holding-heart text-primary text-2xl mb-2"></i>
+                                            <span class="text-gray-500 text-xs mb-1">資源整合</span>
+                                            <span class="text-primaryDark font-bold text-base">志工與宗教</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 服務特色三欄位 (亮色版滾動) -->
+                            <div class="relative z-20 mt-32 md:mt-0">
+                                <!-- 手機版滾動實體遮罩 (亮色) -->
+                                <div class="backdrop-blur-sm md:hidden absolute -inset-x-8 -bottom-12 -top-16 bg-surface/90  z-0 rounded-b-3xl">
+                                    <div class="absolute -top-24 left-0 w-full h-24 bg-gradient-to-t from-surface/90 to-transparent pointer-events-none"></div>
+                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+                                </div>
+
+                                <!-- 📸 視覺衝擊：實紀照片入口 (電影級寬幅設計) -->
+                                <div class="relative w-full h-40 md:h-56 rounded-[2rem] overflow-hidden group cursor-pointer shadow-soft hover:shadow-gold-lg transition-all duration-700 mb-8 md:mb-10 relative z-10 bg-primaryDark"
+                                     onclick="openImageModal('/HuaFan/image/about/演習示範.webp', '演習示範實紀')">
+                                    
+                                    <!-- 視差背景層 (替換為您的真實照片，這裡暫用高質感預設圖) -->
+                                    <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-110 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-70 group-hover:opacity-100"
+                                         style="background-image: url('/HuaFan/image/about/演習示範.webp');"></div>
+
+                                    <!-- 漸層氛圍遮罩 -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-primaryDark/90 via-primaryDark/50 to-transparent transition-colors duration-700"></div>
+
+                                    <!-- 質感框線 -->
+                                    <div class="absolute inset-0 border border-white/20 rounded-[2rem] group-hover:border-accent/60 transition-colors duration-700 z-10 pointer-events-none"></div>
+
+                                    <!-- 內容區 -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-6 md:p-12 z-20">
+                                        <div class="transform group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <div class="flex items-center gap-3 mb-2 md:mb-3">
+                                                <span class="w-6 md:w-8 h-[1px] bg-accent"></span>
+                                                <span class="text-accent text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">Visual Gallery</span>
+                                            </div>
+                                            <h4 class="text-2xl md:text-4xl font-serif font-bold text-white tracking-widest drop-shadow-md">
+                                                觀看演習實紀
+                                            </h4>
+                                        </div>
+                                        <!-- 探索按鈕 -->
+                                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-accent group-hover:border-accent group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(197,166,112,0.6)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <i class="fa-solid fa-arrow-right -rotate-45 text-lg md:text-xl group-hover:rotate-0 transition-transform duration-500"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
+                                    <div class="bg-white rounded-xl p-6 border border-gray-100 hover:border-accent/40 hover:-translate-y-1 transition duration-300 group/card shadow-sm hover:shadow-soft cursor-default">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-[#E8F0E6] flex items-center justify-center group-hover/card:bg-primary transition duration-300">
+                                                <i class="fa-solid fa-bolt text-primary text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-gray-800">災難應變能力</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-500 leading-relaxed text-justify">
+                                            針對地震、倒塌等重大事故，展現迅速且專業的處置能力，確保作業過程莊嚴有序。
+                                        </p>
+                                    </div>
+
+                                    <div class="bg-white rounded-xl p-6 border border-gray-100 hover:border-accent/40 hover:-translate-y-1 transition duration-300 group/card shadow-sm hover:shadow-soft cursor-default">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover/card:bg-accent transition duration-300">
+                                                <i class="fa-solid fa-list-check text-accent text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-gray-800">標準作業程序</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-500 leading-relaxed text-justify">
+                                            嚴謹的SOP規範，從遺體接運、身分確認到安置佈置，皆有條不紊地執行。
+                                        </p>
+                                    </div>
+
+                                    <div class="bg-white rounded-xl p-6 border border-gray-100 hover:border-accent/40 hover:-translate-y-1 transition duration-300 group/card shadow-sm hover:shadow-soft cursor-default">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-[#FFF6E0] flex items-center justify-center group-hover/card:bg-accent transition duration-300">
+                                                <i class="fa-solid fa-hand-holding-heart text-accent text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-gray-800">全程人文關懷</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-500 leading-relaxed text-justify">
+                                            從臨時靈堂搭設到家屬悲傷輔導，整合百合志工隊，提供全方位身心靈支持。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 底部標語 -->
+                            <div class="mt-10 text-center relative z-20">
+                                <p class="text-primary/60 text-sm font-serif italic tracking-wider">
+                                    「因為堅持品質，所以深受政府信賴。」
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- Content 2: 政府指定特約 (Dark Mode) -->
+                <!-- ========================================== -->
+                <div id="content-partner" class="relative group hidden animate-tab-enter z-20">
+                    <!-- 加入 border 以對齊亮色模式的接縫邏輯，全圓角 rounded-3xl -->
+                    <div class="bg-primaryDark rounded-3xl shadow-2xl p-8 md:p-12 border border-white/20 relative">
+                        
+                        <!-- 深色背景裝飾層 -->
+                        <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+                            <div class="absolute bottom-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-15"></div>
+                            <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+                        </div>
+                        
+                        <div class="relative z-20">
+                            <!-- 標題區塊 -->
+                            <div class="text-center mb-12 relative z-20">
+                                <div class="inline-flex items-center justify-center gap-3 mb-4">
+                                    <span class="h-[1px] w-12 bg-accent/30"></span>
+                                    <div class="w-9 h-9 rounded-full bg-primary/40 flex items-center justify-center border border-accent/20 shadow-sm">
+                                        <i class="fa-solid fa-handshake text-accent text-[15px]"></i>
+                                    </div>
+                                    <span class="h-[1px] w-12 bg-accent/30"></span>
+                                </div>
+                                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white mb-2 tracking-widest">
+                                    政府指定特約
+                                </h3>
+                                <p class="text-accent/60 text-[11px] md:text-xs tracking-[0.4em] uppercase font-bold">
+                                    Government Partner
+                                </p>
+                            </div>
+
+                            <!-- 核心內容：聯合公祭 (深色 Sticky 卡片) -->
+                            <div class="sticky top-[80px] md:static z-10 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 mb-8 hover:bg-white/10 transition duration-500 group/item shadow-xl md:shadow-none">
+                                <div class="flex flex-col md:flex-row gap-8 items-center">
+                                    <div class="w-full md:w-2/5 text-center md:text-left border-b md:border-b-0 md:border-r border-white/10 pb-6 md:pb-0 md:pr-8">
+                                        <div class="inline-block bg-accent text-white text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-lg">
+                                            <i class="fa-solid fa-star mr-1"></i> 民政局主辦
+                                        </div>
+                                        <h4 class="text-2xl md:text-3xl font-serif font-bold text-white mb-4 leading-tight">
+                                            臺中市生命禮儀管理處<br>
+                                            <span class="text-accent">聯合公祭</span> 指定特約
+                                        </h4>
+                                        <p class="text-gray-300 text-sm leading-relaxed font-light">
+                                            協助市民辦理喪葬事宜，提供莊嚴肅穆的告別儀式，落實端正民俗、節約費用之宗旨。
+                                        </p>
+                                    </div>
+
+                                    <div class="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-3 gap-2">
+                                        <div class="bg-[#2F3E2B]/50 rounded-xl p-4 border border-accent/20 flex flex-col items-center justify-center text-center group-hover/item:border-accent/40 transition duration-300">
+                                            <i class="fa-solid fa-calendar-check text-accent text-2xl mb-2 opacity-80"></i>
+                                            <span class="text-white/60 text-xs mb-1">舉辦時間</span>
+                                            <span class="text-white font-bold text-lg">每月雙週三</span>
+                                        </div>
+                                        <div class="bg-[#2F3E2B]/50 rounded-xl p-4 border border-accent/20 flex flex-col items-center justify-center text-center group-hover/item:border-accent/40 transition duration-300">
+                                            <i class="fa-solid fa-location-dot text-accent text-2xl mb-2 opacity-80"></i>
+                                            <span class="text-white/60 text-xs mb-1">舉辦地點</span>
+                                            <span class="text-white font-bold text-lg">崇德館景福廳</span>
+                                        </div>
+                                        <div class="bg-[#2F3E2B]/50 rounded-xl p-4 border border-accent/20 flex flex-col items-center justify-center text-center group-hover/item:border-accent/40 transition duration-300">
+                                            <i class="fa-solid fa-hands-holding-circle text-accent text-2xl mb-2 opacity-80"></i>
+                                            <span class="text-white/60 text-xs mb-1">服務宗旨</span>
+                                            <span class="text-white font-bold text-lg">莊嚴 · 節約</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 服務特色三欄位 (深色版滾動) -->
+                            <div class="relative z-20 mt-32 md:mt-0">
+                                <!-- 手機版滾動實體遮罩 (深色) -->
+                                <div class="backdrop-blur-sm md:hidden absolute -inset-x-8 -bottom-12 -top-16 bg-primaryDark/90 z-0 rounded-b-3xl">
+                                    <div class="absolute -top-24 left-0 w-full h-24 bg-gradient-to-t from-primaryDark/90 to-transparent pointer-events-none"></div>
+                                </div>
+
+                                <!-- 📸 視覺衝擊：實紀照片入口 (電影級寬幅設計 - 暗色主題) -->
+                                <div class="relative w-full h-40 md:h-56 rounded-[2rem] overflow-hidden group cursor-pointer shadow-2xl hover:shadow-gold-lg transition-all duration-700 mb-8 md:mb-10 relative z-10 bg-black"
+                                     onclick="openImageModal('/HuaFan/image/about/聯合奠祭.webp', '聯合公祭實紀')">
+                                    
+                                    <!-- 視差背景層 -->
+                                    <div class="absolute inset-0 bg-cover bg-center transform group-hover:scale-110 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-60 group-hover:opacity-90"
+                                         style="background-image: url('/HuaFan/image/about/聯合奠祭.webp');"></div>
+
+                                    <!-- 漸層氛圍遮罩 (暗色版更深邃) -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent transition-colors duration-700"></div>
+
+                                    <!-- 質感框線 -->
+                                    <div class="absolute inset-0 border border-white/10 rounded-[2rem] group-hover:border-accent/50 transition-colors duration-700 z-10 pointer-events-none"></div>
+
+                                    <!-- 內容區 -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-6 md:p-12 z-20">
+                                        <div class="transform group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <div class="flex items-center gap-3 mb-2 md:mb-3">
+                                                <span class="w-6 md:w-8 h-[1px] bg-accent"></span>
+                                                <span class="text-accent text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">Visual Gallery</span>
+                                            </div>
+                                            <h4 class="text-2xl md:text-4xl font-serif font-bold text-white tracking-widest drop-shadow-md">
+                                                觀看公祭實紀
+                                            </h4>
+                                        </div>
+                                        <!-- 探索按鈕 -->
+                                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-accent group-hover:border-accent group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(197,166,112,0.6)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                                            <i class="fa-solid fa-arrow-right -rotate-45 text-lg md:text-xl group-hover:rotate-0 transition-transform duration-500"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
+                                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/5 hover:border-accent/40 hover:bg-white/10 hover:-translate-y-1 transition duration-300 group/card">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover/card:bg-accent group-hover/card:text-white transition duration-300">
+                                                <i class="fa-solid fa-church text-accent text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-white">會場全面升級</h5>
+                                        </div>
+                                        <ul class="space-y-2.5">
+                                            <li class="flex items-start gap-3 text-sm text-gray-300">
+                                                <i class="fa-solid fa-check text-accent mt-1 text-xs"></i> <span>高雅牌樓背板設計</span>
+                                            </li>
+                                            <li class="flex items-start gap-3 text-sm text-gray-300">
+                                                <i class="fa-solid fa-check text-accent mt-1 text-xs"></i> <span>精緻桌巾花藝佈置</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/5 hover:border-accent/40 hover:bg-white/10 hover:-translate-y-1 transition duration-300 group/card">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover/card:bg-accent group-hover/card:text-white transition duration-300">
+                                                <i class="fa-solid fa-user-tie text-accent text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-white">專業服務團隊</h5>
+                                        </div>
+                                        <ul class="space-y-2.5">
+                                            <li class="flex items-start gap-3 text-sm text-gray-300">
+                                                <i class="fa-solid fa-check text-accent mt-1 text-xs"></i> <span>資深禮儀師全程引導</span>
+                                            </li>
+                                            <li class="flex items-start gap-3 text-sm text-gray-300">
+                                                <i class="fa-solid fa-check text-accent mt-1 text-xs"></i> <span>司儀專業流程規劃</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="bg-accent/10 backdrop-blur-sm rounded-xl p-6 border border-accent/20 hover:border-accent/50 hover:bg-accent/20 hover:-translate-y-1 transition duration-300 group/card">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center group-hover/card:bg-accent group-hover/card:text-white transition duration-300">
+                                                <i class="fa-solid fa-medal text-accent text-xl group-hover/card:text-white"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-white">連續政府肯定</h5>
+                                        </div>
+                                        <ul class="space-y-2.5">
+                                            <li class="flex items-start gap-3 text-sm text-white/90">
+                                                <i class="fa-solid fa-star text-accent mt-1 text-xs"></i> <span>多年評鑑優等殊榮</span>
+                                            </li>
+                                            <li class="flex items-start gap-3 text-sm text-white/90">
+                                                <i class="fa-solid fa-star text-accent mt-1 text-xs"></i> <span>市民家屬高度信賴</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 底部標語 -->
+                            <div class="mt-10 text-center relative z-20">
+                                <p class="text-white/40 text-sm font-serif italic tracking-wider">
+                                    「以專業與真誠，守護每一場莊嚴告別」
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="training" class="pt-16 pb-36 md:pb48 relative z-20 overflow-visible overflow-hidden">
+    <!-- 網點背景裝飾（fade in/out） -->
+    <div class="pointer-events-none absolute left-0 right-0 top-2 h-32 md:h-40 z-10"
+          style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiM0NjVCNDAiLz48L3N2Zz4='); 
+              opacity: 0.10;
+              -webkit-mask-image: linear-gradient(to bottom, black 0%, black 15%, transparent 55%, transparent 100%);
+              mask-image: linear-gradient(to bottom, black 0%, black 15%, transparent 55%, transparent 100%);">
+    </div>
+        <!-- 背景裝飾葉片 -->
+        <div class="absolute -bottom-12 md:-bottom-20 left-16 md:left-36 opacity-30 pointer-events-none z-0">
+            <svg width="120" height="120" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 5C40 5 65 20 65 40C65 60 40 75 40 75C40 75 15 60 15 40C15 20 40 5 40 5Z" fill="#C5A670"/>
+            </svg>
+        </div>
+
+        <!-- 背景裝飾：巨大的 "TRAINING" 浮水印 -->
+        <div class="absolute top-10 left-0 w-full h-full pointer-events-none select-none overflow-hidden flex justify-center items-start z-0">
+             <span class="text-[10rem] md:text-[20rem] font-serif font-bold text-[#EBE8E0] leading-none absolute -top-10 md:-top-20 opacity-60">TRAINING</span>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="relative flex flex-col lg:flex-row lg:items-end lg:justify-between lg:gap-24">
+                
+                <!-- 手機版標題區 -->
+                <div class="block lg:hidden absolute top-0 right-0 z-30 flex flex-col items-end text-right">
+                    <div class="absolute -right-4 -top-14 w-20 h-20 text-primary opacity-55 lg:hidden pointer-events-none" style="transform: rotate(-15deg);">
+                        <svg viewBox="0 0 100 100" fill="currentColor"><path d="M50 0C50 0 90 40 90 60C90 85 50 100 50 100C50 100 10 85 10 60C10 40 50 0 50 0Z"/></svg>
+                    </div>
+                    <div class="relative inline-block text-right mb-2">
+                        <h2 class="text-[2.5rem] leading-none font-serif font-bold text-primaryDark tracking-tight relative z-10">
+                            完整的<br>教育訓練
+                        </h2>
+                    </div>
+                    <p class="text-accent/80 font-serif italic text-sm tracking-widest uppercase mb-0 relative z-10 pr-1">Professional Training</p>
+                </div>
+
+                <!-- 卡片區 (Cards Wrapper) -->
+                <div class="relative mt-32 w-full lg:mt-0 lg:static lg:w-3/5 lg:grid lg:grid-cols-2 lg:gap-8">
+                    
+                    <!-- Card 1 (定期教育訓練) - 點擊觸發 獨立 Modal -->
+                    <div onclick="openModal('modal-training')" class="group relative w-[62%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.2)] z-20 cursor-pointer lg:w-full lg:aspect-auto lg:h-[500px] lg:shadow-card lg:hover:shadow-2xl lg:transition-all lg:duration-500 lg:hover:-translate-y-2 lg:z-auto border border-white/50">
+                        <img src="/HuaFan/image/about/教育訓練.webp" alt="定期教育訓練" class="w-full h-full object-cover hover-zoom-img filter brightness-90 group-hover:brightness-100 transition duration-500">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-primaryDark/95 via-primaryDark/40 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500"></div>
+                        
+                        <!-- 提示遮罩 -->
+                        <div class="absolute inset-0 bg-primaryDark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-30">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-center px-6">
+                                <div class="w-16 h-16 rounded-full bg-accent text-white flex items-center justify-center mx-auto mb-4 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-2xl"></i>
+                                </div>
+                                <p class="text-white text-lg font-bold tracking-wider">點擊查看完整內容</p>
+                                <p class="text-white/60 text-sm mt-2">View Full Details</p>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white/90 backdrop-blur-sm text-center w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center rounded-xl shadow-sm z-20">
+                            <i class="fa-solid fa-graduation-cap text-primary text-xl lg:text-2xl"></i>
+                        </div>
+                        
+                        <div class="absolute top-4 right-4 lg:top-6 lg:right-6 z-20">
+                            <span class="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-accent/90 backdrop-blur text-white text-[10px] lg:text-xs font-bold tracking-wider border border-white/20 shadow-sm">
+                                Continuous Learning
+                            </span>
+                        </div>
+                        
+                        <div class="absolute bottom-0 left-0 w-full p-5 lg:p-8 z-20">
+                            <h3 class="text-xl lg:text-3xl font-serif font-bold text-white mb-2 lg:mb-4 leading-snug group-hover:text-accentLight transition-colors">
+                                定期教育訓練
+                            </h3>
+                            <!-- 顯示摘要 -->
+                            <div class="block">
+                                <ul class="text-gray-300 text-sm lg:text-base font-light leading-relaxed mb-4 space-y-1">
+                                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span> 完整職前訓練</li>
+                                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span> 年度定期培訓</li>
+                                </ul>
+                                <div class="flex items-center text-accent text-xs font-bold tracking-[0.2em] uppercase mt-4">
+                                    View Details <i class="fa-solid fa-arrow-right-long ml-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 (團隊優勢) - 點擊觸發 獨立 Modal -->
+                    <div onclick="openModal('modal-team')" class="group absolute top-12 left-[32%] w-[58%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-none z-10 opacity-90 cursor-pointer lg:relative lg:top-auto lg:left-auto lg:w-full lg:aspect-auto lg:h-[500px] lg:opacity-100 lg:shadow-card lg:hover:shadow-2xl lg:z-auto lg:mt-16 lg:transition-all lg:duration-500 lg:hover:-translate-y-2 border border-white/50">
+                        <img src="/HuaFan/image/about/團隊.webp" alt="團隊優勢" class="w-full h-full object-cover hover-zoom-img filter brightness-90 group-hover:brightness-100 transition duration-500">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-primaryDark/95 via-primaryDark/40 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500"></div>
+
+                        <!-- 提示遮罩 -->
+                        <div class="absolute inset-0 bg-primaryDark/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-30">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 text-center px-6">
+                                <div class="w-16 h-16 rounded-full bg-accent text-white flex items-center justify-center mx-auto mb-4 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-2xl"></i>
+                                </div>
+                                <p class="text-white text-lg font-bold tracking-wider">點擊查看完整內容</p>
+                                <p class="text-white/60 text-sm mt-2">View Full Details</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Icon: 手機版改為右上角 (badge 下方)，電腦版維持左上 -->
+                        <div class="absolute top-16 right-4 lg:top-6 lg:left-6 lg:right-auto bg-white/90 backdrop-blur-sm text-center w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center rounded-xl shadow-sm z-20">
+                            <i class="fa-solid fa-user-tie text-primary text-xl lg:text-2xl"></i>
+                        </div>
+                        
+                        <div class="absolute top-4 right-4 lg:top-6 lg:right-6 z-20">
+                            <span class="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-primary/80 backdrop-blur text-white text-[10px] lg:text-xs font-bold tracking-wider border border-white/20 shadow-sm">
+                                Professional Team
+                            </span>
+                        </div>
+                        
+                        <!-- 內容區：手機版靠右對齊 (text-right items-end)，電腦版靠左 (lg:text-left lg:items-start) -->
+                        <div class="absolute bottom-0 left-0 w-full p-5 lg:p-8 z-20 flex flex-col items-end text-right lg:items-start lg:text-left">
+                            <h3 class="text-xl lg:text-3xl font-serif font-bold text-white mb-2 lg:mb-4 leading-snug group-hover:text-accentLight transition-colors">
+                                團隊優勢
+                            </h3>
+                            <div class="block">
+                                <ul class="text-gray-300 text-sm lg:text-base font-light leading-relaxed mb-4 space-y-1">
+                                    <li class="flex items-center gap-2 lg:justify-start justify-end"><span class="w-1.5 h-1.5 rounded-full bg-accent lg:order-first order-last"></span> 專業領域分工</li>
+                                    <li class="flex items-center gap-2 lg:justify-start justify-end"><span class="w-1.5 h-1.5 rounded-full bg-accent lg:order-first order-last"></span> 持續精進學習</li>
+                                </ul>
+                                <div class="flex items-center text-accent text-xs font-bold tracking-[0.2em] uppercase mt-4 lg:justify-start justify-end">
+                                    View Details <i class="fa-solid fa-arrow-right-long ml-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 電腦版標題與共用說明區 -->
+                <div class="w-full mt-12 lg:mt-0 lg:w-2/5 lg:pt-10 flex flex-col items-end">
+                    <!-- 深綠色大葉片裝飾 -->
+                    <div class="absolute -right-10 -top-0 w-40 h-40 text-primary opacity-55 hidden lg:block pointer-events-none" style="transform: rotate(-15deg);">
+                        <svg viewBox="0 0 100 100" fill="currentColor"><path d="M50 0C50 0 90 40 90 60C90 85 50 100 50 100C50 100 10 85 10 60C10 40 50 0 50 0Z"/></svg>
+                    </div>
+
+                    <!-- 電腦版標題 -->
+                    <div class="hidden lg:flex flex-col items-end text-right w-full mb-12">
+                        <div class="absolute bottom-48 right-0 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-gray-300 to-primary/30 -z-10"></div>
+                        <div class="relative inline-block text-right mb-6">
+                            <h2 class="text-7xl font-serif font-bold text-primaryDark leading-[1.1] tracking-tight relative z-10">
+                                完整的<br>教育訓練
+                            </h2>
+                        </div>
+                        <p class="text-accent/80 font-serif italic text-2xl tracking-widest uppercase mb-0 relative z-10 pr-1">Professional Training</p>
+                    </div>
+
+                    <!-- 說明文字與按鈕 (點擊按鈕開啟 合併 Modal) -->
+                    <div class="flex flex-col items-end gap-6 self-end lg:items-end lg:gap-8">
+                        <div class="flex flex-col items-end gap-3 max-w-md">
+                            <div class="w-16 lg:w-24 h-[1px] bg-gradient-to-l from-primary/60 via-primary/30 to-transparent"></div>
+                            <p class="text-primaryDark/70 font-medium text-lg lg:text-xl leading-relaxed text-right">
+                                <span class="text-primary font-bold decoration-accent decoration-2 underline-offset-4">「再教育」</span>與<span class="text-primary font-bold decoration-accent decoration-2 underline-offset-4">「再訓練」</span><br>
+                                是我們給家屬圓滿服務的堅實保證。
+                            </p>
+                        </div>
+                        <button onclick="openModal('modal-combined')" class="group flex items-center gap-3 px-6 py-3 rounded-full border border-accent/30 bg-white/80 hover:bg-primary hover:border-primary text-primary hover:text-white transition-all duration-300 shadow-lg backdrop-blur-sm">
+                            <span class="text-sm font-bold tracking-widest">詳細內容</span>
+                            <i class="fa-solid fa-arrow-right -rotate-45 text-lg group-hover:rotate-0 transition-transform duration-300"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+    ========================================================================
+    🛑 Modal 視窗區塊 (3個版本：2個獨立 + 1個合併[固定尺寸+Tab])
+    ======================================================================== 
+    -->
+    
+    <!-- 1. Modal: 定期教育訓練 (獨立版) -->
+    <div id="modal-training" class="modal-overlay animate-fade-in" onclick="closeModal('modal-training')">
+        <div class="bg-surface w-full max-w-md md:max-w-lg rounded-2xl p-6 md:p-8 shadow-2xl relative animate-zoom-in" onclick="event.stopPropagation()">
+            <button onclick="closeModal('modal-training')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition text-gray-500 z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-md flex-shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-serif font-bold text-primary">定期教育訓練</h3>
+                    <p class="text-accent text-sm font-bold tracking-wider">Continuous Learning</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-[#F5F7F5] rounded-xl p-4 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="fa-solid fa-user-graduate text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-primary mb-1">完整職前訓練</h4>
+                        <p class="text-gray-600 text-sm leading-snug">團隊成員接受完整的教育訓練，奠定專業基礎。</p>
+                    </div>
+                </div>
+                <div class="bg-[#F5F7F5] rounded-xl p-4 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="fa-solid fa-calendar-days text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-primary mb-1">年度定期培訓</h4>
+                        <p class="text-gray-600 text-sm leading-snug">每年定期舉辦教育訓練課程，檢視服務細節。</p>
+                    </div>
+                </div>
+                <div class="bg-[#F5F7F5] rounded-xl p-4 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="fa-solid fa-chalkboard-user text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-primary mb-1">內部講師傳承</h4>
+                        <p class="text-gray-600 text-sm leading-snug">各領域資深夥伴輪流擔任講師，經驗無私分享。</p>
+                    </div>
+                </div>
+                <div class="bg-[#F5F7F5] rounded-xl p-4 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                    <div class="w-10 h-10 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="fa-solid fa-user-tie text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-primary mb-1">專家學者授課</h4>
+                        <p class="text-gray-600 text-sm leading-snug">不定期聘請外部專家學者，注入新知與觀點。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Modal: 團隊優勢 (獨立版) -->
+    <div id="modal-team" class="modal-overlay animate-fade-in" onclick="closeModal('modal-team')">
+        <div class="bg-[#2F3E2B] w-full max-w-md md:max-w-lg rounded-2xl p-8 shadow-2xl relative animate-zoom-in overflow-hidden border border-white/10" onclick="event.stopPropagation()">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
+            <button onclick="closeModal('modal-team')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition text-white/70 hover:text-white z-20">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="relative z-10 flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-crown text-[#C5A670] text-2xl"></i>
+                <h3 class="text-3xl font-serif font-bold text-white tracking-wide">團隊優勢</h3>
+            </div>
+            <div class="relative z-10 space-y-4">
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                    <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">01</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-[#C5A670] mb-1">專業領域分工</h4>
+                        <p class="text-white/80 text-sm leading-relaxed font-light">禮儀師、司儀、接體、SPA、花藝等各領域專才。</p>
+                    </div>
+                </div>
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                    <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">02</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-[#C5A670] mb-1">持續精進學習</h4>
+                        <p class="text-white/80 text-sm leading-relaxed font-light">透過定期進修與交流研討，確保服務觀念與時俱進。</p>
+                    </div>
+                </div>
+                <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                    <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">03</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-[#C5A670] mb-1">服務品質保證</h4>
+                        <p class="text-white/80 text-sm leading-relaxed font-light">每位成員皆經過嚴格考核，是您最值得信賴的依靠。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
+                <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
+            <div class="relative z-10 mt-6 flex justify-end">
+                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-users"></i>
+                    專業證照團隊
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Modal: 合併版 (Tab切換 + 固定尺寸) - 僅供按鈕觸發 -->
+    <div id="modal-combined" class="modal-overlay animate-fade-in" onclick="closeModal('modal-combined')">
+        <!-- Container: 寬螢幕並排，窄螢幕 Tab 切換 -->
+        <!-- Added id="modal-inner-container" to target background change via JS -->
+        <div id="modal-inner-container" class="bg-surface w-full max-w-md lg:max-w-6xl mx-4 md:mx-auto rounded-[2rem] shadow-2xl relative animate-zoom-in flex flex-col lg:flex-row overflow-hidden min-h-[600px] h-auto transition-colors duration-300" onclick="event.stopPropagation()">
+            
+            <!-- 關閉按鈕 -->
+            <button onclick="closeModal('modal-combined')" class="absolute top-4 right-4 z-50 w-8 h-8 rounded-full bg-black/10 hover:bg-black/20 lg:bg-white/10 lg:hover:bg-white/20 flex items-center justify-center transition backdrop-blur-md text-gray-600 lg:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Tab 切換按鈕 (僅在 lg 以下顯示) -->
+            <div class="flex w-full lg:hidden order-1 shrink-0">
+                <button onclick="switchTab('training')" id="tab-btn-training" class="tab-btn active w-1/2 py-5 text-center font-bold text-lg transition-colors duration-300 rounded-br-[2rem]">
+                    定期教育訓練
+                </button>
+                <button onclick="switchTab('team')" id="tab-btn-team" class="tab-btn w-1/2 py-5 text-center font-bold text-lg transition-colors duration-300 rounded-bl-[2rem]">
+                    團隊優勢
+                </button>
+            </div>
+
+            <!-- 左側/Tab1：定期教育訓練 (淺色主題) -->
+            <!-- 在 lg 下為 1/2 寬度，並顯示 -->
+            <div id="tab-content-training" class="tab-content active order-2 w-full lg:w-1/2 p-8 lg:p-12 bg-surface">
+                <!-- 手機版隱藏標題 (因為已有Tab)，電腦版顯示 -->
+                <div class="hidden lg:flex items-center gap-4 mb-8">
+                    <div class="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center shadow-md flex-shrink-0">
+                        <i class="fa-solid fa-graduation-cap text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-primary">定期教育訓練</h3>
+                        <p class="text-accent text-sm font-bold tracking-wider">Continuous Learning</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-[#F5F7F5] rounded-xl p-5 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="fa-solid fa-user-graduate text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-primary mb-1">完整職前訓練</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">團隊成員接受完整的教育訓練，奠定專業基礎。</p>
+                        </div>
+                    </div>
+                    <div class="bg-[#F5F7F5] rounded-xl p-5 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="fa-solid fa-calendar-days text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-primary mb-1">年度定期培訓</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">每年定期舉辦教育訓練課程，檢視服務細節。</p>
+                        </div>
+                    </div>
+                    <div class="bg-[#F5F7F5] rounded-xl p-5 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="fa-solid fa-chalkboard-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-primary mb-1">內部講師傳承</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">各領域資深夥伴輪流擔任講師，經驗無私分享。</p>
+                        </div>
+                    </div>
+                    <div class="bg-[#F5F7F5] rounded-xl p-5 flex items-center gap-4 border border-transparent hover:border-accent/20 transition duration-300">
+                        <div class="w-12 h-12 rounded-full bg-white text-[#C5A670] flex items-center justify-center shrink-0 shadow-sm">
+                            <i class="fa-solid fa-user-tie text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-primary mb-1">專家學者授課</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">不定期聘請外部專家學者，注入新知與觀點。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側/Tab2：團隊優勢 (深色主題) -->
+            <!-- 在 lg 下為 1/2 寬度，並顯示 -->
+            <div id="tab-content-team" class="tab-content order-3 w-full lg:w-1/2 p-8 lg:p-12 bg-[#2F3E2B] relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
+                <!-- 手機版隱藏標題 (因為已有Tab)，電腦版顯示 -->
+                <div class="relative z-10 hidden lg:flex items-center gap-3 mb-8">
+                    <i class="fa-solid fa-crown text-[#C5A670] text-2xl"></i>
+                    <h3 class="text-3xl font-serif font-bold text-white tracking-wide">團隊優勢</h3>
+                </div>
+                <div class="relative z-10 space-y-4">
+                    <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                        <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">01</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-[#C5A670] mb-1">專業領域分工</h4>
+                            <p class="text-white/80 text-sm leading-relaxed font-light">禮儀師、司儀、接體、SPA、花藝等各領域專才。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                        <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">02</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-[#C5A670] mb-1">持續精進學習</h4>
+                            <p class="text-white/80 text-sm leading-relaxed font-light">透過定期進修與交流研討，確保服務觀念與時俱進。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                        <div class="text-4xl font-serif font-bold text-[#C5A670] opacity-30 leading-none mt-1">03</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-[#C5A670] mb-1">服務品質保證</h4>
+                            <p class="text-white/80 text-sm leading-relaxed font-light">每位成員皆經過嚴格考核，是您最值得信賴的依靠。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
+                    <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
+            <div class="relative z-10 mt-6 flex justify-end">
+                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-users"></i>
+                    專業證照團隊
+                </a>
+            </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 核心理念區塊 (Redesigned with Review Section Style) -->
+    <section id="core-philosophy" class="z-10 pt-20 pb-16 relative overflow-hidden bg-gradient-to-b from-[#F0ECE4]/95 via-[#F0ECE4]/60 to-transparent">
+        <!-- Background Elements -->
+        <div class="absolute right-[-10%] top-[-20%] w-[500px] h-[500px] bg-accent/5 rounded-full blur-[80px] pointer-events-none -z-10"></div>
+        <!-- 花紋SVG裝飾 -->
+        <svg class="absolute left-[-5%] bottom-[-10%] w-[180px] h-[120px] opacity-20 pointer-events-none -z-10" viewBox="0 0 180 120" fill="none"><path d="M10 110 Q90 10 170 110" stroke="#C5A670" stroke-width="2" fill="none"/><circle cx="90" cy="60" r="8" fill="#C5A670" fill-opacity="0.12"/></svg>
+
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <!-- Header (Adapted Style) -->
+            <div class="flex flex-col items-end text-right relative z-10 mb-8">
+                 <span class="font-english italic font-bold text-[5rem] md:text-[8rem] text-accent/10 leading-none absolute -top-10 right-0 pointer-events-none select-none mix-blend-multiply">
+                    Philosophy
+                </span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-primaryDark leading-tight relative z-10">
+                    核心<span class="text-accent relative inline-block">理念</span>
+                </h2>
+                <div class="flex items-center gap-3 mt-4 z-10">
+                    <div class="h-[1px] w-12 bg-gradient-to-l from-accent/60 to-transparent"></div>
+                    <p class="text-[#788275] font-serif text-sm tracking-widest font-medium">
+                        以人為本，守護生命的尊嚴與價值
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cards Scroll Container (典雅層次美化) -->
+            <div class="flex overflow-x-auto gap-8 pb-8 pt-12 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-3 mask-gradient-x md:mask-none items-stretch">
+                
+                <!-- Card 1: 宗旨 -->
+                <div class="min-w-[60vw] md:min-w-0 max-w-[360px] bg-gradient-to-br from-[#FFFDF6] via-[#F7F5F0] to-[#F0ECE4] p-8 rounded-[2.5rem] border-2 border-accent/30 transition-all duration-500 group relative flex flex-col hover:-translate-y-3 hover:scale-[1.025]">
+                    <!-- 金色角標 -->
+                    <div class="absolute -top-4 left-8 bg-gradient-to-r from-accent via-primary to-accent text-white text-[12px] font-bold px-5 py-1.5 rounded-full shadow-gold tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-certificate text-yellow-300 animate-pulse"></i> 01 宗旨
+                    </div>
+                    <!-- Icon區塊 -->
+                    <div class="relative flex justify-center mt-8 mb-6">
+                        <div class="absolute -inset-2 rounded-full bg-accent/10 blur-[10px] opacity-60"></div>
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#F5F7F5] to-[#FFF9E6] flex items-center justify-center text-accent text-3xl shadow-gold-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                    </div>
+                    <!-- 文字內容 -->
+                    <div class="flex-1 flex flex-col">
+                        <h3 class="text-2xl font-serif font-bold text-primary mb-2 text-center tracking-wide">華梵宗旨</h3>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-accent/40 via-accent/80 to-accent/40 mx-auto mb-4 rounded-full"></div>
+                        <blockquote class="text-accent/80 text-base font-serif italic text-center mb-2">「以真誠守護每一段生命旅程」</blockquote>
+                        <p class="text-gray-700 leading-relaxed text-center font-light mb-2">
+                            以我們的真誠<br/>讓亡者有尊嚴地<br/>走向生命的另一段旅程
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-center font-light">
+                            用我們的專業<br/>給家屬最體貼、安心<br/>沒有遺憾的服務
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: 原則 (Featured Style) -->
+                <div class="min-w-[60vw] md:min-w-0 max-w-[360px] bg-gradient-to-br from-[#FFFDF6] via-[#F7F5F0] to-[#F0ECE4] p-8 rounded-[2.5rem] border-2 border-accent/40 transition-all duration-500 group relative flex flex-col hover:-translate-y-3 hover:scale-[1.025]">
+                    <!-- 金色角標 -->
+                    <div class="absolute -top-4 left-8 bg-gradient-to-r from-accent via-primary to-accent text-white text-[12px] font-bold px-5 py-1.5 rounded-full shadow-gold tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-gem text-yellow-200 animate-pulse"></i> 02 原則
+                    </div>
+                    <!-- Icon區塊 -->
+                    <div class="relative flex justify-center mt-8 mb-6">
+                        <div class="absolute -inset-2 rounded-full bg-accent/10 blur-[10px] opacity-60"></div>
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-accent/10 to-[#FFF9E6] flex items-center justify-center text-accent text-3xl shadow-gold-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                    </div>
+                    <!-- 文字內容 -->
+                    <div class="flex-1 flex flex-col">
+                        <h3 class="text-2xl font-serif font-bold text-primary mb-2 text-center tracking-wide">華梵原則</h3>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-accent/40 via-primary/80 to-accent/40 mx-auto mb-4 rounded-full"></div>
+                        <blockquote class="text-accent/80 text-base font-serif italic text-center mb-2">「專業細膩，誠信為本」</blockquote>
+                        <p class="text-gray-700 leading-relaxed text-center font-light mb-2">
+                            我們的服務費用<br/>或許沒有比他人便宜<br/>但也絕不比他人貴
+                        </p>
+                        <p class="text-gray-600 leading-relaxed text-center font-light">
+                            我們的服務品質<br/>不僅比他人專業優質<br/>更比他人細心體貼
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: 信念 -->
+                <div class="min-w-[60vw] md:min-w-0 max-w-[360px] bg-gradient-to-br from-[#FFFDF6] via-[#F7F5F0] to-[#F0ECE4] p-8 rounded-[2.5rem] border-2 border-accent/30 transition-all duration-500 group relative flex flex-col hover:-translate-y-3 hover:scale-[1.025]">
+                    <!-- 金色角標 -->
+                    <div class="absolute -top-4 left-8 bg-gradient-to-r from-accent via-primary to-accent text-white text-[12px] font-bold px-5 py-1.5 rounded-full shadow-gold tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-leaf text-yellow-300 animate-pulse"></i> 03 信念
+                    </div>
+                    <!-- Icon區塊 -->
+                    <div class="relative flex justify-center mt-8 mb-6">
+                        <div class="absolute -inset-2 rounded-full bg-accent/10 blur-[10px] opacity-60"></div>
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#F5F7F5] to-[#FFF9E6] flex items-center justify-center text-accent text-3xl shadow-gold-lg group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-hands-holding-circle"></i>
+                        </div>
+                    </div>
+                    <!-- 文字內容 -->
+                    <div class="flex-1 flex flex-col">
+                        <h3 class="text-2xl font-serif font-bold text-primary mb-2 text-center tracking-wide">華梵信念</h3>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-accent/40 via-accent/80 to-accent/40 mx-auto mb-4 rounded-full"></div>
+                        <blockquote class="text-accent/80 text-base font-serif italic text-center mb-2">「圓滿每一份託付」</blockquote>
+                        <p class="text-gray-700 leading-relaxed text-center font-light mb-2">
+                            基於對生命的人文關懷<br/>我們全力以赴
+                        </p>
+                        <div class="pt-2">
+                            <p class="text-lg font-serif font-bold text-accent tracking-widest mb-2 text-center">安寧規劃 · 尊榮飾終</p>
+                            <p class="text-lg font-serif font-bold text-accent tracking-widest mb-2 text-center">專業諮詢 · 圓滿服務</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 生命關懷與公益區塊 (單一容器，右側活潑相框) -->
+    <section id="life-care" class="pt-18 md:pt-24 pb-32 md:pb-48 relative z-20 overflow-hidden bg-gradient-to-b from-transparent to-[#F0F5F2] via-[#F0F5F2] via-80%">
+        <!-- 背景裝飾字 -->
+        <div class="absolute -top-6 md:-top-14 left-0 pointer-events-none select-none overflow-hidden w-full flex justify-start">
+            <span class="font-serif font-bold text-[10rem] md:text-[20rem] text-primary/5 tracking-widest leading-none whitespace-nowrap">CARE</span>
+        </div>
+    
+        <div class="pt-12 mx-auto px-6 md:px-12 relative z-10">
+
+            <!-- 單一容器結構 (改為上下結構，標題獨立於上方) -->
+            <div class="container mx-auto px-12 bg-gradient-to-b from-[#FAF6EE]/70 via-white/80 to-white rounded-[2.5rem] md:rounded-[3rem] p-2 md:p-4 shadow-[0_15px_40px_-10px_rgba(70,91,64,0.08)] overflow-hidden flex flex-col border border-[#EBE4D5] animate-fade-in-up">
+                
+                <!-- ★ 頂部全寬置中標題區 -->
+                <div class="w-full pt-4 md:pt-4 pb-8 px-6 md:px-12 flex flex-col items-center text-center z-10 relative">
+                    <!-- 金色標線與英文 -->
+                    <div class="flex items-center justify-center gap-3 mb-5 mt-2">
+                        <span class="h-[1px] w-12 md:w-16 bg-[#C5A670]"></span>
+                        <span class="text-[#C5A670] text-[0.85rem] md:text-base font-bold tracking-[0.2em] uppercase">Charity & Care</span>
+                        <span class="h-[1px] w-12 md:w-16 bg-[#C5A670]"></span>
+                    </div>
+                    
+                    <!-- 主標題 -->
+                    <h2 class="text-[2.5rem] md:text-5xl font-serif font-bold text-primaryDark mb-4">生命關懷與公益</h2>
+                    
+                    <!-- 副標題 -->
+                    <p class="text-gray-600 text-lg md:text-[1.1rem] leading-relaxed font-medium max-w-2xl">
+                        長期關懷弱勢、參與社會公益<br class=" md:hidden"/>用行動讓社會多一點溫暖
+                    </p>
+                </div>
+
+                <!-- 下半部：左文右圖佈局 -->
+                <div class="flex flex-col lg:flex-row w-full gap-0 pb-4 md:pb-8">
+                    
+                    <!-- 左側：細節文字內容 -->
+                    <div class="p-6 md:p-8 lg:p-12 lg:w-5/12 flex flex-col justify-center z-10 relative pt-6 lg:pt-6">
+                        <!-- 關懷理念 -->
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#EFEBE1] flex items-center justify-center flex-shrink-0 text-[#A68A5E]">
+                                <i class="fa-solid fa-heart text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark">關懷理念</h3>
+                        </div>
+                        <p class="text-base md:text-[1.05rem] text-gray-600 leading-relaxed pl-4 border-l-[3px] border-[#E8E2D2] mb-10">
+                            華梵禮儀公司長期關懷社會弱勢族群、參與社會公益。不論是到安養中心擔任義工、捐贈輪椅物資，以及對於無力殮葬的弱勢家庭，我們都給予喪葬費用的支援與協助。
+                        </p>
+                        
+                        <!-- 邀請您一同傳愛 -->
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#E7EDE7] flex items-center justify-center flex-shrink-0 text-[#465B40]">
+                                <i class="fa-solid fa-hand-holding-heart text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-serif font-bold text-primaryDark">邀請您一同傳愛</h3>
+                        </div>
+                        <div class="border-l-[3px] border-[#E7EDE7] pl-4 flex flex-col gap-5">
+                            <p class="text-gray-600 text-base md:text-[1.05rem] leading-relaxed">
+                                如果您願意捐助，我們會將這些愛心專款專用，協助弱勢族群購買棺木、骨灰罐及辦理喪葬事宜。
+                            </p>
+                            <p class="text-[#B3935B] font-bold text-sm md:text-base mb-1">
+                                # 每一份愛心，都是溫暖社會的力量
+                            </p>
+                            <a href="tel:0800-800818" class="inline-block mt-2">
+                                <button class="flex items-center justify-center gap-3 bg-[#5B6D5B] text-white font-bold text-[1.1rem] rounded-full py-3.5 px-8 hover:bg-[#465B40] transition-all duration-300 shadow-md hover:shadow-lg w-fit">
+                                    <i class="fa-solid fa-phone text-[#D1B98D] animate-attention"></i>
+                                    <span class="tracking-wide">24H 公益服務專線</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 右側：圖片區 -->
+                    <div class="lg:w-7/12 relative p-4 lg:p-8 flex flex-col justify-center lg:pt-6">
+                        <!-- 圖片外層容器 -->
+                        <div class="relative w-full aspect-[4/3] max-w-2xl mx-auto lg:ml-auto lg:mr-0 mb-6 md:mb-0">
+                            <!-- 外框裝飾 (Lively Border) -->
+                            <div class="absolute inset-0 border-[1.5px] border-accent/40 rounded-organic transform rotate-3 scale-[1.03] pointer-events-none"></div>
+                            
+                            <!-- 圖片本體容器 -->
+                            <div class="relative w-full h-full rounded-organic overflow-hidden shadow-gold-lg group bg-white">
+                                <div id="charity-slides-wrapper" class="absolute inset-0 w-full h-full pb-16 md:pb-0">
+                                    <!-- 多圖疊加，溶接淡入淡出 -->
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide06.jpg" alt="志工參與社會服務" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide10.jpg" alt="捐助輪椅物資" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide09.jpg" alt="社區關懷活動" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide11.jpg" alt="公益捐血活動" />
+                                    <img class="charity-slide w-full h-full object-cover transition-transform duration-700 " src="https://www.wf119.com.tw/images/charity-slide01.jpg" alt="長者陪伴計畫" />
+                                </div>
+                                <!-- 底部漸層與文字 (Overlay) -->
+                                <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6 z-10">
+                                    <!-- 底部 bg-warm 柔和漸層 -->
+                                    <div class="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none z-0" style="background: linear-gradient(0deg, #F7F5F0 0%, rgba(247,245,240,0.92) 20%, rgba(247,245,240,0.7) 55%, rgba(247,245,240,0.0) 100%);"></div>
+                                    <div class="transform translate-y-1 group-hover:translate-y-0 transition duration-500">
+                                        <div class="flex items-end justify-between relative z-10">
+                                            <div class="pb-2 pl-1 md:pb-4 md:pl-2">
+                                                <span class="text-accent text-[0.92rem] md:text-base font-semibold tracking-[0.18em] uppercase mb-0.5 block drop-shadow-sm" style="letter-spacing:0.18em;">ACTIVITY</span>
+                                                <h4 id="charity-slide-title" class="text-white text-lg md:text-2xl font-serif font-bold tracking-wide leading-snug md:leading-normal drop-shadow-sm md:drop-shadow">志工參與社會服務</h4>
+                                            </div>
+                                            <!-- 控制點 (Inside) -->
+                                            <div class="flex gap-2 mb-1">
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="0"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="1"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="2"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="3"></button>
+                                                <button class="charity-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 shadow-sm" data-idx="4"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
+    <div id="hf-footer"></div>
+
+    <script>
+    // 字體大小調整函數
+function adjustFontSize(change) {
+    // 取得根元素 (html)
+    const html = document.documentElement;
+    
+    // 取得當前的字體大小 (預設通常是 16px)
+    let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+    
+    // 計算新的字體大小
+    let newSize = currentSize + change;
+    
+    // 設定限制範圍：最小 12px，最大 24px
+    if (newSize >= 12 && newSize <= 24) {
+        html.style.fontSize = newSize + 'px';
+    }
+}
+
+    function toggleMobileSubmenu() {
+        const submenuContainer = document.getElementById('mobile-submenu-area');
+        const submenuList = document.getElementById('submenu-about-list');
+        const icon = document.getElementById('mobile-submenu-icon');
+        
+        if (submenuContainer.classList.contains('opacity-0')) {
+            // Expand
+            submenuContainer.classList.remove('opacity-0', '-translate-x-4', 'pointer-events-none');
+            submenuContainer.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+            submenuList.classList.remove('hidden');
+            // Rotate icon
+            if(icon) icon.classList.add('rotate-90');
+        } else {
+            // 如果已展開，再點擊直接跳轉
+            window.location.href = '關於華梵.html';
+        }
+    }
+
+        // Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const fullScreenMenu = document.getElementById('full-screen-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            const isHidden = fullScreenMenu.classList.contains('hidden');
+            if (isHidden) {
+                fullScreenMenu.classList.remove('hidden');
+                fullScreenMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    fullScreenMenu.style.opacity = '1';
+                });
+            } else {
+                fullScreenMenu.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    fullScreenMenu.classList.add('hidden');
+                    fullScreenMenu.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        // 只有非按鈕的 menu-link (即 <a> 標籤) 點擊時才關閉選單
+        menuLinks.forEach(link => {
+            if (link.tagName !== 'BUTTON') {
+                link.addEventListener('click', toggleMenu);
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 圖片彈窗功能
+        function openImageModal(imageSrc, title) {
+            // 創建彈窗元素
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/90 z-[200] flex items-center justify-center p-4 animate-fadeIn';
+            modal.style.animation = 'fadeIn 0.3s ease';
+            
+            modal.innerHTML = `
+                <div class="relative max-w-6xl w-full">
+                    <button onclick="this.closest('.fixed').remove()" 
+                            class="absolute -top-12 right-0 text-white hover:text-accent transition text-3xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="text-center mb-4">
+                        <h3 class="text-white text-xl font-bold">${title}</h3>
+                    </div>
+                    <img src="${imageSrc}" alt="${title}" 
+                         class="w-full h-auto rounded-lg shadow-2xl max-h-[80vh] object-contain mx-auto">
+                </div>
+            `;
+            
+            // 點擊背景關閉
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            // ESC鍵關閉
+            const escHandler = (e) => {
+                if (e.key === 'Escape') {
+                    modal.remove();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            };
+            document.addEventListener('keydown', escHandler);
+            
+            document.body.appendChild(modal);
+        }
+
+        // 添加 fadeIn 動畫和其他樣式
+        const style = document.createElement('style');
+        style.textContent = `
+            .hero-slide {
+                opacity: 0;
+                transition: opacity 2s cubic-bezier(0.4,0,0.2,1);
+                z-index: 1;
+            }
+            .hero-slide.active {
+                opacity: 1;
+                z-index: 2;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .shadow-rose-glow {
+                box-shadow: 0 10px 40px -10px rgba(192, 132, 132, 0.3);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Hero slider
+        const slides = Array.from(document.querySelectorAll('.hero-slide'));
+        const dots = Array.from(document.querySelectorAll('.hero-dot'));
+        const prevBtn = document.querySelector('.hero-prev');
+        const nextBtn = document.querySelector('.hero-next');
+        let currentSlide = 0;
+        let sliderTimer = null;
+
+        function setSlide(index) {
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === index);
+                slide.style.pointerEvents = idx === index ? 'auto' : 'none';
+            });
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('bg-white', idx === index);
+                dot.classList.toggle('bg-white/60', idx !== index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            setSlide((currentSlide + 1) % slides.length);
+        }
+
+        function prevSlide() {
+            setSlide((currentSlide - 1 + slides.length) % slides.length);
+        }
+
+        function startSlider() {
+            stopSlider();
+            sliderTimer = setInterval(nextSlide, 8000);
+        }
+
+        function stopSlider() {
+            if (sliderTimer) clearInterval(sliderTimer);
+        }
+
+        if (slides.length) {
+            setSlide(0);
+            startSlider();
+
+            if (nextBtn) nextBtn.addEventListener('click', () => {
+                nextSlide();
+                startSlider();
+            });
+            if (prevBtn) prevBtn.addEventListener('click', () => {
+                prevSlide();
+                startSlider();
+            });
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    setSlide(idx);
+                    startSlider();
+                });
+            });
+
+            // 手機左右滑動切換 hero
+            const heroSection = document.getElementById('hero-section');
+            if (heroSection) {
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let touchEndX = 0;
+                let touchEndY = 0;
+                let touchMoved = false;
+
+                heroSection.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 1) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        touchEndX = touchStartX;
+                        touchEndY = touchStartY;
+                        touchMoved = false;
+                    }
+                }, { passive: true });
+
+                heroSection.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1) {
+                        touchEndX = e.touches[0].clientX;
+                        touchEndY = e.touches[0].clientY;
+                        touchMoved = true;
+                    }
+                }, { passive: true });
+
+                heroSection.addEventListener('touchend', () => {
+                    if (!touchMoved) return;
+                    const dx = touchEndX - touchStartX;
+                    const dy = touchEndY - touchStartY;
+                    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                        if (dx < 0) {
+                            nextSlide();
+                        } else {
+                            prevSlide();
+                        }
+                        startSlider();
+                    }
+                });
+            }
+        }
+
+        // 公益區塊圖片輪播邏輯（溶接淡入淡出效果）
+        const charitySlides = [
+            {
+                img: 'https://www.wf119.com.tw/images/charity-slide06.jpg',
+                title: '志工參與社會服務'
+            },
+            {
+                img: 'https://www.wf119.com.tw/images/charity-slide10.jpg',
+                title: '捐助輪椅物資'
+            },
+            {
+                img: 'https://www.wf119.com.tw/images/charity-slide09.jpg',
+                title: '社區關懷活動'
+            },
+            {
+                img: 'https://www.wf119.com.tw/images/charity-slide11.jpg',
+                title: '公益捐血活動'
+            },
+            {
+                img: 'https://www.wf119.com.tw/images/charity-slide01.jpg',
+                title: '長者陪伴計畫'
+            }
+        ];
+        const charitySlidesWrapper = document.getElementById('charity-slides-wrapper');
+        const charityImgs = charitySlidesWrapper.querySelectorAll('.charity-slide');
+        const charityTitle = document.getElementById('charity-slide-title');
+        const charityDots = document.querySelectorAll('.charity-dot');
+        let charityCurrent = 0;
+        let charityInterval;
+
+        function setCharitySlide(idx) {
+            charityImgs.forEach((img, i) => {
+                img.classList.toggle('active', i === idx);
+                img.style.zIndex = i === idx ? 2 : 1;
+            });
+            charityTitle.textContent = charitySlides[idx].title;
+            charityDots.forEach((dot, i) => {
+                if (i === idx) {
+                    dot.classList.add('bg-accent', 'scale-125');
+                    dot.classList.remove('bg-white/50');
+                } else {
+                    dot.classList.remove('bg-accent', 'scale-125');
+                    dot.classList.add('bg-white/50');
+                }
+            });
+            charityCurrent = idx;
+        }
+
+        function nextCharitySlide() {
+            const nextIdx = (charityCurrent + 1) % charitySlides.length;
+            setCharitySlide(nextIdx);
+        }
+
+        // 初始化與事件綁定
+        charityDots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                setCharitySlide(idx);
+                resetCharityTimer();
+            });
+        });
+
+        // 手機左右滑動切換公益圖片，事件綁定到 section#life-care
+        const lifeCareSection = document.getElementById('life-care');
+        if (lifeCareSection) {
+            let charityTouchStartX = 0;
+            let charityTouchStartY = 0;
+            let charityTouchEndX = 0;
+            let charityTouchEndY = 0;
+            let charityTouchMoved = false;
+
+            lifeCareSection.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    charityTouchStartX = e.touches[0].clientX;
+                    charityTouchStartY = e.touches[0].clientY;
+                    charityTouchEndX = charityTouchStartX;
+                    charityTouchEndY = charityTouchStartY;
+                    charityTouchMoved = false;
+                }
+            }, { passive: true });
+
+            lifeCareSection.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) {
+                    charityTouchEndX = e.touches[0].clientX;
+                    charityTouchEndY = e.touches[0].clientY;
+                    charityTouchMoved = true;
+                }
+            }, { passive: true });
+
+            lifeCareSection.addEventListener('touchend', () => {
+                if (!charityTouchMoved) return;
+                const dx = charityTouchEndX - charityTouchStartX;
+                const dy = charityTouchEndY - charityTouchStartY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) {
+                        nextCharitySlide();
+                    } else {
+                        const prevIdx = (charityCurrent - 1 + charitySlides.length) % charitySlides.length;
+                        setCharitySlide(prevIdx);
+                    }
+                    resetCharityTimer();
+                }
+            });
+        }
+
+        function resetCharityTimer() {
+            clearInterval(charityInterval);
+            charityInterval = setInterval(nextCharitySlide, 6000);
+        }
+
+        // 啟動輪播
+        setCharitySlide(0);
+        resetCharityTimer();
+            // Charity slide 溶接淡入淡出 CSS
+            const charityStyle = document.createElement('style');
+            charityStyle.textContent = `
+                .charity-slide {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    opacity: 0;
+                    transition: opacity 1.8s cubic-bezier(0.4,0,0.2,1);
+                    z-index: 1;
+                    pointer-events: none;
+                }
+                .charity-slide.active {
+                    opacity: 1;
+                    z-index: 2;
+                    pointer-events: auto;
+                }
+            `;
+            document.head.appendChild(charityStyle);
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.classList.add('no-scroll');
+            // Reset combined modal to first tab when opening
+            if(modalId === 'modal-combined') {
+                switchTab('training');
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+
+        // Tab 切換系統 (修改為完美無縫相連的右上角資料夾設計)
+        function switchGovTab(tabName) {
+            const contentDemo = document.getElementById('content-demo');
+            const contentPartner = document.getElementById('content-partner');
+            const btnDemo = document.getElementById('btn-demo');
+            const btnPartner = document.getElementById('btn-partner');
+
+            // 移除動畫類別，準備重新觸發
+            contentDemo.classList.remove('animate-tab-enter');
+            contentPartner.classList.remove('animate-tab-enter');
+            
+            // 定義精確的狀態樣式
+            // Light Mode Active (演習示範)：利用 border-b-surface 和 translate-y-[2px] 完美覆蓋下方卡片的白框
+            // 注意：因為手機版靠左，左側圓角需使用 rounded-tl-3xl 完美對接卡片左上角
+            const demoActiveClasses = "flex-1 py-3.5 md:py-4 rounded-tl-3xl rounded-tr-2xl text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-40 bg-surface text-primary shadow-[0_-5px_20px_-5px_rgba(197,166,112,0.2)] flex items-center justify-center gap-2 border-2 border-white border-b-surface translate-y-[2px]";
+            
+            // Light Mode Inactive (指定特約，當演習示範啟用時)：置於後方，無向下位移
+            const demoInactiveClasses = "flex-1 py-3 md:py-3.5 rounded-tl-xl rounded-tr-2xl text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-10 bg-[#E5E7EB]/90 text-gray-500 hover:text-primary hover:bg-[#D1D5DB] flex items-center justify-center gap-2 border-t border-r border-gray-300/50 translate-y-0";
+            
+            // Dark Mode Active (指定特約)：利用 border-b-primaryDark 和 translate-y-[1px] 完美覆蓋下方卡片的 1px 白框
+            const partnerActiveClasses = "flex-1 py-3.5 md:py-4 rounded-tl-2xl rounded-tr-2xl text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-40 bg-primaryDark text-white shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.3)] flex items-center justify-center gap-2 border border-white/20 border-b-primaryDark translate-y-[1px]";
+            
+            // Dark Mode Inactive (演習示範，當指定特約啟用時)：置於後方
+            const partnerInactiveClasses = "flex-1 py-3 md:py-3.5 rounded-tl-3xl rounded-tr-xl text-[15px] md:text-[16px] font-bold transition-colors duration-300 relative z-10 bg-[#E5E7EB]/90 text-gray-500 hover:text-primary hover:bg-[#D1D5DB] flex items-center justify-center gap-2 border-t border-l border-gray-300/50 translate-y-0";
+
+            if (tabName === 'demo') {
+                // UI 狀態切換
+                btnDemo.className = demoActiveClasses;
+                btnPartner.className = demoInactiveClasses;
+                
+                // 內容切換
+                contentPartner.classList.replace('block', 'hidden');
+                contentDemo.classList.replace('hidden', 'block');
+                
+                // 重新觸發動畫
+                void contentDemo.offsetWidth; 
+                contentDemo.classList.add('animate-tab-enter');
+
+            } else if (tabName === 'partner') {
+                // UI 狀態切換
+                btnPartner.className = partnerActiveClasses;
+                btnDemo.className = partnerInactiveClasses;
+                
+                // 內容切換
+                contentDemo.classList.replace('block', 'hidden');
+                contentPartner.classList.replace('hidden', 'block');
+                
+                // 重新觸發動畫
+                void contentPartner.offsetWidth; 
+                contentPartner.classList.add('animate-tab-enter');
+            }
+        }
+
+        function switchTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show selected content
+            document.getElementById('tab-content-' + tabName).classList.add('active');
+            
+            // Activate selected button
+            document.getElementById('tab-btn-' + tabName).classList.add('active');
+
+            // --- Toggle Container Background Color (Mobile) ---
+            const modalContainer = document.getElementById('modal-inner-container');
+            const closeBtnIcon = document.querySelector('#modal-combined button i');
+            const closeBtn = document.querySelector('#modal-combined button');
+
+            // 僅在手機/平板模式下執行背景切換 (lg:flex-row 下不需切換)
+            if (window.innerWidth < 1024) {
+                if (tabName === 'team') {
+                    // Switch to Green Theme
+                    modalContainer.classList.remove('bg-surface');
+                    modalContainer.classList.add('bg-[#2F3E2B]');
+                    // Update close button style for dark background
+                    closeBtn.classList.remove('bg-black/10', 'hover:bg-black/20', 'text-gray-600');
+                    closeBtn.classList.add('bg-white/10', 'hover:bg-white/20', 'text-white');
+                } else {
+                    // Switch to Beige Theme (Training)
+                    modalContainer.classList.remove('bg-[#2F3E2B]');
+                    modalContainer.classList.add('bg-surface');
+                    // Update close button style for light background
+                    closeBtn.classList.remove('bg-white/10', 'hover:bg-white/20', 'text-white');
+                    closeBtn.classList.add('bg-black/10', 'hover:bg-black/20', 'text-gray-600');
+                }
+            } else {
+                // Desktop Reset: Force Beige Surface (since it's split view)
+                modalContainer.classList.add('bg-surface');
+                modalContainer.classList.remove('bg-[#2F3E2B]');
+                // Desktop close button style
+                closeBtn.classList.add('lg:bg-white/10', 'lg:hover:bg-white/20', 'lg:text-white');
+            }
+        }
+        
+        // Add resize listener to reset background if switching from mobile to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                const modalContainer = document.getElementById('modal-inner-container');
+                if(modalContainer) {
+                    modalContainer.classList.add('bg-surface');
+                    modalContainer.classList.remove('bg-[#2F3E2B]');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
