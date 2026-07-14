@@ -345,7 +345,7 @@
 
     </style>
 </head>
-<body class="text-text bg-warm relative">
+<body class="text-text bg-warm relative pb-16 md:pb-0">
 
     <!-- 1. 全域背景層 (Global Background Layer) - Z-0 -->
     <div id="global-bg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
@@ -1703,7 +1703,7 @@
             <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
                 <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
             <div class="relative z-10 mt-6 flex justify-end">
-                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                <a href="index.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
                     <i class="fa-solid fa-users"></i>
                     專業證照團隊
                 </a>
@@ -1821,7 +1821,7 @@
                 <div class="relative z-10 mt-8 pt-6 border-t border-white/10 text-center">
                     <p class="font-serif italic text-white/40 text-sm tracking-wide">"Excellence is not an act, but a habit."</p>
             <div class="relative z-10 mt-6 flex justify-end">
-                <a href="首頁_webp.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
+                <a href="index.html#team" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C5A670] text-[#2F3E2B] font-bold text-sm shadow-lg hover:shadow-gold transition hover:-translate-y-0.5">
                     <i class="fa-solid fa-users"></i>
                     專業證照團隊
                 </a>
@@ -2068,6 +2068,8 @@
 
     <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
     <div id="hf-footer"></div>
+    <!-- 共用元件（由 js/hf-components.js 注入）：手機版 Sticky Footer -->
+    <div id="hf-sticky-footer"></div>
 
     <script>
     // 字體大小調整函數
@@ -2101,7 +2103,7 @@ function adjustFontSize(change) {
             if(icon) icon.classList.add('rotate-90');
         } else {
             // 如果已展開，再點擊直接跳轉
-            window.location.href = '關於華梵.html';
+            window.location.href = 'about.html';
         }
     }
 

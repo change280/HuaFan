@@ -864,7 +864,7 @@
 
     </style>
 </head>
-<body class="text-text bg-warm relative">
+<body class="text-text bg-warm relative pb-16 md:pb-0">
 
     <!-- 1. 全域背景層 -->
     <div id="global-bg-layer" class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
@@ -1856,6 +1856,8 @@
     
     <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
     <div id="hf-footer"></div>
+    <!-- 共用元件（由 js/hf-components.js 注入）：手機版 Sticky Footer -->
+    <div id="hf-sticky-footer"></div>
 
     <!-- 🆕 手機版彈窗模態框 -->
 <div id="mobile-info-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden flex items-center justify-center p-4 md:hidden">
@@ -1888,7 +1890,7 @@
             if(icon) icon.classList.add('rotate-90');
         } else {
             // 如果已展開，再點擊直接跳轉
-            window.location.href = '關於華梵.html';
+            window.location.href = 'about.html';
         }
     }
 
