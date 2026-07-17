@@ -58,6 +58,11 @@
     </script>
     <style>
         /* 自定義樣式 */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
         h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
         
@@ -1083,7 +1088,7 @@
                         min-height: 0;
                         margin-top: 4.25rem;
                         display: grid;
-                        grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+                        grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
                         gap: 1.5rem;
                         align-items: stretch;
                     }
@@ -1128,6 +1133,362 @@
                     .hf-price-card--popular:hover,
                     .hf-price-card--champion:hover,
                     .hf-price-card__cta:hover { transform: none !important; }
+                }
+
+                /* ======================================================================
+                   華梵禮儀｜影音內容區（透明背景版）
+                   位置：方案價格區下方、家屬評論區上方
+                   ====================================================================== */
+                .hf-video-showcase {
+                    --hf-video-green: #294330;
+                    --hf-video-green-soft: #49614e;
+                    --hf-video-gold: #c89a50;
+                    --hf-video-paper: #fffefb;
+                    position: relative;
+                    z-index: 20;
+                    isolation: isolate;
+                    overflow: visible;
+                    padding: clamp(5.5rem, 8vw, 8.5rem) 0;
+                    background: transparent;
+                }
+
+                /* 連場過渡：與上下段落的柔性接橋
+                   上交界（評論→影音）情緒延續：M03 長距離漸層溶接 + M04 靜態光廊
+                   下交界（影音→最新消息）資訊轉換：M02 背景色繼承 + M25 水印母題
+                   所有裝飾層 aria-hidden、靜態、置於內容之後，不遮擋 CTA。 */
+                .hf-video-showcase__glow {
+                    position: absolute;
+                    left: 50%;
+                    top: -10%;
+                    z-index: -3;
+                    width: min(82vw, 1220px);
+                    height: 128%;
+                    transform: translateX(-50%);
+                    pointer-events: none;
+                    background:
+                        radial-gradient(ellipse 58% 44% at 50% 20%, rgba(255,255,255,.65), transparent 62%),
+                        radial-gradient(ellipse 44% 40% at 50% 84%, rgba(200,154,80,.10), transparent 64%);
+                    opacity: .85;
+                }
+                .hf-video-showcase__bridge {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    z-index: -2;
+                    pointer-events: none;
+                }
+                .hf-video-showcase__bridge--top {
+                    top: 0;
+                    height: clamp(150px, 20vw, 320px);
+                    background: linear-gradient(to bottom,
+                        rgba(255,255,255,.72) 0%,
+                        rgba(255,255,255,.32) 42%,
+                        rgba(255,255,255,0) 100%);
+                }
+                .hf-video-showcase__bridge--bottom {
+                    bottom: 0;
+                    height: clamp(160px, 22vw, 360px);
+                    background: linear-gradient(to top,
+                        rgba(235,232,224,.85) 0%,
+                        rgba(235,232,224,.38) 44%,
+                        rgba(235,232,224,0) 100%);
+                }
+                .hf-video-showcase__watermark {
+                    position: absolute;
+                    left: 50%;
+                    bottom: clamp(-2rem, -1.5vw, -.5rem);
+                    z-index: -2;
+                    margin: 0;
+                    transform: translateX(-50%);
+                    color: rgba(41,67,48,.045);
+                    font-family: "Noto Serif TC", serif;
+                    font-size: clamp(5.5rem, 19vw, 19rem);
+                    font-weight: 700;
+                    line-height: .8;
+                    letter-spacing: -.045em;
+                    white-space: nowrap;
+                    pointer-events: none;
+                    user-select: none;
+                }
+                .hf-video-showcase__inner {
+                    position: relative;
+                    z-index: 1;
+                    width: min(92%, 1500px);
+                    margin: 0 auto;
+                }
+                .hf-video-showcase__head {
+                    display: flex;
+                    align-items: end;
+                    justify-content: space-between;
+                    gap: 3rem;
+                    margin-bottom: clamp(2.1rem, 4vw, 3.4rem);
+                }
+                .hf-video-showcase__heading {
+                    max-width: 53rem;
+                }
+                .hf-video-showcase__eyebrow {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .75rem;
+                    margin-bottom: 1rem;
+                    color: #a97631;
+                    font-size: .78rem;
+                    font-weight: 900;
+                    letter-spacing: .32em;
+                    text-transform: uppercase;
+                }
+                .hf-video-showcase__eyebrow::before {
+                    content: "";
+                    width: 2.5rem;
+                    height: 1px;
+                    background: var(--hf-video-gold);
+                }
+                .hf-video-showcase__title {
+                    margin: 0;
+                    color: var(--hf-video-green);
+                    font-family: "Noto Serif TC", serif;
+                    font-size: clamp(2.35rem, 4vw, 4.3rem);
+                    font-weight: 700;
+                    line-height: 1.16;
+                    letter-spacing: -.035em;
+                }
+                .hf-video-showcase__lead {
+                    max-width: 45rem;
+                    margin: 1rem 0 0;
+                    color: #687064;
+                    font-size: clamp(.98rem, 1.15vw, 1.1rem);
+                    line-height: 1.9;
+                }
+                .hf-video-showcase__all {
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .65rem;
+                    min-height: 3.25rem;
+                    padding: .75rem 1.25rem;
+                    border: 1px solid rgba(41,67,48,.18);
+                    border-radius: 999px;
+                    color: var(--hf-video-green);
+                    background: rgba(255,255,255,.66);
+                    font-size: .9rem;
+                    font-weight: 800;
+                    text-decoration: none;
+                    box-shadow: 0 14px 34px -28px rgba(41,67,48,.6);
+                    transition: transform .25s ease, color .25s ease, border-color .25s ease, background .25s ease;
+                }
+                .hf-video-showcase__all:hover {
+                    transform: translateY(-2px);
+                    color: #fff;
+                    border-color: var(--hf-video-green);
+                    background: var(--hf-video-green);
+                }
+                .hf-video-showcase__grid {
+                    display: grid;
+                    grid-template-columns: minmax(0, 1.56fr) minmax(320px, .74fr);
+                    gap: clamp(1.35rem, 2.5vw, 2.2rem);
+                    align-items: stretch;
+                }
+                .hf-video-card {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    overflow: hidden;
+                    height: 100%;
+                    border: 1px solid rgba(41,67,48,.1);
+                    border-radius: clamp(1.35rem, 2.4vw, 2rem);
+                    background: rgba(255,254,251,.92);
+                    box-shadow:
+                        0 28px 75px -52px rgba(41,67,48,.55),
+                        inset 0 1px 0 rgba(255,255,255,.9);
+                }
+                .hf-video-card--youtube {
+                    align-self: stretch;
+                    justify-content: center;
+                    padding: clamp(.65rem, 1vw, .9rem);
+                }
+                .hf-video-card--youtube::after {
+                    content: "";
+                    position: absolute;
+                    inset: .65rem;
+                    z-index: 3;
+                    pointer-events: none;
+                    border: 1px solid rgba(255,255,255,.16);
+                    border-radius: calc(clamp(1.35rem, 2.4vw, 2rem) - .55rem);
+                }
+                .hf-video-card__media {
+                    position: relative;
+                    overflow: hidden;
+                    width: 100%;
+                    margin: auto 0;
+                    aspect-ratio: 16 / 9;
+                    border-radius: calc(clamp(1.35rem, 2.4vw, 2rem) - .55rem);
+                    background: #142118;
+                }
+                .hf-video-card__media iframe {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                }
+                .hf-video-card__label {
+                    position: absolute;
+                    top: 1.55rem;
+                    left: 1.55rem;
+                    z-index: 4;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .55rem;
+                    padding: .55rem .85rem;
+                    border: 1px solid rgba(255,255,255,.3);
+                    border-radius: 999px;
+                    color: #fff;
+                    background: rgba(21,33,24,.66);
+                    backdrop-filter: blur(10px);
+                    -webkit-backdrop-filter: blur(10px);
+                    font-size: .78rem;
+                    font-weight: 800;
+                    letter-spacing: .08em;
+                    box-shadow: 0 10px 26px rgba(0,0,0,.13);
+                }
+                .hf-video-card__label i {
+                    color: #ff5d62;
+                }
+                .hf-video-card--tiktok {
+                    display: flex;
+                    min-width: 0;
+                    flex-direction: column;
+                    padding: clamp(1.15rem, 2vw, 1.65rem);
+                    align-self: start;
+                }
+                .hf-video-card__topline {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                }
+                .hf-video-card__platform {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .65rem;
+                    color: var(--hf-video-green);
+                    font-size: .85rem;
+                    font-weight: 900;
+                    letter-spacing: .08em;
+                }
+                .hf-video-card__platform-icon {
+                    width: 2.35rem;
+                    height: 2.35rem;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: .85rem;
+                    color: #fff;
+                    background: #151515;
+                    box-shadow: 0 10px 20px -14px rgba(0,0,0,.7);
+                }
+                .hf-video-card__profile-link {
+                    color: #8c7653;
+                    font-size: .78rem;
+                    font-weight: 800;
+                    text-decoration: none;
+                }
+                .hf-video-card__profile-link:hover {
+                    color: var(--hf-video-green);
+                }
+                .hf-video-card__tiktok-wrap {
+                    position: relative;
+                    min-height: 0;
+                    overflow: visible;
+                    width: 100%;
+                    border-radius: 1.25rem;
+                    background: transparent;
+                }
+                .hf-video-card__tiktok-wrap .tiktok-embed {
+                    display: block !important;
+                    width: 100% !important;
+                    max-width: 720px !important;
+                    min-width: 0 !important;
+                    margin: 0 auto !important;
+                }
+                .hf-video-card__tiktok-wrap iframe {
+                    display: block !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    margin: 0 !important;
+                    border: 0 !important;
+                }
+                .hf-video-card__tiktok-fallback {
+                    display: grid;
+                    min-height: 12rem;
+                    place-items: center;
+                    padding: 2rem;
+                    border: 1px solid rgba(41,67,48,.08);
+                    border-radius: 1.25rem;
+                    background:
+                        radial-gradient(circle at 18% 14%, rgba(200,154,80,.16), transparent 34%),
+                        linear-gradient(145deg, #faf7ef 0%, #fffefb 100%);
+                    text-align: center;
+                }
+                .hf-video-card__tiktok-fallback a {
+                    color: var(--hf-video-green);
+                    font-weight: 800;
+                    text-decoration: none;
+                }
+                .hf-video-card__tiktok-fallback a:hover { text-decoration: underline; }
+                .hf-video-showcase__note {
+                    display: flex;
+                    align-items: center;
+                    gap: .65rem;
+                    margin: 1.45rem 0 0;
+                    color: #85877f;
+                    font-size: .78rem;
+                    line-height: 1.6;
+                }
+                .hf-video-showcase__note i {
+                    color: var(--hf-video-gold);
+                }
+                @media (max-width: 1050px) {
+                    .hf-video-showcase__head {
+                        align-items: flex-start;
+                    }
+                    .hf-video-showcase__grid {
+                        grid-template-columns: 1fr;
+                    }
+                    .hf-video-card--youtube,
+                    .hf-video-card--tiktok {
+                        max-width: 46rem;
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+                }
+                @media (max-width: 720px) {
+                    .hf-video-showcase {
+                        padding: 4rem 0;
+                    }
+                    .hf-video-showcase__inner {
+                        width: min(91%, 1500px);
+                    }
+                    .hf-video-showcase__head {
+                        display: block;
+                    }
+                    .hf-video-showcase__all {
+                        margin-top: 1.35rem;
+                    }
+                    .hf-video-card__label {
+                        top: 1.05rem;
+                        left: 1.05rem;
+                        padding: .45rem .7rem;
+                        font-size: .7rem;
+                    }
+                    .hf-video-card--youtube {
+                        padding: .45rem;
+                    }
+                    .hf-video-card--youtube::after {
+                        inset: .45rem;
+                    }
                 }
     </style>
 </head>
@@ -1731,7 +2092,7 @@
 
 	<!-- 修改顏色為透明度漸層，融入全域背景 -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180 opacity-90">
-            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <svg class="relative block w-full h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
             </svg>
         </div>
@@ -1971,7 +2332,7 @@
                     <div class="absolute inset-0 bg-gray-900">
                         <picture>
                             <source srcset="/HuaFan/image/index/華梵會館.webp" type="image/webp">
-                            <img src="/HuaFan/image/index/unnamed.webp" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 object-[95%_center] group-hover:opacity-70" alt="靜心私人會館" loading="lazy" decoding="async">
+                            <img src="/HuaFan/image/index/unnamed.webp" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 object-[95%_center] group-hover:opacity-70" alt="華梵會館" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <!-- 多層漸層：綠色調 -->
@@ -1990,12 +2351,12 @@
                         </div>
 
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 transform translate-y-4 group-hover:translate-y-0 text-center w-full px-4">
-                            <h3 class="text-3xl text-white font-serif font-bold tracking-wide mb-4 drop-shadow-lg">靜心私人會館</h3>
+                            <h3 class="text-3xl text-white font-serif font-bold tracking-wide mb-4 drop-shadow-lg">華梵會館</h3>
                             <span class="inline-block px-3 py-1 border border-white/30 rounded-full text-xs text-white/80 tracking-widest backdrop-blur-sm">PRIVATE</span>
                         </div>
 
                         <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:opacity-0 transition-opacity duration-300 drop-shadow-md">靜心私人會館</h3>
+                            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:opacity-0 transition-opacity duration-300 drop-shadow-md">華梵會館</h3>
                             <div class="w-10 h-1 bg-gradient-to-r from-[#8A9A5B] via-[#8A9A5B] to-[#8A9A5B]/60 mb-4 transition-all duration-500 group-hover:w-16 rounded-full shadow-[0_0_10px_rgba(138,154,91,0.3)]"></div>
                             <p class="text-gray-100/90 text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 border-l border-white/30 pl-4">
                                 遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，讓家屬擁有絕對的隱私。
@@ -2015,9 +2376,9 @@
 
 
 
-        <section class="hf-price-v2" id="calculator" aria-labelledby="hf-price-v2-title">
+        <section class="hf-price-v2" id="calculator" aria-labelledby="hf-price-v2-title" style="padding-bottom: 0rem;">
             <div class="absolute -top-[1px] left-0 w-full overflow-hidden leading-none opacity-90">
-                <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <svg class="relative block w-full h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
                 </svg>
             </div>
@@ -2147,8 +2508,9 @@
             </div>
         </section>
 
+
     <!-- Google 評論區塊 -->
-    <section class="pt-12 pb-16 relative overflow-hidden">
+    <section class="relative z-30" style="margin-top: 7rem;">
 
         <div class="container mx-auto px-6 relative z-10">
             
@@ -2400,8 +2762,71 @@
         </div>
     </section>
 
+    <!-- 影音內容區（透明背景）：位於方案價格區下方 -->
+    <section class="hf-video-showcase" id="videos" aria-labelledby="hf-video-title">
+      <!-- 連場過渡裝飾層（純裝飾，不進入閱讀與焦點順序） -->
+      <div class="hf-video-showcase__bridge hf-video-showcase__bridge--bottom" aria-hidden="true"></div>
+      <span class="hf-video-showcase__watermark" aria-hidden="true">Stories</span>
+      <div class="hf-video-showcase__inner">
+        <div class="hf-video-showcase__head">
+          <div class="hf-video-showcase__heading">
+            <span class="hf-video-showcase__eyebrow">Stories in motion</span>
+            <h2 class="hf-video-showcase__title" id="hf-video-title">看見華梵的陪伴</h2>
+            <p class="hf-video-showcase__lead">
+              認識華梵的服務理念、空間與陪伴方式，讓每一項選擇都更安心、更有方向。
+            </p>
+          </div>
+          <a class="hf-video-showcase__all" href="https://www.tiktok.com/@huafanlife" target="_blank" rel="noopener noreferrer">
+            查看更多短影音 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <div class="hf-video-showcase__grid">
+          <article class="hf-video-card hf-video-card--youtube" aria-label="華梵禮儀 YouTube 影片">
+            <span class="hf-video-card__label"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube｜完整影片</span>
+            <div class="hf-video-card__media">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/yWqoDkkfMdc?rel=0&modestbranding=1"
+                title="華梵禮儀 YouTube 影片"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </article>
+
+          <article class="hf-video-card hf-video-card--tiktok" aria-label="華梵禮儀 TikTok 短影音入口">
+            <div class="hf-video-card__topline">
+              <span class="hf-video-card__platform">
+                <span class="hf-video-card__platform-icon"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></span>
+                TikTok 短影音
+              </span>
+              <a class="hf-video-card__profile-link" href="https://www.tiktok.com/@huafanlife" target="_blank" rel="noopener noreferrer">@huafanlife</a>
+            </div>
+
+            <div class="hf-video-card__tiktok-wrap">
+              <blockquote
+                class="tiktok-embed"
+                cite="https://www.tiktok.com/@huafanlife"
+                data-unique-id="huafanlife"
+                data-embed-type="creator"
+                data-embed-from="oembed"
+                style="width:100%;max-width:720px;min-width:288px;margin:0 auto;">
+                <section class="hf-video-card__tiktok-fallback">
+                  <a href="https://www.tiktok.com/@huafanlife?refer=creator_embed" target="_blank" rel="noopener noreferrer">
+                    查看華梵禮儀 TikTok｜@huafanlife
+                  </a>
+                </section>
+              </blockquote>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- 最新消息區塊 (Refined Layout using Flow for Overlap Prevention) -->
-    <section class="pt-16 pb-24 relative z-20 overflow-visible overflow-hidden">
+    <section class="pt-28 pb-24 relative z-20 overflow-visible overflow-hidden">
 
         <!-- 背景裝飾葉片 -->
         <div class="absolute -bottom-12 md:-bottom-20 left-16 md:left-36 opacity-40 pointer-events-none">
@@ -3546,7 +3971,7 @@ function adjustFontSize(change) {
             cta: "觀看花藝作品"
         },
         {
-            title: "靜心私人會館",
+            title: "華梵會館",
             image: "/HuaFan/image/index/華梵會館.webp",
             fallback: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2070&auto=format&fit=crop",
             desc: "遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，溫馨典雅的環境設計，讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感，陪伴摯愛最後一程。",
@@ -4082,5 +4507,7 @@ function adjustFontSize(change) {
         initMap();
 
 </script>
+<!-- TikTok 官方嵌入腳本（供影音區 TikTok 個人檔案嵌入使用） -->
+<script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>
