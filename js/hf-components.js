@@ -18,6 +18,28 @@
 (function () {
   'use strict';
 
+  /* ---------------------------------------------------------------
+   * 0) 全站集中設定（HF_CONFIG）
+   * ------------------------------------------------------------------
+   * 上線前只需修改此區塊，全站（含 guide.html 內的 LINE 按鈕）自動生效。
+   * 社群連結留空字串 '' 代表「尚未提供」：相關按鈕會自動隱藏，
+   * 不會出現壞連結。客戶提供後填入完整網址即可。
+   * ------------------------------------------------------------- */
+  var HF_CONFIG = {
+    PHONE_DISPLAY: '0800-800-818',
+    PHONE_TEL: 'tel:0800800818',
+    LINE_URL: '',        // 例：'https://line.me/R/ti/p/@wf119'
+    FACEBOOK_URL: '',    // 例：'https://www.facebook.com/xxxx'
+    INSTAGRAM_URL: '',   // 例：'https://www.instagram.com/xxxx'
+    // 官方 / 政府資訊連結（皆為現行有效網址）
+    GOV_TAICHUNG_MORTUARY: 'https://mortuary.taichung.gov.tw/',                       // 臺中市殯葬資訊服務網（生命禮儀管理處）
+    GOV_TAICHUNG_LEGAL_LIST: 'https://mortuary.taichung.gov.tw/Frontend/Morticianlist.aspx', // 臺中市合法殯葬禮儀業者查詢
+    GOV_MOI_PORTAL: 'https://mort.moi.gov.tw/',                                       // 內政部全國殯葬資訊入口網
+    GOV_MOI_PROTECTION: 'https://mort.moi.gov.tw/#/Protection/?type=1'                // 內政部殯葬消費者保護專區
+  };
+  // 讓各頁（faq.html / wiki.html / news.html）也能取用
+  window.HF_CONFIG = HF_CONFIG;
+
   // 目前頁面檔名（去除路徑、查詢字串與 hash）
   var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   if (!page) page = 'index.html';
@@ -30,23 +52,27 @@
    * 1) 右側懸浮按鈕組
    * ------------------------------------------------------------- */
   function floatingHTML() {
-    return '' +
-    '<div class="fixed right-4 bottom-8 z-40 flex flex-col gap-3">' +
-      '<a href="https://line.me/ti/p/@your_line_id" target="_blank" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer">' +
+    var lineBtn = HF_CONFIG.LINE_URL ?
+      '<a href="' + HF_CONFIG.LINE_URL + '" target="_blank" rel="noopener" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer" aria-label="加入 LINE 好友">' +
         '<i class="fa-brands fa-line text-lg md:text-2xl"></i>' +
         '<span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">加入 LINE</span>' +
-      '</a>' +
-      '<a href="#" target="_blank" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer">' +
+      '</a>' : '';
+    var fbBtn = HF_CONFIG.FACEBOOK_URL ?
+      '<a href="' + HF_CONFIG.FACEBOOK_URL + '" target="_blank" rel="noopener" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group cursor-pointer" aria-label="關注 Facebook">' +
         '<i class="fa-brands fa-facebook-f text-lg md:text-xl"></i>' +
         '<span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">關注 Facebook</span>' +
-      '</a>' +
+      '</a>' : '';
+    return '' +
+    '<div class="fixed right-4 bottom-8 z-40 flex flex-col gap-3">' +
+      lineBtn +
+      fbBtn +
       '<div class="font-pill-vertical group relative w-10 md:w-12 h-[110px] mx-auto flex flex-col items-center justify-center shadow-lg py-3 bg-primary rounded-full border border-white/10 text-[#C5A670]">' +
         '<button onclick="adjustFontSize(1)" class="font-pill-btn-vertical" aria-label="放大字體"><i class="fa-solid fa-plus text-lg"></i></button>' +
         '<span class="text-xs font-medium px-1 select-none text-white/80">字</span>' +
         '<span class="text-xs font-medium px-1 select-none text-white/80">體</span>' +
         '<button onclick="adjustFontSize(-1)" class="font-pill-btn-vertical" aria-label="縮小字體"><i class="fa-solid fa-minus text-sm"></i></button>' +
       '</div>' +
-      '<a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group mt-1 cursor-pointer">' +
+      '<a href="#" onclick="window.scrollTo({top:0,behavior:\'smooth\'});return false;" class="w-10 h-10 md:w-12 md:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent hover:scale-110 transition duration-300 relative group mt-1 cursor-pointer" aria-label="回到頂部">' +
         '<i class="fa-solid fa-angle-up text-lg md:text-xl"></i>' +
         '<span class="absolute right-full mr-3 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">回到頂部</span>' +
       '</a>' +
@@ -100,12 +126,12 @@
             '<span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">生前契約</span>' +
             '<span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Pre-need</span>' +
           '</a>' +
-          '<a href="process.html" data-nav="process" class="menu-link group text-right cursor-pointer relative">' +
+          '<a href="wiki.html" data-nav="wiki" class="menu-link group text-right cursor-pointer relative">' +
             '<span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">禮儀百科</span>' +
             '<span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Etiquette Guide</span>' +
           '</a>' +
           '<a href="' + HOME + '#locations" class="menu-link group text-right cursor-pointer relative">' +
-            '<span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">聯絡我們</span>' +
+            '<span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">服務據點</span>' +
             '<span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Contact</span>' +
           '</a>' +
         '</div>' +
@@ -117,8 +143,9 @@
    * 3) Header 頁首
    * ------------------------------------------------------------- */
   function dropdownItem(hash, text) {
+    var href = hash.charAt(0) === '#' ? ('about.html' + hash) : hash;
     return '' +
-      '<a href="about.html' + hash + '" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">' +
+      '<a href="' + href + '" class="nav-dropdown-item block px-4 py-2.5 text-center transition-all group/item hover:bg-[#E8DCC0]/20">' +
         '<span class="nav-item-icon"><i class="fa-solid fa-leaf"></i></span>' +
         '<span class="nav-dropdown-text text-[#5C5C5C] font-serif text-[13px] tracking-[0.15em] group-hover/item:text-primaryDark transition-colors">' + text + '</span>' +
       '</a>';
@@ -149,14 +176,15 @@
                   dropdownItem('#training', '教育訓練') +
                   dropdownItem('#core-philosophy', '核心理念') +
                   dropdownItem('#life-care', '公益關懷') +
+                  dropdownItem('news.html', '最新消息') +
                 '</div>' +
               '</div>' +
             '</div>' +
           '</div>' +
           '<a href="' + HOME + '#services" class="hover:text-primary relative group transition">服務方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
           '<a href="preneed.html" data-nav="preneed" class="hover:text-primary relative group transition">生前契約<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
-          '<a href="process.html" data-nav="process" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
-          '<a href="' + HOME + '#locations" class="hover:text-primary relative group transition">聯絡我們<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
+          '<a href="wiki.html" data-nav="wiki" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
+          '<a href="' + HOME + '#locations" class="hover:text-primary relative group transition">服務據點<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
         '</nav>' +
         '<div class="flex items-center gap-3 md:gap-4 relative z-50">' +
           '<a href="' + HOME + '#calculator" class="hidden md:flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-full text-base text-gray-600 hover:border-primary hover:text-primary transition duration-300 bg-white shadow-sm"><i class="fa-solid fa-calculator"></i> 預估費用</a>' +
@@ -176,8 +204,28 @@
   /* ---------------------------------------------------------------
    * 4) Footer 頁尾（取自 process.html）
    * ------------------------------------------------------------- */
+  // 頁尾前螢幕網屏「疊加層」：以點點紋理讓上方區塊柔和過渡到 footer 波浪。
+  // 使用 <img> 保持原始長寬比：寬度與頁面等寬、高度隨比例縮放（透明背景）。
+  //
+  // 版面規則：
+  //   緩衝帶本身高度為 0（不佔版面高度），因此上方鄰接的區塊會直接與 footer 相接、
+  //   不再被空白區域推開。點點圖以 position:absolute + bottom:0 對齊「區塊與 footer 的接縫」，
+  //   並向上延伸疊加在上方區塊底部；z-index 介於一般區塊與 footer 之間（區塊之上、波浪之下），
+  //   讓點點紋理浮在上方區塊底色之上，且下緣自然收進 footer 深綠色波浪之下。
+  function footerScreentoneHTML() {
+    return '' +
+    '<div class="hf-footer-transition" aria-hidden="true" ' +
+      'style="position:relative;height:0;z-index:25;pointer-events:none;">' +
+      '<img src="/HuaFan/image/shared/footer_screentone.webp" alt="" ' +
+        'class="hf-footer-screentone block select-none" ' +
+        'style="position:absolute;left:0;bottom:0;width:100%;height:auto;aspect-ratio:1697/632;" ' +
+        'loading="lazy" decoding="async">' +
+    '</div>';
+  }
+
   function footerHTML() {
     return '' +
+    footerScreentoneHTML() +
     '<footer class="bg-secondary text-gray-400 py-8 text-sm font-light relative z-30">' +
       '<div class="absolute top-0 left-0 w-full overflow-hidden leading-[0] -translate-y-[99%] z-0 pointer-events-none">' +
         '<svg class="relative block w-[calc(100%+1.3px)] h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">' +
@@ -226,17 +274,22 @@
             '<h4 class="text-white font-bold mb-6 text-lg">快速連結</h4>' +
             '<ul class="space-y-3">' +
               '<li><a href="guide.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 臨終關懷 SOP</a></li>' +
+              '<li><a href="process.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 治喪流程</a></li>' +
               '<li><a href="' + HOME + '#calculator" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 服務費用試算</a></li>' +
-              '<li><a href="#" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 合法塔位查詢</a></li>' +
-              '<li><a href="process.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 生命禮儀百科</a></li>' +
+              '<li><a href="wiki.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 生命禮儀百科</a></li>' +
+              '<li><a href="news.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 最新消息</a></li>' +
+              '<li><a href="faq.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 常見問題</a></li>' +
+              '<li><a href="' + HF_CONFIG.GOV_MOI_PORTAL + '" target="_blank" rel="noopener" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 全國殯葬資訊入口網 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i></a></li>' +
+              '<li><a href="' + HF_CONFIG.GOV_TAICHUNG_MORTUARY + '" target="_blank" rel="noopener" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 臺中市殯葬資訊服務網 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i></a></li>' +
             '</ul>' +
           '</div>' +
           '<div>' +
             '<h4 class="text-white font-bold mb-6 text-lg">關注我們</h4>' +
             '<div class="flex gap-4">' +
-              '<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#06C755] hover:text-white transition duration-300"><i class="fa-brands fa-line text-lg"></i></a>' +
-              '<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition duration-300"><i class="fa-brands fa-facebook-f text-lg"></i></a>' +
-              '<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition duration-300"><i class="fa-brands fa-instagram text-lg"></i></a>' +
+              (HF_CONFIG.LINE_URL ? '<a href="' + HF_CONFIG.LINE_URL + '" target="_blank" rel="noopener" aria-label="LINE 官方帳號" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#06C755] hover:text-white transition duration-300"><i class="fa-brands fa-line text-lg"></i></a>' : '') +
+              (HF_CONFIG.FACEBOOK_URL ? '<a href="' + HF_CONFIG.FACEBOOK_URL + '" target="_blank" rel="noopener" aria-label="Facebook 粉絲專頁" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition duration-300"><i class="fa-brands fa-facebook-f text-lg"></i></a>' : '') +
+              (HF_CONFIG.INSTAGRAM_URL ? '<a href="' + HF_CONFIG.INSTAGRAM_URL + '" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition duration-300"><i class="fa-brands fa-instagram text-lg"></i></a>' : '') +
+              ((!HF_CONFIG.LINE_URL && !HF_CONFIG.FACEBOOK_URL && !HF_CONFIG.INSTAGRAM_URL) ? '<p class="text-xs text-gray-500 leading-relaxed">社群帳號籌備中，歡迎來電<br>0800-800-818 聯繫我們。</p>' : '') +
             '</div>' +
             '<div class="mt-8 p-4 bg-white/5 rounded border border-white/10 relative overflow-hidden group">' +
               '<div class="absolute inset-0 bg-accent/10 translate-y-full group-hover:translate-y-0 transition duration-500"></div>' +
@@ -245,8 +298,9 @@
             '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 relative z-10">' +
-          '<p>&copy; 2025 華梵禮儀有限公司 All Rights Reserved. 許可證號：府授經商字第10907655990號</p>' +
+        '<div class="border-t border-white/10 pt-8 flex flex-col gap-2 md:flex-row justify-between items-center text-xs text-gray-500 relative z-10">' +
+          '<p>&copy; ' + new Date().getFullYear() + ' 華梵禮儀有限公司 All Rights Reserved. 許可證號：府授經商字第10907655990號</p>' +
+          '<p class="text-center md:text-right">消費申訴：本公司 0800-800-818｜臺中市生命禮儀管理處 (04)2233-4145｜消費者服務專線 1950</p>' +
         '</div>' +
       '</div>' +
     '</footer>';
@@ -269,10 +323,15 @@
           '<i class="fa-solid fa-phone-volume text-lg group-hover:rotate-12 transition-transform"></i>' +
           '<span class="font-serif font-bold tracking-widest text-base">呼叫禮儀師</span>' +
         '</a>' +
-        '<a href="https://line.me/ti/p/@your_line_id" target="_blank" class="flex-1 bg-[#6B8C70] text-white rounded-full flex items-center justify-center gap-3 py-4 shadow-[0_8px_20px_-5px_rgba(127,169,136,0.4)] hover:bg-[#7FA988] active:scale-95 transition-all duration-300 group">' +
+        (HF_CONFIG.LINE_URL ?
+        '<a href="' + HF_CONFIG.LINE_URL + '" target="_blank" rel="noopener" class="flex-1 bg-[#6B8C70] text-white rounded-full flex items-center justify-center gap-3 py-4 shadow-[0_8px_20px_-5px_rgba(127,169,136,0.4)] hover:bg-[#7FA988] active:scale-95 transition-all duration-300 group">' +
           '<i class="fa-brands fa-line text-2xl"></i>' +
           '<span class="font-serif font-bold tracking-widest text-base">諮詢 LINE</span>' +
-        '</a>' +
+        '</a>' :
+        '<a href="' + HOME + '#calculator" class="flex-1 bg-[#6B8C70] text-white rounded-full flex items-center justify-center gap-3 py-4 shadow-[0_8px_20px_-5px_rgba(127,169,136,0.4)] hover:bg-[#7FA988] active:scale-95 transition-all duration-300 group">' +
+          '<i class="fa-solid fa-calculator text-xl"></i>' +
+          '<span class="font-serif font-bold tracking-widest text-base">費用試算</span>' +
+        '</a>') +
       '</div>' +
     '</div>';
   }
@@ -340,6 +399,12 @@
     if (page === 'about.html') key = 'about';
     else if (page === 'preneed.html') key = 'preneed';
     else if (page === 'process.html') key = 'process';
+    else if (page === 'wiki.html') key = 'wiki';
+    else if (page === 'wiki_top-detail.html') key = 'wiki';   // 百科詳細頁歸類於百科群組
+    else if (page === 'wiki_base-detail.html') key = 'wiki';
+    else if (page === 'news.html') key = 'news';
+    else if (page === 'news-detail.html') key = 'news';       // 消息詳細頁歸類於消息群組
+    else if (page === 'faq.html') key = 'wiki'; // FAQ 歸類於百科群組
     if (!key) return;
     var items = document.querySelectorAll('[data-nav="' + key + '"]');
     for (var i = 0; i < items.length; i++) {
@@ -395,6 +460,21 @@
 
     bindMenuActions();
     markActive();
+    fixLineLinks();
+  }
+
+  // 頁面內殘留的 LINE 佔位連結（例：guide.html 的綠色 LINE 按鈕）：
+  // 已設定 LINE_URL → 改為正式連結；未設定 → 整顆按鈕隱藏，避免壞連結。
+  function fixLineLinks() {
+    var links = document.querySelectorAll('a[href*="your_line_id"], a[data-hf-line]');
+    for (var i = 0; i < links.length; i++) {
+      if (HF_CONFIG.LINE_URL) {
+        links[i].setAttribute('href', HF_CONFIG.LINE_URL);
+        links[i].setAttribute('rel', 'noopener');
+      } else {
+        links[i].style.display = 'none';
+      }
+    }
   }
 
   if (document.readyState === 'loading') {
