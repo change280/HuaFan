@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <!-- 禮儀百科資料層 -->
+    <script src="js/hf-wiki-data.js"></script>
+    <title>禮儀百科｜華梵禮儀 - 習俗禮節、宗教葬儀、喪葬補助與契約權益</title>
+    <meta name="description" content="生命禮儀百科：弔唁服裝儀容、奠儀白包禮節、公奠拈香、佛道教與基督宗教葬儀、百日對年合爐、勞保國保喪葬補助申請、殯葬定型化契約與消費權益。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 100px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        /* Hero 背景 */
+        .wiki-hero-bg {
+            background-image: url('/HuaFan/image/index/花.webp');
+            background-size: cover;
+            background-position: center 35%;
+            position: relative;
+        }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* 釘選目錄卡（沿用原目錄樣式） */
+        .wiki-toc-link { transition: all .25s ease; border-left: 2px solid transparent; }
+        .wiki-toc-link:hover, .wiki-toc-link.active { border-left-color: #C5A670; color: #465B40; background: rgba(197,166,112,.08); }
+
+        /* 知識圖卡（仿尖端洞察卡片，套用華梵色彩） */
+        .wiki-card-item {
+            position: relative; display: flex; flex-direction: column;
+            background: #FFFEFA;
+            border: 1px solid rgba(255,255,255,.9);
+            border-radius: 1.5rem; overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(70, 91, 64, 0.1);
+            transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s, border-color 0.35s;
+            text-decoration: none; color: inherit;
+        }
+        .wiki-card-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -18px rgba(70,91,64,.35);
+            border-color: rgba(197,166,112,.5);
+        }
+        .wiki-cover {
+            aspect-ratio: 16 / 10; overflow: hidden; background: #E3EBE5; position: relative;
+        }
+        .wiki-cover img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .wiki-card-item:hover .wiki-cover img { transform: scale(1.05); }
+        .wiki-body {
+            padding: 1.3rem 1.4rem 1.4rem;
+            display: flex; flex-direction: column; gap: 0.7rem; flex: 1;
+        }
+        .wiki-meta {
+            display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;
+            font-size: 0.7rem; font-weight: 700;
+            color: #8B9287; letter-spacing: 0.05em;
+        }
+        .wiki-no {
+            font-weight: 700; letter-spacing: 0.15em; padding: 0.18rem 0.55rem;
+            border-radius: 999px; background: rgba(70,91,64,0.08); color: #465B40;
+        }
+        .wiki-cat { display: inline-flex; align-items: center; gap: 0.25rem; color: #465B40; }
+        .wiki-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.15rem; font-weight: 700; color: #2F3E2B;
+            line-height: 1.45; letter-spacing: 0.01em;
+            display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .wiki-card-item:hover .wiki-title { color: #465B40; }
+        .wiki-summary {
+            font-size: 0.85rem; color: #6b7280; line-height: 1.75;
+            display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .wiki-cta {
+            margin-top: auto; padding-top: 0.75rem;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.78rem; font-weight: 700; color: #C5A670;
+            letter-spacing: 0.15em;
+            border-top: 1px dashed rgba(197,166,112,.5);
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+        .wiki-card-item:hover .wiki-cta { gap: 0.75rem; color: #465B40; }
+        .wiki-badge {
+            position: absolute; top: 0.65rem; left: 0.7rem;
+            padding: 0.22rem 0.6rem; border-radius: 999px;
+            color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+            backdrop-filter: blur(6px); z-index: 2;
+        }
+        .wiki-badge-pinned { background: rgba(70,91,64,0.88); }
+        .wiki-badge-featured { background: rgba(197,166,112,0.92); color: #2F3E2B; right: 0.7rem; left: auto; }
+
+        /* 分類 chips */
+        .cat-chip {
+            display: inline-flex; align-items: center;
+            padding: 0.45rem 1rem; border-radius: 999px;
+            border: 1px solid #d1d5db; background: #fff;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+            color: #4b5563; cursor: pointer; user-select: none;
+            transition: all 0.25s ease;
+        }
+        .cat-chip:hover { border-color: #465B40; color: #465B40; }
+        .cat-chip.active { background: #465B40; color: #fff; border-color: #465B40; }
+
+        /* 分頁 */
+        .pager-btn {
+            min-width: 2.4rem; height: 2.4rem;
+            padding: 0 0.75rem; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+            border: 1px solid #d1d5db;
+            background: #fff; color: #465B40;
+            transition: all 0.2s ease; cursor: pointer;
+        }
+        .pager-btn:hover { border-color: #465B40; }
+        .pager-btn.active { background: #465B40; color: #fff; border-color: #465B40; }
+        .pager-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wiki-toc-link, .wiki-card-item, .wiki-cover img, .cat-chip { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== Hero 區 ===== -->
+    <section class="wiki-hero-bg min-h-[55vh] flex flex-col justify-center relative pt-36 pb-32 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-primary/40 to-primary/60"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-medium tracking-[0.25em] uppercase mb-5">
+                <i class="fa-solid fa-book-open text-accent"></i> Etiquette Encyclopedia
+            </span>
+            <h1 class="text-white text-5xl md:text-6xl font-serif font-bold leading-tight text-shadow-lg">禮儀百科</h1>
+            <p class="text-white/90 mt-6 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+                習俗與禮節、宗教葬儀、補助申請與契約權益。<br class="hidden md:block">
+                每個家庭的情況不同，內容僅供參考，實際安排歡迎與禮儀師討論。
+            </p>
+        </div>
+
+        <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[100px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </section>
+
+    <main class="pb-60 md:pb-96">
+        <div class="container mx-auto px-4 md:px-6 pt-12">
+            <div class="flex flex-col lg:flex-row gap-10 max-w-7xl mx-auto">
+
+                <!-- 側邊：釘選文章目錄（由 WikiStore 注入，保留原目錄設計） -->
+                <aside class="lg:w-64 flex-shrink-0 relative z-30" id="wiki-pinned-nav"></aside>
+
+                <!-- 主要內容：分類篩選 + 知識圖卡牆 -->
+                <div class="flex-1 min-w-0 relative z-30">
+
+                    <!-- 分類篩選 -->
+                    <div id="wiki-cats" class="flex flex-wrap gap-2 md:gap-3 mb-8" role="tablist" aria-label="百科分類"></div>
+
+                    <!-- 圖卡列表 -->
+                    <section id="wiki-grid-section">
+                        <div id="wiki-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"></div>
+                        <p id="wiki-empty" class="hidden text-center text-gray-400 py-24 text-sm tracking-widest">
+                            尚無文章。管理者請按 <kbd class="px-2 py-0.5 border border-gray-300 rounded text-xs bg-white">⌘ + ⇧ + E</kbd> 開啟後台新增。
+                        </p>
+                        <nav id="wiki-pager" class="mt-12 flex flex-wrap items-center justify-center gap-1.5" aria-label="分頁"></nav>
+                    </section>
+
+                    <!-- 關於本百科 -->
+                    <section class="mt-16">
+                        <div class="rounded-[2rem] p-8 md:p-10 bg-surface border border-white shadow-soft">
+                            <div class="flex flex-col md:flex-row items-start gap-6">
+                                <span class="w-14 h-14 rounded-2xl bg-primary text-accent flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-feather-pointed text-xl"></i>
+                                </span>
+                                <div>
+                                    <h3 class="font-serif text-xl md:text-2xl font-bold text-primaryDark mb-2">關於禮儀百科</h3>
+                                    <p class="text-sm md:text-base text-gray-500 leading-relaxed">
+                                        禮儀百科為華梵禮儀持續更新的生命禮儀知識庫，內容涵蓋弔唁禮節、宗教葬儀、葬式知識、習俗祭祀、補助權益與契約消費保障。
+                                        習俗依地區與家庭而異，內容僅供參考；實際安排歡迎來電
+                                        <a href="tel:0800800818" class="text-primary font-bold hover:text-accent transition">0800-800-818</a>
+                                        與禮儀師討論。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA -->
+                    <section class="mt-10 rounded-[2rem] bg-primary text-white p-8 md:p-12 text-center relative overflow-hidden">
+                        <div class="absolute -top-16 -right-16 w-64 h-64 bg-accent/20 rounded-full blur-[80px] pointer-events-none"></div>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold mb-3 relative z-10">還有其他疑問嗎？</h2>
+                        <p class="text-white/80 mb-8 relative z-10">看看常見問題，或直接與我們的禮儀師聊聊，24 小時都在。</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                            <a href="faq.html" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-solid fa-circle-question mr-2"></i>常見問題 FAQ</a>
+                            <a href="tel:0800800818" class="px-8 py-3.5 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-phone-volume mr-2"></i>0800-800-818</a>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾（含頁尾前螢幕網屏緩衝帶） -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    (function initWikiPage() {
+        'use strict';
+
+        /* 舊版錨點相容：wiki.html#etiquette 等 → 導向對應釘選文章頁 */
+        (function legacyHashRedirect() {
+            var hash = (location.hash || '').replace('#', '');
+            if (!hash) return;
+            var post = WikiStore.getById(hash);
+            if (post && post.pinned) {
+                location.replace(WikiStore.detailUrlOf(post));
+            }
+        })();
+
+        var grid = document.getElementById('wiki-grid');
+        var empty = document.getElementById('wiki-empty');
+        var pager = document.getElementById('wiki-pager');
+        var catsEl = document.getElementById('wiki-cats');
+        var pinnedNavEl = document.getElementById('wiki-pinned-nav');
+        var PAGE_SIZE = 12;
+
+        var currentPage = 1;
+        var activeCat = 'all';
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function renderPinnedNav() {
+            pinnedNavEl.innerHTML = WikiStore.renderPinnedNavHTML({ showBack: false });
+        }
+
+        function renderCats() {
+            var all = WikiStore.getAll();
+            var counts = new Map();
+            counts.set('all', all.length);
+            all.forEach(function (p) {
+                (p.categories || []).forEach(function (c) {
+                    counts.set(c, (counts.get(c) || 0) + 1);
+                });
+            });
+            var cats = Array.from(counts.entries()).filter(function (e) { return e[0] === 'all' || e[1] > 0; });
+            catsEl.innerHTML = cats.map(function (entry) {
+                var cat = entry[0], n = entry[1];
+                var label = cat === 'all' ? '全部知識' : cat;
+                var active = cat === activeCat ? 'active' : '';
+                return '<button type="button" class="cat-chip ' + active + '" data-cat="' + esc(cat) + '" role="tab" aria-selected="' + (cat === activeCat) + '">' +
+                    esc(label) + ' <span class="ml-1.5 text-[10px] opacity-70">' + n + '</span></button>';
+            }).join('');
+            catsEl.querySelectorAll('[data-cat]').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    activeCat = el.getAttribute('data-cat');
+                    currentPage = 1;
+                    renderCats();
+                    renderGrid();
+                });
+            });
+        }
+
+        function filterList() {
+            var all = WikiStore.getAll();
+            if (activeCat === 'all') return all;
+            return all.filter(function (p) { return (p.categories || []).includes(activeCat); });
+        }
+
+        function renderGrid() {
+            var list = filterList();
+            grid.innerHTML = '';
+            pager.innerHTML = '';
+
+            if (!list.length) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            var totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            var startIdx = (currentPage - 1) * PAGE_SIZE;
+            var pageItems = list.slice(startIdx, startIdx + PAGE_SIZE);
+
+            grid.innerHTML = pageItems.map(function (p, i) {
+                var cover = WikiStore.coverOf(p);
+                var summary = WikiStore.summaryOf(p, 110);
+                var cat = (p.categories && p.categories[0]) || '';
+                var num = String(startIdx + i + 1).padStart(2, '0');
+                return '' +
+                    '<a href="' + esc(WikiStore.detailUrlOf(p)) + '" class="wiki-card-item">' +
+                        (p.pinned ? '<span class="wiki-badge wiki-badge-pinned"><i class="fa-solid fa-thumbtack mr-1"></i>釘選</span>' : '') +
+                        (p.featured ? '<span class="wiki-badge wiki-badge-featured"><i class="fa-solid fa-star mr-1"></i>精選</span>' : '') +
+                        '<div class="wiki-cover">' +
+                            '<img src="' + esc(cover) + '" alt="' + esc(p.title) + '" loading="lazy" ' +
+                                 'onerror="this.src=\'' + esc(WikiStore.pickFallbackCover(p.id)) + '\';">' +
+                        '</div>' +
+                        '<div class="wiki-body">' +
+                            '<div class="wiki-meta">' +
+                                '<span class="wiki-no">No.' + num + '</span>' +
+                                (p.publishedDate ? '<span><i class="fa-regular fa-calendar mr-1"></i>' + esc(p.publishedDate) + '</span>' : '') +
+                                (cat ? '<span class="wiki-cat"><i class="fa-solid fa-tag text-[9px]"></i>' + esc(cat) + '</span>' : '') +
+                            '</div>' +
+                            '<h3 class="wiki-title">' + esc(p.title) + '</h3>' +
+                            (summary ? '<p class="wiki-summary">' + esc(summary) + '</p>' : '') +
+                            '<span class="wiki-cta">閱讀全文 <i class="fa-solid fa-arrow-right-long text-xs"></i></span>' +
+                        '</div>' +
+                    '</a>';
+            }).join('');
+
+            renderPager(totalPages);
+        }
+
+        function renderPager(totalPages) {
+            if (totalPages <= 1) { pager.innerHTML = ''; return; }
+            function mk(label, page, opts) {
+                opts = opts || {};
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'pager-btn' + (opts.active ? ' active' : '');
+                btn.textContent = label;
+                if (opts.disabled) btn.disabled = true;
+                if (!opts.disabled && !opts.active) {
+                    btn.addEventListener('click', function () {
+                        currentPage = page;
+                        renderGrid();
+                        var sec = document.getElementById('wiki-grid-section');
+                        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+                return btn;
+            }
+            function mkEllipsis() {
+                var s = document.createElement('span');
+                s.textContent = '…';
+                s.className = 'px-1 text-gray-400';
+                return s;
+            }
+            pager.innerHTML = '';
+            pager.appendChild(mk('«', currentPage - 1, { disabled: currentPage === 1 }));
+            var set = new Set([1, totalPages, currentPage, currentPage - 1, currentPage + 1, currentPage - 2, currentPage + 2]);
+            var arr = Array.from(set).filter(function (p) { return p >= 1 && p <= totalPages; }).sort(function (a, b) { return a - b; });
+            var prev = 0;
+            arr.forEach(function (p) {
+                if (p - prev > 1) pager.appendChild(mkEllipsis());
+                pager.appendChild(mk(String(p), p, { active: p === currentPage }));
+                prev = p;
+            });
+            pager.appendChild(mk('»', currentPage + 1, { disabled: currentPage === totalPages }));
+        }
+
+        function refreshAll() {
+            renderPinnedNav();
+            renderCats();
+            renderGrid();
+        }
+
+        refreshAll();
+        WikiStore.subscribe(refreshAll);
+
+        // 部署後拉遠端 JSON 覆蓋
+        WikiStore.refreshFromRemote().then(function (ok) { if (ok) refreshAll(); });
+    })();
+    </script>
+    <script src="js/hf-wiki-admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>常見問題 FAQ｜華梵禮儀 - 治喪流程、費用、生前契約與百日對年計算</title>
+    <meta name="description" content="華梵禮儀常見問題：親人剛過世該怎麼辦、治喪流程與天數、費用如何計算、生前契約信託保障、百日對年合爐日期線上計算器。24H 免費諮詢 0800-800-818。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 100px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        details.hf-faq summary::-webkit-details-marker { display: none; }
+        details.hf-faq summary::after { content: '+'; margin-left: auto; color: #C5A670; font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+        details.hf-faq[open] summary::after { content: '−'; }
+        details.hf-faq[open] { background: rgba(255,255,255,.95); border-color: rgba(197,166,112,.55); }
+    </style>
+
+    <!-- FAQ 結構化資料（SEO） -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "親人剛過世，第一步該怎麼辦？",
+          "acceptedAnswer": { "@type": "Answer", "text": "請先保持冷靜，撥打華梵24小時免費專線0800-800-818，禮儀師會立即指引您接下來的每一步：協助開立死亡證明、安排大體接運與冰存，並與您約定治喪協調時間。" }
+        },
+        {
+          "@type": "Question",
+          "name": "華梵是否提供24小時服務？",
+          "acceptedAnswer": { "@type": "Answer", "text": "是。緊急協助專線0800-800-818全天候接聽，實際到場時間依所在地點、交通及當下狀況，由專人於電話中確認。" }
+        },
+        {
+          "@type": "Question",
+          "name": "治喪整個流程大約需要幾天？",
+          "acceptedAnswer": { "@type": "Answer", "text": "一般約7至14天，實際天數依家屬期望、宗教儀式、火化與禮廳檔期、擇日結果而定。禮儀師會在治喪協調時與家屬確認完整時程表。" }
+        },
+        {
+          "@type": "Question",
+          "name": "喪禮費用如何計算？線上試算就是最後費用嗎？",
+          "acceptedAnswer": { "@type": "Answer", "text": "線上試算僅提供預算區間參考。正式費用依場地規費、儀式內容、交通與家屬選擇而定，華梵會逐項提供書面明細並經家屬確認後才執行，絕不巧立名目。" }
+        },
+        {
+          "@type": "Question",
+          "name": "不同宗教或無宗教信仰的家庭也能規劃嗎？",
+          "acceptedAnswer": { "@type": "Answer", "text": "可以。可依佛道教、基督宗教、天主教、無宗教追思或環保自然葬等方向討論，重點是尊重逝者與家屬的價值選擇。" }
+        },
+        {
+          "@type": "Question",
+          "name": "生前契約安全嗎？錢會不會拿不回來？",
+          "acceptedAnswer": { "@type": "Answer", "text": "依殯葬管理條例，生前契約預收費用的75%必須交付銀行信託專戶管理，消費者並享有契約審閱期與解約權利。簽約前可至內政部全國殯葬資訊入口網查詢合法業者名單。" }
+        },
+        {
+          "@type": "Question",
+          "name": "百日、對年的日期怎麼計算？",
+          "acceptedAnswer": { "@type": "Answer", "text": "百日一般以往生日為第一天往後推算至第一百日；對年為往生後滿一週年，傳統以農曆同月同日計算，遇閏月習俗上提前一個月。各地習俗略有差異，實際日期建議與禮儀師確認。" }
+        },
+        {
+          "@type": "Question",
+          "name": "如何確認禮儀公司是合法業者？",
+          "acceptedAnswer": { "@type": "Answer", "text": "可至內政部全國殯葬資訊入口網或臺中市殯葬資訊服務網查詢合法業者名冊。華梵禮儀為臺中市合法立案業者，並多次獲臺中市殯葬禮儀服務業評鑑特優等與優等肯定。" }
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <main class="pt-28 pb-24">
+        <div class="container mx-auto px-4 md:px-6 max-w-4xl">
+
+            <!-- 頁面標題 -->
+            <div class="text-center mb-14">
+                <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-2">FAQ</span>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-primaryDark">常見問題</h1>
+                <p class="text-gray-500 mt-4 max-w-xl mx-auto leading-relaxed">關於治喪、費用與習俗，家屬最常問我們的問題。<br>找不到答案？歡迎 24H 來電 <a href="tel:0800800818" class="text-primary font-bold hover:underline">0800-800-818</a>。</p>
+            </div>
+
+            <!-- ===== 服務相關 ===== -->
+            <section class="mb-12">
+                <h2 class="text-xl md:text-2xl font-serif font-bold text-primaryDark mb-5 flex items-center gap-3"><i class="fa-solid fa-headset text-accent"></i>服務相關</h2>
+                <div class="space-y-4">
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition" open>
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">親人剛過世，第一步該怎麼辦？</summary>
+                        <div class="text-gray-600 leading-relaxed mt-4 space-y-2">
+                            <p>請先保持冷靜，撥打華梵 24 小時免費專線 <a href="tel:0800800818" class="text-primary font-bold">0800-800-818</a>，禮儀師會立即指引您接下來的每一步：協助開立死亡證明、安排大體接運與冰存，並與您約定治喪協調時間。</p>
+                            <p>我們也整理了完整的緊急應對指南：<a href="guide.html" class="text-accent font-bold hover:underline">我剛失去親人，該怎麼辦？ →</a></p>
+                        </div>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">華梵是否提供 24 小時服務？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">是。緊急協助專線全天接聽。實際到場時間會依所在地點、交通及當下狀況，由專人於電話中確認。</p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">治喪整個流程大約需要幾天？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">一般約 7 至 14 天，實際天數依家屬期望、宗教儀式、火化與禮廳檔期、擇日結果而定。禮儀師會在治喪協調時與家屬確認完整時程表。完整流程可參考 <a href="process.html" class="text-accent font-bold hover:underline">治喪流程說明 →</a></p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">不同宗教或無宗教信仰的家庭也能規劃嗎？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">可以。可依佛道教、基督宗教、天主教、無宗教追思或環保葬等方向討論，重點是尊重逝者與家屬的價值選擇。各宗教儀式差異可參考 <a href="wiki.html#religions" class="text-accent font-bold hover:underline">禮儀百科：宗教與葬儀 →</a></p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ===== 費用相關 ===== -->
+            <section class="mb-12">
+                <h2 class="text-xl md:text-2xl font-serif font-bold text-primaryDark mb-5 flex items-center gap-3"><i class="fa-solid fa-hand-holding-dollar text-accent"></i>費用相關</h2>
+                <div class="space-y-4">
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">喪禮費用如何計算？線上試算就是最後費用嗎？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">不是。<a href="index.html#calculator" class="text-accent font-bold hover:underline">線上試算</a>只提供預算區間；正式費用仍須依場地規費、儀式內容、交通與家屬選擇，逐項提供書面明細並經確認後才執行，絕不巧立名目、中途加價。</p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">有哪些政府喪葬補助可以申請？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">依逝者投保身分，可能可申請勞保喪葬津貼／死亡給付、國民年金喪葬給付、農保喪葬津貼或低收入戶喪葬補助等。禮儀師會協助家屬盤點可申請項目，官方申請管道整理於 <a href="wiki.html#subsidy" class="text-accent font-bold hover:underline">禮儀百科：喪葬補助申請 →</a></p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ===== 契約與權益 ===== -->
+            <section class="mb-12">
+                <h2 class="text-xl md:text-2xl font-serif font-bold text-primaryDark mb-5 flex items-center gap-3"><i class="fa-solid fa-file-signature text-accent"></i>生前契約與消費權益</h2>
+                <div class="space-y-4">
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">生前契約安全嗎？錢會不會拿不回來？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">依《殯葬管理條例》，生前契約預收費用的 <strong>75% 必須交付銀行信託專戶</strong>管理，消費者並享有契約審閱期與解約權利。您可隨時至受託銀行網站查詢信託狀態。更多說明請見 <a href="preneed.html" class="text-accent font-bold hover:underline">生前契約專頁 →</a></p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">如何確認禮儀公司是合法業者？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">可至 <a href="https://mort.moi.gov.tw/" target="_blank" rel="noopener" class="text-accent font-bold hover:underline">內政部全國殯葬資訊入口網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a> 或 <a href="https://mortuary.taichung.gov.tw/Frontend/Morticianlist.aspx" target="_blank" rel="noopener" class="text-accent font-bold hover:underline">臺中市殯葬資訊服務網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a> 查詢合法業者名冊。華梵禮儀為臺中市合法立案業者（許可證號：府授經商字第10907655990號），多次獲評鑑特優等與優等肯定。</p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">對服務有疑慮時，可以向誰申訴？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">華梵申訴專線 <a href="tel:0800800818" class="text-primary font-bold">0800-800-818</a>；亦可洽臺中市生命禮儀管理處 (04) 2233-4145、臺中市政府消費者保護官室 (04) 2228-9111，或撥打全國消費者服務專線 <strong>1950</strong>。</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ===== 習俗相關 ===== -->
+            <section class="mb-12">
+                <h2 class="text-xl md:text-2xl font-serif font-bold text-primaryDark mb-5 flex items-center gap-3"><i class="fa-solid fa-book-journal-whills text-accent"></i>習俗相關</h2>
+                <div class="space-y-4">
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">參加告別式要注意什麼？奠儀（白包）怎麼包？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">著深色素服、輕步低聲、手機調震動；奠儀金額以單數計（如 $1,100、$2,100），以白色封袋盛裝並正楷署名。完整禮節說明請見 <a href="wiki.html#etiquette" class="text-accent font-bold hover:underline">禮儀百科：弔唁禮節須知 →</a></p>
+                    </details>
+                    <details class="hf-faq rounded-2xl border border-primary/10 bg-white/65 p-5 transition">
+                        <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">百日、對年、合爐是什麼？日期怎麼算？</summary>
+                        <p class="text-gray-600 leading-relaxed mt-4">百日為往生後第一百日的祭祀；對年為滿一週年（傳統以農曆計，遇閏月提前一個月）；合爐則是將逝者名字寫入祖先牌位、香爐灰併入祖先爐，多於對年後擇吉日辦理。可先用下方 <a href="#calculator" class="text-accent font-bold hover:underline">計算器</a> 快速推算國曆參考日期。</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ===== 百日對年計算器 ===== -->
+            <section id="calculator" class="mb-12">
+                <div class="rounded-[2rem] bg-surface border border-white shadow-card p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute -top-20 -right-20 w-72 h-72 bg-accent/10 rounded-full blur-[70px] pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <span class="text-accent font-bold tracking-[0.25em] uppercase text-xs block mb-2">Memorial Date Calculator</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2">百日・對年 日期計算器</h2>
+                        <p class="text-sm text-gray-500 mb-8 leading-relaxed">輸入親人往生的<strong>國曆日期</strong>，快速推算各重要祭祀日的參考日期。</p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-end mb-8">
+                            <label class="flex-1">
+                                <span class="block text-sm font-bold text-primaryDark mb-2">往生日期（國曆）</span>
+                                <input type="date" id="death-date" class="w-full px-5 py-3.5 rounded-xl border border-gray-300 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-base" aria-label="往生日期">
+                            </label>
+                            <button id="calc-btn" type="button" class="px-8 py-3.5 rounded-xl bg-primary text-white font-bold hover:bg-primaryDark transition shadow-soft cursor-pointer">
+                                <i class="fa-solid fa-calculator mr-2"></i>計算日期
+                            </button>
+                        </div>
+
+                        <div id="calc-results" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <div class="rounded-xl bg-pale/60 border border-primary/10 p-5 text-center">
+                                <p class="text-xs tracking-widest text-gray-500 mb-1">頭七（第 7 日）</p>
+                                <p id="result-day7" class="font-serif font-bold text-lg text-primaryDark"></p>
+                            </div>
+                            <div class="rounded-xl bg-pale/60 border border-primary/10 p-5 text-center">
+                                <p class="text-xs tracking-widest text-gray-500 mb-1">滿七（第 49 日）</p>
+                                <p id="result-day49" class="font-serif font-bold text-lg text-primaryDark"></p>
+                            </div>
+                            <div class="rounded-xl bg-accent/15 border border-accent/40 p-5 text-center">
+                                <p class="text-xs tracking-widest text-gray-500 mb-1">百日（第 100 日）</p>
+                                <p id="result-day100" class="font-serif font-bold text-lg text-primaryDark"></p>
+                            </div>
+                            <div class="rounded-xl bg-accent/15 border border-accent/40 p-5 text-center">
+                                <p class="text-xs tracking-widest text-gray-500 mb-1">對年（滿一年）</p>
+                                <p id="result-year1" class="font-serif font-bold text-lg text-primaryDark"></p>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border border-emergency/25 bg-emergency/5 p-4 text-xs text-gray-500 leading-relaxed">
+                            <i class="fa-solid fa-circle-info text-emergency mr-1"></i>
+                            計算結果以「往生日為第 1 天」的國曆推算，僅供參考。傳統習俗上百日可能依子孫人數「扣日」、對年以<strong>農曆</strong>同月同日計算（遇閏月提前一個月），各地習俗與宗教作法不同，實際日期請與您的禮儀師確認。華梵禮儀提供後續關懷服務，屆時將主動提醒家屬。
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="text-center">
+                <p class="text-gray-500 mb-6">還有其他問題？我們 24 小時都在，一通電話就能得到答案。</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="tel:0800800818" class="px-8 py-4 rounded-full bg-emergency text-white font-bold shadow-red-glow hover:opacity-90 transition"><i class="fa-solid fa-phone-volume mr-2"></i>24H 免費專線 0800-800-818</a>
+                    <a href="wiki.html" class="px-8 py-4 rounded-full border border-primary/30 text-primary font-bold hover:bg-primary hover:text-white transition"><i class="fa-solid fa-book-open mr-2"></i>瀏覽禮儀百科</a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    (function () {
+        'use strict';
+        var WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
+
+        function fmt(d) {
+            return d.getFullYear() + ' 年 ' + (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日（' + WEEKDAYS[d.getDay()] + '）';
+        }
+        function addDays(base, n) {
+            var d = new Date(base.getTime());
+            d.setDate(d.getDate() + n);
+            return d;
+        }
+
+        document.getElementById('calc-btn').addEventListener('click', function () {
+            var input = document.getElementById('death-date');
+            if (!input.value) {
+                input.focus();
+                input.classList.add('border-emergency', 'ring-2', 'ring-emergency/20');
+                setTimeout(function () { input.classList.remove('border-emergency', 'ring-2', 'ring-emergency/20'); }, 1500);
+                return;
+            }
+            var parts = input.value.split('-');
+            var base = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+
+            // 往生日為第 1 天：頭七 = +6，滿七(49日) = +48，百日 = +99
+            document.getElementById('result-day7').textContent = fmt(addDays(base, 6));
+            document.getElementById('result-day49').textContent = fmt(addDays(base, 48));
+            document.getElementById('result-day100').textContent = fmt(addDays(base, 99));
+
+            // 對年：國曆隔年同月同日（參考值；傳統以農曆計算）
+            var y1 = new Date(base.getTime());
+            y1.setFullYear(y1.getFullYear() + 1);
+            document.getElementById('result-year1').textContent = fmt(y1) + '＊';
+
+            document.getElementById('calc-results').classList.remove('hidden');
+            document.getElementById('calc-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    })();
+    </script>
+</body>
+</html>

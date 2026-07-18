@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <!-- 最新消息資料層 -->
+    <script src="js/hf-news-store.js"></script>
+    <title>最新消息｜華梵禮儀 - 獲獎殊榮、公益關懷與服務動態</title>
+    <meta name="description" content="華梵禮儀最新消息：臺中市殯葬禮儀服務業評鑑特優等、公益關懷活動、聯合奠祭與環保自然葬服務動態。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 100px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        /* Hero 背景 */
+        .news-hero-bg {
+            background-image: url('/HuaFan/image/index/華梵會館.webp');
+            background-size: cover;
+            background-position: center 30%;
+            position: relative;
+        }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* 消息圖卡（仿尖端洞察卡片，套用華梵色彩） */
+        .news-card-item {
+            position: relative; display: flex; flex-direction: column;
+            background: #FFFEFA;
+            border: 1px solid rgba(255,255,255,.9);
+            border-radius: 1.5rem; overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(70, 91, 64, 0.1);
+            transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s, border-color 0.35s;
+            text-decoration: none; color: inherit;
+        }
+        .news-card-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -18px rgba(70,91,64,.35);
+            border-color: rgba(197,166,112,.5);
+        }
+        .news-cover {
+            aspect-ratio: 16 / 10; overflow: hidden; background: #E3EBE5; position: relative;
+        }
+        .news-cover img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .news-card-item:hover .news-cover img { transform: scale(1.05); }
+        .news-body {
+            padding: 1.3rem 1.4rem 1.4rem;
+            display: flex; flex-direction: column; gap: 0.7rem; flex: 1;
+        }
+        .news-meta {
+            display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;
+            font-size: 0.7rem; font-weight: 700;
+            color: #8B9287; letter-spacing: 0.05em;
+        }
+        .news-no {
+            font-weight: 700; letter-spacing: 0.15em; padding: 0.18rem 0.55rem;
+            border-radius: 999px; background: rgba(70,91,64,0.08); color: #465B40;
+        }
+        .news-cat { display: inline-flex; align-items: center; gap: 0.25rem; color: #465B40; }
+        .news-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.15rem; font-weight: 700; color: #2F3E2B;
+            line-height: 1.45; letter-spacing: 0.01em;
+            display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .news-card-item:hover .news-title { color: #465B40; }
+        .news-summary {
+            font-size: 0.85rem; color: #6b7280; line-height: 1.75;
+            display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .news-cta {
+            margin-top: auto; padding-top: 0.75rem;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.78rem; font-weight: 700; color: #C5A670;
+            letter-spacing: 0.15em;
+            border-top: 1px dashed rgba(197,166,112,.5);
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+        .news-card-item:hover .news-cta { gap: 0.75rem; color: #465B40; }
+        .news-badge {
+            position: absolute; top: 0.65rem; right: 0.7rem;
+            padding: 0.22rem 0.6rem; border-radius: 999px;
+            background: rgba(197,166,112,0.92); color: #2F3E2B;
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+            backdrop-filter: blur(6px); z-index: 2;
+        }
+
+        /* 分類 chips */
+        .cat-chip {
+            display: inline-flex; align-items: center;
+            padding: 0.45rem 1rem; border-radius: 999px;
+            border: 1px solid #d1d5db; background: #fff;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+            color: #4b5563; cursor: pointer; user-select: none;
+            transition: all 0.25s ease;
+        }
+        .cat-chip:hover { border-color: #465B40; color: #465B40; }
+        .cat-chip.active { background: #465B40; color: #fff; border-color: #465B40; }
+
+        /* 分頁 */
+        .pager-btn {
+            min-width: 2.4rem; height: 2.4rem;
+            padding: 0 0.75rem; border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+            border: 1px solid #d1d5db;
+            background: #fff; color: #465B40;
+            transition: all 0.2s ease; cursor: pointer;
+        }
+        .pager-btn:hover { border-color: #465B40; }
+        .pager-btn.active { background: #465B40; color: #fff; border-color: #465B40; }
+        .pager-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .news-card-item, .news-cover img, .cat-chip { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== Hero 區 ===== -->
+    <section class="news-hero-bg min-h-[55vh] flex flex-col justify-center relative pt-36 pb-32 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-primary/40 to-primary/60"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-medium tracking-[0.25em] uppercase mb-5">
+                <i class="fa-regular fa-newspaper text-accent"></i> Latest News
+            </span>
+            <h1 class="text-white text-5xl md:text-6xl font-serif font-bold leading-tight text-shadow-lg">最新消息</h1>
+            <p class="text-white/90 mt-6 max-w-2xl mx-auto leading-relaxed text-base md:text-lg">
+                關於生命的告別、儀式的意義，<br class="hidden md:block">
+                以及我們如何守護每一份囑託。
+            </p>
+        </div>
+
+        <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[100px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </section>
+
+    <main class="pb-60 md:pb-96 relative z-30">
+        <div class="container mx-auto px-4 md:px-6 pt-12">
+            <div class="max-w-7xl mx-auto">
+
+                <!-- 分類篩選 -->
+                <div id="news-cats" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-10" role="tablist" aria-label="消息分類"></div>
+
+                <!-- 圖卡列表 -->
+                <section id="news-grid-section">
+                    <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8"></div>
+                    <p id="news-empty" class="hidden text-center text-gray-400 py-24 text-sm tracking-widest">
+                        尚無消息。管理者請按 <kbd class="px-2 py-0.5 border border-gray-300 rounded text-xs bg-white">⌘ + ⇧ + E</kbd> 開啟後台新增。
+                    </p>
+                    <nav id="news-pager" class="mt-12 flex flex-wrap items-center justify-center gap-1.5" aria-label="分頁"></nav>
+                </section>
+
+                <!-- 關於本專欄 -->
+                <section class="mt-16">
+                    <div class="rounded-[2rem] p-8 md:p-10 bg-surface border border-white shadow-soft">
+                        <div class="flex flex-col md:flex-row items-start gap-6">
+                            <span class="w-14 h-14 rounded-2xl bg-primary text-accent flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-newspaper text-xl"></i>
+                            </span>
+                            <div>
+                                <h3 class="font-serif text-xl md:text-2xl font-bold text-primaryDark mb-2">關於最新消息</h3>
+                                <p class="text-sm md:text-base text-gray-500 leading-relaxed">
+                                    這裡記錄華梵禮儀的獲獎殊榮、公益關懷行動與服務動態。
+                                    每一則消息，都是我們對「專業、體貼、尊重」的實踐。
+                                    若需要任何協助，歡迎來電
+                                    <a href="tel:0800800818" class="text-primary font-bold hover:text-accent transition">0800-800-818</a>，24 小時都在。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾（含頁尾前螢幕網屏緩衝帶） -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    (function initNewsPage() {
+        'use strict';
+
+        /* 舊版連結相容：news.html?id=xxx → 導向 news-detail.html?id=xxx */
+        (function legacyIdRedirect() {
+            var params = new URLSearchParams(location.search);
+            var id = params.get('id');
+            if (id) location.replace('news-detail.html?id=' + encodeURIComponent(id));
+        })();
+
+        var grid = document.getElementById('news-grid');
+        var empty = document.getElementById('news-empty');
+        var pager = document.getElementById('news-pager');
+        var catsEl = document.getElementById('news-cats');
+        var PAGE_SIZE = 12;
+
+        var currentPage = 1;
+        var activeCat = 'all';
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function renderCats() {
+            var all = NewsStore.getAll();
+            var counts = new Map();
+            counts.set('all', all.length);
+            all.forEach(function (p) {
+                (p.categories || []).forEach(function (c) {
+                    counts.set(c, (counts.get(c) || 0) + 1);
+                });
+            });
+            var cats = Array.from(counts.entries()).filter(function (e) { return e[0] === 'all' || e[1] > 0; });
+            catsEl.innerHTML = cats.map(function (entry) {
+                var cat = entry[0], n = entry[1];
+                var label = cat === 'all' ? '全部消息' : cat;
+                var active = cat === activeCat ? 'active' : '';
+                return '<button type="button" class="cat-chip ' + active + '" data-cat="' + esc(cat) + '" role="tab" aria-selected="' + (cat === activeCat) + '">' +
+                    esc(label) + ' <span class="ml-1.5 text-[10px] opacity-70">' + n + '</span></button>';
+            }).join('');
+            catsEl.querySelectorAll('[data-cat]').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    activeCat = el.getAttribute('data-cat');
+                    currentPage = 1;
+                    renderCats();
+                    renderGrid();
+                });
+            });
+        }
+
+        function filterList() {
+            var all = NewsStore.getAll();
+            if (activeCat === 'all') return all;
+            return all.filter(function (p) { return (p.categories || []).includes(activeCat); });
+        }
+
+        function renderGrid() {
+            var list = filterList();
+            grid.innerHTML = '';
+            pager.innerHTML = '';
+
+            if (!list.length) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            var totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            var startIdx = (currentPage - 1) * PAGE_SIZE;
+            var pageItems = list.slice(startIdx, startIdx + PAGE_SIZE);
+
+            grid.innerHTML = pageItems.map(function (p, i) {
+                var cover = NewsStore.coverOf(p);
+                var summary = NewsStore.summaryOf(p, 110);
+                var cat = (p.categories && p.categories[0]) || '';
+                var num = String(startIdx + i + 1).padStart(2, '0');
+                return '' +
+                    '<a href="' + esc(NewsStore.detailUrlOf(p)) + '" class="news-card-item">' +
+                        (p.featured ? '<span class="news-badge"><i class="fa-solid fa-star mr-1"></i>精選</span>' : '') +
+                        '<div class="news-cover">' +
+                            '<img src="' + esc(cover) + '" alt="' + esc(p.title) + '" loading="lazy" ' +
+                                 'onerror="this.src=\'' + esc(NewsStore.pickFallbackCover(p.id)) + '\';">' +
+                        '</div>' +
+                        '<div class="news-body">' +
+                            '<div class="news-meta">' +
+                                '<span class="news-no">No.' + num + '</span>' +
+                                (p.publishedDate ? '<span><i class="fa-regular fa-calendar mr-1"></i>' + esc(p.publishedDate) + '</span>' : '') +
+                                (cat ? '<span class="news-cat"><i class="fa-solid fa-tag text-[9px]"></i>' + esc(cat) + '</span>' : '') +
+                            '</div>' +
+                            '<h3 class="news-title">' + esc(p.title) + '</h3>' +
+                            (summary ? '<p class="news-summary">' + esc(summary) + '</p>' : '') +
+                            '<span class="news-cta">閱讀全文 <i class="fa-solid fa-arrow-right-long text-xs"></i></span>' +
+                        '</div>' +
+                    '</a>';
+            }).join('');
+
+            renderPager(totalPages);
+        }
+
+        function renderPager(totalPages) {
+            if (totalPages <= 1) { pager.innerHTML = ''; return; }
+            function mk(label, page, opts) {
+                opts = opts || {};
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'pager-btn' + (opts.active ? ' active' : '');
+                btn.textContent = label;
+                if (opts.disabled) btn.disabled = true;
+                if (!opts.disabled && !opts.active) {
+                    btn.addEventListener('click', function () {
+                        currentPage = page;
+                        renderGrid();
+                        var sec = document.getElementById('news-grid-section');
+                        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+                return btn;
+            }
+            function mkEllipsis() {
+                var s = document.createElement('span');
+                s.textContent = '…';
+                s.className = 'px-1 text-gray-400';
+                return s;
+            }
+            pager.innerHTML = '';
+            pager.appendChild(mk('«', currentPage - 1, { disabled: currentPage === 1 }));
+            var set = new Set([1, totalPages, currentPage, currentPage - 1, currentPage + 1, currentPage - 2, currentPage + 2]);
+            var arr = Array.from(set).filter(function (p) { return p >= 1 && p <= totalPages; }).sort(function (a, b) { return a - b; });
+            var prev = 0;
+            arr.forEach(function (p) {
+                if (p - prev > 1) pager.appendChild(mkEllipsis());
+                pager.appendChild(mk(String(p), p, { active: p === currentPage }));
+                prev = p;
+            });
+            pager.appendChild(mk('»', currentPage + 1, { disabled: currentPage === totalPages }));
+        }
+
+        function refreshAll() {
+            renderCats();
+            renderGrid();
+        }
+
+        refreshAll();
+        NewsStore.subscribe(refreshAll);
+
+        // 部署後拉遠端 JSON 覆蓋
+        NewsStore.refreshFromRemote().then(function (ok) { if (ok) refreshAll(); });
+    })();
+    </script>
+    <script src="js/hf-news-admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>禮儀百科｜華梵禮儀 - 習俗禮節、宗教葬儀、喪葬補助與契約權益</title>
+    <meta name="description" content="生命禮儀百科：弔唁服裝儀容、奠儀白包禮節、公奠拈香、佛道教與基督宗教葬儀、百日對年合爐、勞保國保喪葬補助申請、殯葬定型化契約與消費權益。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 100px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        .wiki-toc-link { transition: all .25s ease; border-left: 2px solid transparent; }
+        .wiki-toc-link:hover, .wiki-toc-link.active { border-left-color: #C5A670; color: #465B40; background: rgba(197,166,112,.08); }
+
+        .wiki-card { background: #FFFEFA; border: 1px solid rgba(255,255,255,.9); }
+
+        details.wiki-detail summary::-webkit-details-marker { display: none; }
+        details.wiki-detail summary::after { content: '+'; margin-left: auto; color: #C5A670; font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+        details.wiki-detail[open] summary::after { content: '−'; }
+        details.wiki-detail[open] { background: rgba(255,255,255,.95); border-color: rgba(197,166,112,.5); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wiki-toc-link { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <main class="pt-28 pb-24">
+        <div class="container mx-auto px-4 md:px-6">
+
+            <!-- 頁面標題 -->
+            <div class="text-center mb-14 relative">
+                <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-2">Etiquette Encyclopedia</span>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-primaryDark">禮儀百科</h1>
+                <p class="text-gray-500 mt-4 max-w-2xl mx-auto leading-relaxed">
+                    習俗與禮節、宗教葬儀、補助申請與契約權益。<br class="hidden md:block">
+                    每個家庭的情況不同，內容僅供參考，實際安排歡迎與禮儀師討論。
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10 max-w-6xl mx-auto">
+
+                <!-- 側邊目錄（桌機） -->
+                <aside class="lg:w-64 flex-shrink-0">
+                    <nav class="lg:sticky lg:top-28 bg-surface rounded-2xl border border-white shadow-soft p-4" aria-label="百科目錄">
+                        <p class="text-xs tracking-[0.2em] text-accent uppercase font-bold px-3 pt-2 pb-3">目錄 Contents</p>
+                        <div class="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-1 pb-2 lg:pb-0">
+                            <a href="#etiquette" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-user-tie w-5 text-accent"></i> 弔唁禮節須知</a>
+                            <a href="#religions" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-hands-praying w-5 text-accent"></i> 宗教與葬儀</a>
+                            <a href="#burials" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-leaf w-5 text-accent"></i> 葬式知識</a>
+                            <a href="#memorial" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-regular fa-calendar-check w-5 text-accent"></i> 百日・對年・合爐</a>
+                            <a href="#subsidy" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-hand-holding-dollar w-5 text-accent"></i> 喪葬補助申請</a>
+                            <a href="#contracts" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-file-signature w-5 text-accent"></i> 契約與消費權益</a>
+                            <a href="#traffic" class="wiki-toc-link whitespace-nowrap px-3 py-2.5 rounded-r-lg text-sm text-gray-600"><i class="fa-solid fa-route w-5 text-accent"></i> 殯儀館交通資訊</a>
+                        </div>
+                        <div class="hidden lg:block border-t border-gray-100 mt-3 pt-3 px-3 pb-2 space-y-2">
+                            <a href="process.html" class="block text-sm text-primary font-bold hover:text-accent transition"><i class="fa-solid fa-diagram-project w-5"></i> 完整治喪流程 →</a>
+                            <a href="faq.html" class="block text-sm text-primary font-bold hover:text-accent transition"><i class="fa-solid fa-circle-question w-5"></i> 常見問題 FAQ →</a>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- 主要內容 -->
+                <div class="flex-1 space-y-16">
+
+                    <!-- 1. 弔唁禮節 -->
+                    <section id="etiquette">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>弔唁禮節須知</h2>
+                        <p class="text-gray-500 mb-8 text-sm">參加告別式前，先了解這些基本禮節，讓心意得體表達。</p>
+
+                        <div class="space-y-4">
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition" open>
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">服裝儀容</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>參加喪禮請著<strong>深色、偏寒色調素服</strong>為宜，儀容清爽、略施薄妝即可，不宜過度妝扮，不穿拖鞋，尤忌蓬首垢面。</p>
+                                    <p><strong>胸花／黃絲帶佩戴：</strong>奠禮會場備有胸花或黃絲帶，以逝者性別區分佩戴方向──逝者為男性別於<strong>左胸</strong>，逝者為女性別於<strong>右胸</strong>，約鎖骨下一掌距離。</p>
+                                    <p><strong>進場禮節：</strong>進入會場請輕步低聲、態度肅穆莊重，並將手機調為震動或關機。</p>
+                                    <p><strong>禮成離場：</strong>靈柩送出後，與親友<strong>不互道「再見」、「再會」</strong>，即「不要再辦喪事」之意。</p>
+                                </div>
+                            </details>
+
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition">
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">奠儀（白包）禮節</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>「奠儀」又稱「香儀」、「香奠」、「楮敬」，是致送供奠物品的統稱，現多指向逝者行奠並慰問生者的禮金。</p>
+                                    <p><strong>金額：</strong>以<strong>單數</strong>計，如 $1,100、$2,100……，以白色封袋盛裝。</p>
+                                    <p><strong>署名格式：</strong>香奠袋於會場多有供應，請以正楷署名。上款為哀悼逝者之詞（如「○○先生千古」、「○○女士仙逝」），下款為致意者落款（如「○○○敬弔」、「○○○敬輓」）。</p>
+                                    <p><strong>中款題詞參考：</strong>通用──「往登淨土」、「音容宛在」、「世德流芳」；男用──「駕鶴西歸」、「德邵年高」；女用──「馭鶴仙去」、「懿訓猶存」、「彤管流芳」。</p>
+                                </div>
+                            </details>
+
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition">
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">公奠與拈香</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p><strong>填寫公奠單：</strong>參與公奠之單位請於會場受賻處填寫「公奠單」，推選一名主奠，註明公奠單位、主奠者姓名與職銜，交予工作人員後靜待司儀唱名。以個人名義參加者，可於單位公奠後自由拈香致意。</p>
+                                    <p><strong>團體奠拜：</strong>主奠者站最前，其他成員於後排列隨行；獻香、獻花時隨行者行注目禮，最後與主奠者一同向逝者行鞠躬禮。</p>
+                                    <p><strong>拿香禮節：</strong>右手握香、左手包右手。男舉香雙手上不過眉、下不過腰；女舉香上不過顎、下不過腰，雙眼向逝者行注目禮。</p>
+                                    <p><strong>拈香禮：</strong>先於主奠位行一鞠躬禮，向前至祭壇以右手拇指、食指、中指拈起少許香末提至眉心，行注目禮後放回香器，退回主奠位再行鞠躬禮，由襄儀引導家屬答禮後復位。</p>
+                                    <p><strong>家屬答禮：</strong>拜奠完畢，襄儀會引導家屬答禮──左側男眷先、右側女眷後；退場請依襄儀指示方向復位。若時間許可，誠摯建議全程觀禮，這可能是您最後一次向逝者致意。</p>
+                                </div>
+                            </details>
+                        </div>
+                    </section>
+
+                    <!-- 2. 宗教與葬儀 -->
+                    <section id="religions">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>宗教與葬儀</h2>
+                        <p class="text-gray-500 mb-8 text-sm">不同信仰有不同的告別方式，華梵尊重每個家庭的宗教與價值選擇。</p>
+
+                        <div class="grid md:grid-cols-3 gap-5">
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-dharmachakra"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-3">佛教葬儀</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">佛教認為死亡可以是輪迴的開始，也可以是解脫的來臨。主張葬儀<strong>簡單、隆重</strong>即可；靈前不宜用葷腥祭祀，宜以香花、素食、蔬果供養，並可將奠儀所餘供養三寶、弘法利生，將功德迴向亡者。</p>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-yin-yang"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-3">道教葬儀</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">道教講求煉度「薦亡」，強調超拔渡化的儀式。臺灣道教為喪家所做的功德以課誦經懺為主，如誦「度人經」、「太上三元慈悲滅罪水懺」等，透過「給牒」、「過橋」象徵亡魂獲得超拔，不致沉淪。</p>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-cross"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-3">基督宗教葬儀</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">天主教以殯葬彌撒（追思彌撒）為核心，基督教則以安息禮拜送別，由神父或牧師主禮，透過經文、詩歌與追思，將逝者交託於信仰的盼望中。儀式莊嚴安靜，一般不設香案、不燒紙錢，親友以獻花與禱告致意。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3. 葬式知識 -->
+                    <section id="burials">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>葬式知識</h2>
+                        <p class="text-gray-500 mb-8 text-sm">從傳統土葬、火化晉塔到環保自然葬，了解各種安葬方式。</p>
+
+                        <div class="space-y-4">
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition" open>
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">火葬（火化晉塔）</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>火化後晉塔是目前臺灣最普遍的安葬方式。火葬在我國歷史悠久，《墨子．節葬》即有記載，漢代以後隨佛教東傳而漸盛，唐宋民間已多有奉行。</p>
+                                    <p>現代火葬因經濟、衛生、節約土地等因素成為主流。火化後骨灰可安奉於納骨塔（晉塔）、或選擇樹葬、海葬等環保自然葬。華梵可協助安排火化時程、選塔與晉塔儀式。</p>
+                                </div>
+                            </details>
+
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition">
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">土葬</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>土葬是我國傳統喪葬儀式，源自「入土為安」的觀念──以農立國的漢民族視土地為生命之本，認為人死後埋葬於土中，是靈魂得以安息的最好所在。</p>
+                                    <p>方法為以棺木盛屍、挖葬穴深埋土中、以土丘為標記。現行土葬須於<strong>公墓</strong>內為之，並向殯葬主管機關申請，相關規定可洽各縣市生命禮儀（殯葬）管理處。</p>
+                                </div>
+                            </details>
+
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition">
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">環保自然葬（樹葬・海葬）</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>環保自然葬讓生命回歸自然──<strong>樹葬</strong>將骨灰研磨後埋藏於樹木根部；<strong>海葬</strong>則將骨灰拋灑於政府劃定海域，化作春泥更護花。</p>
+                                    <p>華梵禮儀是台中市政府<strong>聯合奠祭、聯合海葬</strong>的重要協辦廠商，經驗豐富。臺中市亦提供多處樹葬園區與定期聯合海葬場次，詳情可洽華梵或參考 <a href="https://mortuary.taichung.gov.tw/" target="_blank" rel="noopener" class="text-accent font-bold hover:underline">臺中市殯葬資訊服務網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>。</p>
+                                </div>
+                            </details>
+
+                            <details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition">
+                                <summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">水葬（歷史知識）</summary>
+                                <div class="text-gray-600 leading-relaxed mt-4 space-y-3">
+                                    <p>水葬在我國尚不多見，是古代南方部分少數民族（主要為康藏）的喪葬形式，一般由喇嘛誦經後將逝者遺體投入水中。奉行此葬式的民族多生活於深谷大河之畔，視江河為生命的起點與歸宿。</p>
+                                    <p>因易污染水源等因素，歷代均力求革除，水葬之法已逐漸廢棄不用。今日合法的「海葬」係指火化後將<strong>骨灰</strong>拋灑於指定海域，與傳統水葬不同。</p>
+                                </div>
+                            </details>
+                        </div>
+                    </section>
+
+                    <!-- 4. 百日對年合爐 -->
+                    <section id="memorial">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>百日・對年・合爐</h2>
+                        <p class="text-gray-500 mb-8 text-sm">後續祭祀的重要日子與意義。想快速推算日期，可使用 <a href="faq.html#calculator" class="text-accent font-bold hover:underline">百日對年計算器 →</a></p>
+
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2"><span class="text-accent mr-2">01</span>頭七・做七</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">自往生日起每七日為一個「七」，共七個七（四十九日）。「頭七」為第一個七日，傳統上認為亡魂於此日返家，家屬會誦經祭拜。現代常視治喪時程將做七儀式合併簡化。</p>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2"><span class="text-accent mr-2">02</span>百日</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">往生後第一百日的祭祀，表達百日思念之情。一般以往生日為第一天往後推算；部分地區習俗會依子孫人數「扣日」，實際日期建議與禮儀師確認。</p>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2"><span class="text-accent mr-2">03</span>對年</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">往生後滿一週年的祭祀（又稱小祥），傳統以<strong>農曆</strong>同月同日計算；若遇閏月則有提前一個月之習俗。對年當日祭拜後，服喪期間的相關禁忌多告一段落。</p>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2"><span class="text-accent mr-2">04</span>合爐</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">將逝者的魂帛火化、名字寫入祖先牌位，香爐灰併入祖先爐中，象徵正式成為祖先、與歷代祖先一同接受祭祀。多於對年後擇吉日辦理，日期由家屬與禮儀師或擇日師商定。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 5. 喪葬補助 -->
+                    <section id="subsidy">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>喪葬補助申請</h2>
+                        <p class="text-gray-500 mb-8 text-sm">依逝者投保身分不同，家屬可申請的給付也不同。以下整理官方申請管道，華梵禮儀師也會主動協助家屬確認可申請的項目。</p>
+
+                        <div class="space-y-4">
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft flex flex-col md:flex-row md:items-center gap-4">
+                                <div class="flex-1">
+                                    <h3 class="font-serif font-bold text-lg text-primaryDark mb-1">勞保 喪葬津貼／死亡給付</h3>
+                                    <p class="text-sm text-gray-600 leading-relaxed">被保險人本人或其家屬死亡，可依規定請領喪葬津貼（本人死亡另有遺屬年金或遺屬津貼）。請領有期限，建議儘早辦理。</p>
+                                </div>
+                                <a href="https://www.bli.gov.tw/0004840.html" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primaryDark transition">勞保局官網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft flex flex-col md:flex-row md:items-center gap-4">
+                                <div class="flex-1">
+                                    <h3 class="font-serif font-bold text-lg text-primaryDark mb-1">國民年金 喪葬給付</h3>
+                                    <p class="text-sm text-gray-600 leading-relaxed">國保被保險人死亡，支出殯葬費者可申請喪葬給付（5 個月投保金額）。申請資格、金額與應備文件詳見勞保局說明。</p>
+                                </div>
+                                <a href="https://www.bli.gov.tw/0014359.html" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primaryDark transition">申請說明 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft flex flex-col md:flex-row md:items-center gap-4">
+                                <div class="flex-1">
+                                    <h3 class="font-serif font-bold text-lg text-primaryDark mb-1">農保 喪葬津貼</h3>
+                                    <p class="text-sm text-gray-600 leading-relaxed">農保被保險人死亡，由支出殯葬費者請領喪葬津貼（15 個月投保金額）。</p>
+                                </div>
+                                <a href="https://www.bli.gov.tw/0006759.html" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primaryDark transition">申請說明 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+                            </div>
+                            <div class="rounded-2xl border border-accent/40 bg-accent/5 p-5 text-sm text-gray-600 leading-relaxed">
+                                <i class="fa-solid fa-circle-info text-accent mr-2"></i>另有低收入戶喪葬補助、軍公教遺族給付等，依身分與各縣市規定不同。治喪期間資料繁雜，華梵禮儀師會協助家屬盤點可申請項目與應備文件，歡迎來電 <a href="tel:0800800818" class="text-primary font-bold">0800-800-818</a> 詢問。
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 6. 契約與消費權益 -->
+                    <section id="contracts">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>契約與消費權益</h2>
+                        <p class="text-gray-500 mb-8 text-sm">簽約前先了解自己的權益。以下皆為政府官方資源，華梵全面採用內政部定型化契約。</p>
+
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <a href="https://www.moi.gov.tw/cl.aspx?n=81" target="_blank" rel="noopener" class="wiki-card group rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-file-contract"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2 group-hover:text-primary">殯葬定型化契約範本下載 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-60"></i></h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">內政部公告之「殯葬服務定型化契約」、「生前殯葬服務定型化契約（自用型／家用型）」範本與應記載事項。</p>
+                            </a>
+                            <a href="https://mort.moi.gov.tw/" target="_blank" rel="noopener" class="wiki-card group rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-gavel"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2 group-hover:text-primary">合法殯葬業者查詢 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-60"></i></h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">內政部全國殯葬資訊入口網──查詢合法殯葬禮儀服務業者、生前契約業者與殯葬設施。</p>
+                            </a>
+                            <a href="https://mortuary.taichung.gov.tw/Frontend/Morticianlist.aspx" target="_blank" rel="noopener" class="wiki-card group rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-city"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2 group-hover:text-primary">臺中市合法業者名冊 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-60"></i></h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">臺中市殯葬資訊服務網（生命禮儀管理處）──臺中市合法殯葬禮儀業者與殯葬設施查詢。</p>
+                            </a>
+                            <a href="https://www.bankchb.com/frontend/FT-5-2-3-1.jsp" target="_blank" rel="noopener" class="wiki-card group rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all">
+                                <div class="text-2xl text-accent mb-3"><i class="fa-solid fa-building-columns"></i></div>
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-2 group-hover:text-primary">生前契約信託查詢 <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-60"></i></h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">依法生前契約預收費用 75% 須交付信託。可至受託銀行網站查詢信託專戶狀態，保障您的權益。</p>
+                            </a>
+                        </div>
+
+                        <div class="mt-5 rounded-2xl border border-emergency/30 bg-emergency/5 p-5 text-sm text-gray-600 leading-relaxed">
+                            <p class="font-bold text-emergency mb-2"><i class="fa-solid fa-shield-halved mr-2"></i>消費諮詢／申訴管道</p>
+                            <p>華梵禮儀申訴專線：<a href="tel:0800800818" class="text-primary font-bold">0800-800-818</a>｜臺中市生命禮儀管理處：(04) 2233-4145｜臺中市政府消費者保護官室：(04) 2228-9111 或撥打全國消費者服務專線 <strong>1950</strong>。另可參考 <a href="https://mort.moi.gov.tw/#/Protection/?type=1" target="_blank" rel="noopener" class="text-accent font-bold hover:underline">內政部殯葬消費者保護專區 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>。</p>
+                        </div>
+                    </section>
+
+                    <!-- 7. 交通資訊 -->
+                    <section id="traffic">
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-2 flex items-center gap-3"><span class="w-8 h-[2px] bg-accent inline-block"></span>臺中市崇德殯儀館 交通資訊</h2>
+                        <p class="text-gray-500 mb-8 text-sm">地址：臺中市北區崇德路一段 50 號｜電話：(04) 2233-4145</p>
+
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-3"><i class="fa-solid fa-bus text-accent mr-2"></i>搭乘公車</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-3">可搭乘台中客運、統聯客運、全航客運、豐原客運等多線市區公車，於下列站點下車步行即達：</p>
+                                <ul class="text-sm text-gray-600 space-y-1.5">
+                                    <li><i class="fa-solid fa-location-dot text-accent text-xs mr-2"></i>一心市場</li>
+                                    <li><i class="fa-solid fa-location-dot text-accent text-xs mr-2"></i>市立殯儀館</li>
+                                    <li><i class="fa-solid fa-location-dot text-accent text-xs mr-2"></i>中國醫藥大學／中山堂</li>
+                                    <li><i class="fa-solid fa-location-dot text-accent text-xs mr-2"></i>五權學士路口</li>
+                                </ul>
+                            </div>
+                            <div class="wiki-card rounded-2xl p-6 shadow-soft">
+                                <h3 class="font-serif font-bold text-lg text-primaryDark mb-3"><i class="fa-solid fa-car text-accent mr-2"></i>自行開車</h3>
+                                <ul class="text-sm text-gray-600 space-y-2.5 leading-relaxed">
+                                    <li><strong>國道1號（南下）：</strong>大雅交流道下 → 中清路往市區 → 左轉文心路 → 右轉崇德路即達。</li>
+                                    <li><strong>國道1號（北上）：</strong>臺灣大道交流道下 → 往市區 → 左轉五權路 → 左轉崇德路即達。</li>
+                                    <li><strong>國道3號（南下）：</strong>沙鹿交流道下 → 臺灣大道二段 → 左轉五權路 → 左轉崇德路即達。</li>
+                                    <li><strong>國道3號（北上）：</strong>大里接 63 中投快速道路 → 五權南路下 → 右轉三民路 → 左轉崇德路即達。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA -->
+                    <section class="rounded-[2rem] bg-primary text-white p-8 md:p-12 text-center relative overflow-hidden">
+                        <div class="absolute -top-16 -right-16 w-64 h-64 bg-accent/20 rounded-full blur-[80px] pointer-events-none"></div>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold mb-3 relative z-10">還有其他疑問嗎？</h2>
+                        <p class="text-white/80 mb-8 relative z-10">看看常見問題，或直接與我們的禮儀師聊聊，24 小時都在。</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                            <a href="faq.html" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-solid fa-circle-question mr-2"></i>常見問題 FAQ</a>
+                            <a href="tel:0800800818" class="px-8 py-3.5 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-phone-volume mr-2"></i>0800-800-818</a>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    // 目錄捲動高亮
+    (function () {
+        var links = document.querySelectorAll('.wiki-toc-link');
+        var sections = [];
+        links.forEach(function (l) {
+            var id = l.getAttribute('href').slice(1);
+            var sec = document.getElementById(id);
+            if (sec) sections.push({ id: id, el: sec, link: l });
+        });
+        function onScroll() {
+            var pos = window.scrollY + 140;
+            var active = sections[0];
+            sections.forEach(function (s) { if (s.el.offsetTop <= pos) active = s; });
+            sections.forEach(function (s) { s.link.classList.toggle('active', s === active); });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

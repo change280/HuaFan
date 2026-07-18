@@ -13,6 +13,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Noto+Serif+TC:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -790,78 +791,6 @@
         to { transform: rotate(360deg); }
     }
 }
-
-        /* ===== 新增：桌面下拉選單樣式 ===== */
-        .nav-dropdown-item {
-            opacity: 0;
-            transform: translateY(-5px);
-            transition: all 0.3s ease-out;
-            position: relative;
-            padding-left: 28px;
-        }
-
-        .nav-item-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translate(-6px, -50%);
-            opacity: 0;
-            color: #C5A670;
-            font-size: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-item-line {
-            position: absolute;
-            left: 4px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: #C5A670;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-dropdown-text {
-            transition: transform 0.2s ease;
-        }
-
-        .nav-dropdown-item:hover .nav-item-icon {
-            transform: translate(0, -50%);
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-item-line {
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-dropdown-text {
-            transform: translateX(2px);
-        }
-        
-        .group:hover .nav-dropdown-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* 每個項目加入微小延遲，創造階梯式動畫 */
-        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
-        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
-        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
-        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
-        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
-
-        /* 手機版子選單動畫 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .submenu-item-fade {
-            animation: fadeInUp 0.4s ease-out forwards;
-            opacity: 0;
-        }
-
     </style>
 </head>
 <body class="text-text bg-warm relative pb-16 md:pb-0">
@@ -1843,17 +1772,8 @@
 
 
 
-    <!-- 🆕 修正後：高雅過渡區塊 -->
-    <div class="relative w-full h-96 md:h-96 -mt-32 z-10 overflow-visible">
-        
-        <!-- 底部金色光暈 -->
-        <div class="absolute bottom-0 w-full h-full pointer-events-none"></div>
-        <!-- 網點遮罩效果：越接近底部網點越明顯 -->
-            <div class="absolute bottom-0 w-full h-full opacity-40 mix-blend-multiply" style="background-image: radial-gradient(#465B40 1.5px, transparent 1.5px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, transparent 20%, black 90%); -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 90%);">
-            </div>
-    </div>
+    <!-- 頁尾過渡：改由 hf-components.js 注入的共用「螢幕網屏緩衝帶」處理（原自製網點過渡區塊已移除） -->
 
-    
     <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾 -->
     <div id="hf-footer"></div>
     <!-- 共用元件（由 js/hf-components.js 注入）：手機版 Sticky Footer -->

@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
     
     <script>
         tailwind.config = {
@@ -43,6 +44,8 @@
     </script>
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        /* 頁尾緩衝帶底色：延續 #feedback 區塊的 #F0F5F2 漸層收尾，無縫接到 footer 波浪之下（由 hf-components.js 讀取） */
+        :root { --hf-footer-backdrop: #F0F5F2; }
         h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
         
         .hero-bg-comfort {
@@ -158,77 +161,6 @@
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
 }
-
-        /* ===== 新增：桌面下拉選單樣式 ===== */
-        .nav-dropdown-item {
-            opacity: 0;
-            transform: translateY(-5px);
-            transition: all 0.3s ease-out;
-            position: relative;
-            padding-left: 28px;
-        }
-
-        .nav-item-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translate(-6px, -50%);
-            opacity: 0;
-            color: #C5A670;
-            font-size: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-item-line {
-            position: absolute;
-            left: 4px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: #C5A670;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-dropdown-text {
-            transition: transform 0.2s ease;
-        }
-
-        .nav-dropdown-item:hover .nav-item-icon {
-            transform: translate(0, -50%);
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-item-line {
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-dropdown-text {
-            transform: translateX(2px);
-        }
-        
-        .group:hover .nav-dropdown-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* 每個項目加入微小延遲，創造階梯式動畫 */
-        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
-        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
-        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
-        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
-        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
-
-        /* 手機版子選單動畫 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .submenu-item-fade {
-            animation: fadeInUp 0.4s ease-out forwards;
-            opacity: 0;
-        }
     </style>
 </head>
 <body class="text-text bg-warm relative pb-16 md:pb-0">
@@ -597,14 +529,14 @@
     </section>
 
     <!-- 5. 情感見證 -->
-	<section id="feedback" class="pt-24 pb-28 md:pb-48 bg-gradient-to-b from-white to-[#F0F5F2] via-[#F0F5F2] via-80% relative">
+	<section id="feedback" class="pt-24 pb-64 md:pb-86 bg-gradient-to-b from-white to-[#F0F5F2] via-[#F0F5F2] via-80% relative">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <span class="text-accent font-bold tracking-[0.2em] text-sm block mb-2">Feedback</span>
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 decor-line">家屬真實回饋</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start relative z-30">
                 
                 <div class="bg-white p-8 rounded-3xl rounded-tl-none shadow-sm relative md:mt-4">
                     <div class="text-accent/20 text-6xl absolute -top-6 right-6 font-serif">,,</div>

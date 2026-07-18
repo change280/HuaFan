@@ -8,9 +8,12 @@
     <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
     <script src="js/hf-components.js"></script>
     <title>華梵禮儀｜生前契約 Pre-need Contract - 預約未來的安心</title>
+    <meta name="description" content="華梵生前契約：採用內政部定型化契約，預收費用75%交付銀行信託，為自己與家人預約一份安心。生前契約常見問題與費用說明。">
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
     
     <script>
         tailwind.config = {
@@ -458,79 +461,7 @@
 
         .animate-global-float-up { animation: global-float-up 25s linear infinite; }
         .animate-global-float-up-soft { animation: global-float-up-soft 30s ease-out infinite; }
-        .animate-global-float-up-glow { animation: global-float-up-glow 28s ease-in-out infinite; }
-
-        /* ===== 新增：桌面下拉選單樣式 ===== */
-        .nav-dropdown-item {
-            opacity: 0;
-            transform: translateY(-5px);
-            transition: all 0.3s ease-out;
-            position: relative;
-            padding-left: 28px;
-        }
-
-        .nav-item-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translate(-6px, -50%);
-            opacity: 0;
-            color: #C5A670;
-            font-size: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-item-line {
-            position: absolute;
-            left: 4px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: #C5A670;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-dropdown-text {
-            transition: transform 0.2s ease;
-        }
-
-        .nav-dropdown-item:hover .nav-item-icon {
-            transform: translate(0, -50%);
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-item-line {
-            opacity: 0.9;
-        }
-
-        .nav-dropdown-item:hover .nav-dropdown-text {
-            transform: translateX(2px);
-        }
-        
-        .group:hover .nav-dropdown-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* 每個項目加入微小延遲，創造階梯式動畫 */
-        .group:hover .nav-dropdown-item:nth-child(1) { transition-delay: 0.05s; }
-        .group:hover .nav-dropdown-item:nth-child(2) { transition-delay: 0.1s; }
-        .group:hover .nav-dropdown-item:nth-child(3) { transition-delay: 0.15s; }
-        .group:hover .nav-dropdown-item:nth-child(4) { transition-delay: 0.2s; }
-        .group:hover .nav-dropdown-item:nth-child(5) { transition-delay: 0.25s; }
-
-        /* 手機版子選單動畫 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .submenu-item-fade {
-            animation: fadeInUp 0.4s ease-out forwards;
-            opacity: 0;
-        }
-        
+        .animate-global-float-up-glow { animation: global-float-up-glow 28s ease-in-out infinite; }        
     </style>
 </head>
 <body class="text-text bg-warm relative pb-16 md:pb-0">
@@ -1830,8 +1761,8 @@
 </section>
 
     <!-- 法律資訊與相關連結 Section -->
-    <section class="pt-16 pb-32 relative z-20 bg-gradient-to-b from-transparent via-warm/80 to-[#F7F5F0] overflow-hidden">
-        <div class="container mx-auto px-4">
+    <section class="pt-16 pb-72 relative bg-gradient-to-b from-transparent via-warm/80 to-[#F7F5F0] overflow-hidden">
+        <div class="container mx-auto px-4  relative z-30">
             <div class="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-10 border-l-4 border-accent">
                 <h3 class="text-2xl font-serif font-bold text-primaryDark mb-8">
                     <i class="fa-solid fa-scale-balanced text-accent mr-3"></i>

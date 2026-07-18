@@ -8,11 +8,6 @@
     <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
     <script src="js/hf-components.js"></script>
     <title>華梵禮儀｜真心．真意．安心託付 - 24H 專業生命禮儀</title>
-    <meta name="description" content="華梵禮儀有限公司｜台中市殯葬禮儀服務業評鑑特優等。24小時專業生命禮儀服務、生前契約、環保自然葬、費用透明試算。免費諮詢專線 0800-800-818。">
-    <meta property="og:title" content="華梵禮儀｜真心．真意．安心託付 - 24H 專業生命禮儀">
-    <meta property="og:description" content="台中市殯葬禮儀服務業評鑑特優等。24小時專業生命禮儀服務、生前契約、環保自然葬。免費諮詢 0800-800-818。">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="zh_TW">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,14 +59,7 @@
     </script>
     <style>
         /* 自定義樣式 */
-        html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
-        /* 頁尾緩衝帶底色：延續 #locations 區塊的 #F0F5F2 漸層收尾，無縫接到 footer 波浪之下（由 hf-components.js 讀取） */
-        :root { --hf-footer-backdrop: #F0F5F2; }
         h1, h2, h3, .serif-font { font-family: 'Noto Serif TC', serif; }
         
         .text-shadow-lg {
@@ -629,803 +617,332 @@
             opacity: 0;
             transform: translateY(10px);
         }
-                /* ======================================================================
-                     華梵禮儀｜方案價格展示 v2
-                     視覺重點：幸福方案（熱門推薦）＋尊崇方案（銷售冠軍）
-                     其餘方案僅作價格帶與選擇範圍提示，降低對比、置於景深後方。
-                     ====================================================================== */
-                .hf-price-v2 {
-                    --hf-green: #294330;
-                    --hf-green-soft: #425f49;
-                    --hf-copy: #4e586b;
-                    --hf-gold: #c79548;
-                    --hf-gold-light: #efc56f;
-                    --hf-copper: #b97936;
-                    --hf-paper: #fffefb;
-                    --hf-line: rgba(183, 126, 65, .25);
-                    --hf-calc-scale: .92;
-                    position: relative;
-                    z-index: 20;
-                    isolation: isolate;
-                    overflow: hidden;
-                    min-height: 780px;
-                    padding: clamp(5.25rem, 7vw, 7.5rem) 0 clamp(4.5rem, 6vw, 6.5rem);
-                    background: transparent;
-                }
-                .hf-price-v2::before,
-                .hf-price-v2::after {
-                    content: "";
-                    position: absolute;
-                    z-index: -2;
-                    pointer-events: none;
-                    border: 1px solid rgba(197, 166, 112, .09);
-                    border-radius: 50%;
-                }
-                .hf-price-v2::before {
-                    width: 54rem;
-                    height: 54rem;
-                    left: 17%;
-                    top: -35rem;
-                }
-                .hf-price-v2::after {
-                    width: 46rem;
-                    height: 46rem;
-                    right: -18rem;
-                    bottom: -31rem;
-                }
-                .hf-price-v2__light {
-                    position: absolute;
-                    inset: 0;
-                    z-index: -1;
-                    pointer-events: none;
-                    background:
-                        linear-gradient(113deg, transparent 0 34%, rgba(255,255,255,.68) 42%, transparent 50%),
-                        radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.72), transparent 55%);
-                    opacity: .72;
-                }
-                .hf-price-v2__inner {
-                    width: min(94%, 1740px);
-                    min-height: 630px;
-                    margin: 0 auto;
-                    display: grid;
-                    grid-template-columns: minmax(430px, 34%) minmax(0, 66%);
-                    gap: clamp(2.5rem, 4vw, 5rem);
-                    align-items: center;
-                    transform: scale(var(--hf-calc-scale));
-                    transform-origin: top center;
-                }
-
-                /* 左側文案 ----------------------------------------------------------- */
-                .hf-price-v2__copy {
-                    position: relative;
-                    z-index: 30;
-                    max-width: 34rem;
-                    padding-left: clamp(.5rem, 1.8vw, 2rem);
-                }
-                .hf-price-v2__eyebrow {
-                    display: block;
-                    margin-bottom: 1.8rem;
-                    color: #a97631;
-                    font-size: .82rem;
-                    font-weight: 900;
-                    letter-spacing: .34em;
-                    text-transform: uppercase;
-                }
-                .hf-price-v2__title {
-                    margin: 0;
-                    color: var(--hf-green);
-                    font-family: "Noto Serif TC", serif;
-                    font-size: clamp(3.7rem, 5.15vw, 5.65rem);
-                    font-weight: 700;
-                    line-height: 1.05;
-                    letter-spacing: -.045em;
-                }
-                .hf-price-v2__lead {
-                    max-width: 31rem;
-                    margin: 2rem 0 2.2rem;
-                    padding-left: 1.35rem;
-                    border-left: 2px solid rgba(183, 126, 65, .72);
-                    color: var(--hf-copy);
-                    font-size: clamp(1rem, 1.23vw, 1.2rem);
-                    font-weight: 500;
-                    line-height: 1.95;
-                }
-                .hf-price-v2__benefits {
-                    display: grid;
-                    gap: 1.15rem;
-                    max-width: 31rem;
-                    margin: 0;
-                    padding: 0;
-                    list-style: none;
-                }
-                .hf-price-v2__benefits li {
-                    display: grid;
-                    grid-template-columns: 2.25rem minmax(0, 1fr);
-                    align-items: center;
-                    gap: .8rem;
-                    color: #293442;
-                    font-size: clamp(.96rem, 1.08vw, 1.08rem);
-                    font-weight: 800;
-                    line-height: 1.5;
-                }
-                .hf-price-v2__benefits span:first-child {
-                    width: 2.25rem;
-                    height: 2.25rem;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    border-radius: 999px;
-                    color: var(--hf-green);
-                    background: rgba(41, 67, 48, .07);
-                    box-shadow: inset 0 0 0 1px rgba(41, 67, 48, .04);
-                }
-                .hf-price-v2__more {
-                    margin: 1.55rem 0 0;
-                    color: #7b7f83;
-                    font-size: .82rem;
-                    line-height: 1.75;
-                }
-                .hf-price-v2__more strong { color: var(--hf-green-soft); }
-
-                /* 右側卡片舞台 ------------------------------------------------------- */
-                .hf-price-v2__stage {
-                    position: relative;
-                    z-index: 5;
-                    min-width: 0;
-                    min-height: 620px;
-                    align-self: stretch;
-                }
-                .hf-price-card {
-                    position: absolute;
-                    bottom: 2.15rem;
-                    box-sizing: border-box;
-                    display: flex;
-                    flex-direction: column;
-                    overflow: visible;
-                    border: 1px solid rgba(183, 126, 65, .27);
-                    border-radius: 1.15rem;
-                    background:
-                        linear-gradient(150deg, rgba(255,255,255,.98), rgba(255,254,250,.92)),
-                        var(--hf-paper);
-                    box-shadow:
-                        0 24px 66px -44px rgba(75, 60, 42, .44),
-                        inset 0 1px 0 rgba(255,255,255,.95);
-                    color: #435066;
-                }
-                .hf-price-card::before {
-                    content: "";
-                    position: absolute;
-                    top: -1px;
-                    left: .55rem;
-                    right: .55rem;
-                    height: .24rem;
-                    border-radius: 999px 999px 0 0;
-                    background: linear-gradient(90deg, #b4763c, #e5b558 52%, #b4763c);
-                }
-                .hf-price-card__level {
-                    display: inline-flex;
-                    align-items: center;
-                    width: fit-content;
-                    min-height: 1.8rem;
-                    padding: .3rem .72rem;
-                    border-radius: 999px;
-                    background: #f4f0ea;
-                    color: #756757;
-                    font-size: .72rem;
-                    font-weight: 800;
-                    letter-spacing: .04em;
-                    white-space: nowrap;
-                }
-                .hf-price-card__title {
-                    margin: 1.1rem 0 0;
-                    color: var(--hf-green);
-                    font-family: "Noto Serif TC", serif;
-                    font-weight: 700;
-                    line-height: 1.2;
-                    letter-spacing: .04em;
-                }
-                .hf-price-card__price {
-                    margin: .75rem 0 0;
-                    color: var(--hf-copper);
-                    font-family: "Noto Sans TC", sans-serif;
-                    font-weight: 900;
-                    line-height: 1;
-                    letter-spacing: -.035em;
-                    white-space: nowrap;
-                }
-                .hf-price-card__line {
-                    width: 100%;
-                    height: 1px;
-                    margin: 1.25rem 0;
-                    background: linear-gradient(90deg, rgba(197, 166, 112, .55), rgba(197, 166, 112, .08));
-                }
-                .hf-price-card__list {
-                    display: grid;
-                    gap: .86rem;
-                    margin: 0 0 1.35rem;
-                    padding: 0;
-                    list-style: none;
-                    line-height: 1.45;
-                }
-                .hf-price-card__list li {
-                    display: grid;
-                    grid-template-columns: 1rem minmax(0, 1fr);
-                    gap: .65rem;
-                    align-items: start;
-                }
-                .hf-price-card__list i {
-                    margin-top: .23rem;
-                    color: #bd813d;
-                    font-size: .76rem;
-                }
-                .hf-price-card__cta {
-                    width: 100%;
-                    min-height: 3.35rem;
-                    margin-top: auto;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: .58rem;
-                    border: 2px solid #b77935;
-                    border-radius: 999px;
-                    color: #a56c2f;
-                    background: rgba(255,255,255,.74);
-                    font-size: 1rem;
-                    font-weight: 900;
-                    text-decoration: none;
-                    transition: transform .28s ease, box-shadow .28s ease, color .28s ease, background .28s ease;
-                }
-                .hf-price-card__cta:hover,
-                .hf-price-card__cta:focus-visible {
-                    color: #fff;
-                    background: linear-gradient(135deg, #c18a45, #a9692f);
-                    box-shadow: 0 12px 28px -16px rgba(117, 70, 24, .8);
-                    transform: translateY(-2px);
-                    outline: none;
-                }
-
-                /* 幸福方案 */
-                .hf-price-card--popular {
-                    left: 20%;
-                    z-index: 20;
-                    width: clamp(285px, 25.5%, 330px);
-                    min-height: 520px;
-                    padding: 2rem 1.7rem 1.55rem;
-                }
-                .hf-price-card--popular .hf-price-card__title { font-size: clamp(2rem, 2.35vw, 2.6rem); }
-                .hf-price-card--popular .hf-price-card__price { font-size: clamp(2.5rem, 3.05vw, 3.35rem); }
-                .hf-price-card--popular .hf-price-card__list { font-size: .98rem; }
-
-                /* 尊崇方案 */
-                .hf-price-card--champion {
-                    left: 53%;
-                    z-index: 30;
-                    width: clamp(350px, 32.5%, 405px);
-                    min-height: 575px;
-                    padding: 2.35rem 2.15rem 1.65rem;
-                    bottom: 1.55rem;
-                    border-width: 2px;
-                    border-color: rgba(192, 128, 54, .58);
-                    box-shadow:
-                        0 34px 76px -42px rgba(105, 65, 25, .5),
-                        0 12px 30px -26px rgba(80, 65, 45, .3),
-                        inset 0 1px 0 rgba(255,255,255,.98);
-                }
-                .hf-price-card--champion .hf-price-card__title { font-size: clamp(2.35rem, 2.75vw, 3.05rem); }
-                .hf-price-card--champion .hf-price-card__price { font-size: clamp(3rem, 3.7vw, 4rem); }
-                .hf-price-card--champion .hf-price-card__list { font-size: 1rem; }
-                .hf-price-card--champion .hf-price-card__cta {
-                    border-color: #c68d41;
-                    color: #fff;
-                    background:
-                        linear-gradient(180deg, rgba(255,255,255,.34), transparent 35%),
-                        linear-gradient(135deg, #e1ad58, #b87430 72%);
-                    box-shadow:
-                        inset 0 1px 0 rgba(255,255,255,.75),
-                        0 12px 24px -15px rgba(129, 78, 26, .7);
-                }
-                .hf-price-card--champion .hf-price-card__cta:hover,
-                .hf-price-card--champion .hf-price-card__cta:focus-visible {
-                    background: linear-gradient(135deg, #d79c46, #a96026);
-                }
-
-                /* 立體標章 */
-                .hf-price-badge {
-                    position: absolute;
-                    z-index: 4;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: .5rem;
-                    color: #fff;
-                    font-weight: 900;
-                    letter-spacing: .04em;
-                    background:
-                        linear-gradient(180deg, rgba(255,255,255,.33), transparent 34%),
-                        linear-gradient(145deg, #e5ae53 0%, #bd772e 70%, #9f5c22 100%);
-                    border: 1px solid rgba(255, 221, 152, .85);
-                    box-shadow:
-                        inset 0 1px 0 rgba(255,255,255,.65),
-                        0 12px 24px -13px rgba(124, 73, 20, .8),
-                        0 2px 0 rgba(134, 77, 19, .55);
-                }
-                .hf-price-badge--popular {
-                    top: 1rem;
-                    right: 1rem;
-                    min-height: 2.55rem;
-                    padding: .55rem 1rem;
-                    border-radius: 999px;
-                    font-size: .92rem;
-                }
-                .hf-price-badge--champion {
-                    top: -.75rem;
-                    right: 1.1rem;
-                    width: 10.4rem;
-                    min-height: 6.3rem;
-                    flex-direction: column;
-                    border-radius: 0 0 1.45rem 1.45rem;
-                    font-size: 1.2rem;
-                }
-                .hf-price-badge--champion i { font-size: 1.35rem; color: #fff3ce; }
-
-                /* 景深次要卡 */
-                .hf-price-card--ghost {
-                    z-index: 2;
-                    width: 185px;
-                    min-height: 325px;
-                    padding: 1.35rem 1.05rem 1rem;
-                    opacity: .13;
-                    filter: saturate(.45) contrast(.93);
-                    pointer-events: none;
-                    box-shadow: 0 16px 42px -36px rgba(72, 55, 39, .25);
-                }
-                .hf-price-card--ghost .hf-price-card__level { font-size: .6rem; padding: .22rem .5rem; }
-                .hf-price-card--ghost .hf-price-card__title { margin-top: .8rem; font-size: 1.1rem; }
-                .hf-price-card--ghost .hf-price-card__price { font-size: 1.35rem; }
-                .hf-price-card--ghost .hf-price-card__line { margin: .9rem 0; }
-                .hf-price-card--ghost .hf-price-card__list { gap: .48rem; font-size: .62rem; }
-                .hf-price-card--ghost .hf-price-card__list li { grid-template-columns: .7rem 1fr; gap: .35rem; }
-                .hf-price-card--ghost .hf-price-card__cta { min-height: 2rem; border-width: 1px; font-size: .62rem; }
-                .hf-price-card--ghost-1 { left: -2%; bottom: 1rem; transform: scale(.88); opacity: .085; }
-                .hf-price-card--ghost-2 { left: 10%; bottom: 1.55rem; transform: scale(.96); opacity: .16; }
-                .hf-price-card--ghost-3 { left: 86%; bottom: 1.45rem; transform: scale(.96); opacity: .15; }
-                .hf-price-card--ghost-4 { left: 99%; bottom: .95rem; transform: scale(.88); opacity: .09; }
-
-                /* 桌面小互動 */
-                .hf-price-card--popular,
-                .hf-price-card--champion {
-                    transition: transform .35s ease, box-shadow .35s ease;
-                }
-                .hf-price-card--popular:hover { transform: translateY(-.45rem); }
-                .hf-price-card--champion:hover { transform: translateY(-.55rem); }
-
-                /* 響應式 ------------------------------------------------------------- */
-                @media (max-width: 1580px) {
-                    .hf-price-v2__inner { width: min(93%, 1460px); grid-template-columns: minmax(390px, 36%) minmax(0, 64%); gap: 2.75rem; }
-                    .hf-price-card--ghost-1,
-                    .hf-price-card--ghost-4 { display: none; }
-                    .hf-price-card--popular { left: 4%; width: 38%; }
-                    .hf-price-card--champion { left: 46%; width: 47%; }
-                    .hf-price-card--ghost-2 { left: -8%; }
-                    .hf-price-card--ghost-3 { left: 88%; }
-                }
-                @media (max-width: 1260px) {
-                    .hf-price-v2 { --hf-calc-scale: .96; }
-                    .hf-price-v2 { min-height: 0; }
-                    .hf-price-v2__inner {
-                        width: min(92%, 1040px);
-                        min-height: 0;
-                        display: block;
-                    }
-                    .hf-price-v2__copy { max-width: 760px; padding-left: 0; }
-                    .hf-price-v2__title { font-size: clamp(3.6rem, 8vw, 5.2rem); }
-                    .hf-price-v2__lead { max-width: 680px; }
-                    .hf-price-v2__stage {
-                        min-height: 0;
-                        margin-top: 4.25rem;
-                        display: grid;
-                        grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-                        gap: 1.5rem;
-                        align-items: stretch;
-                    }
-                    .hf-price-card,
-                    .hf-price-card--popular,
-                    .hf-price-card--champion {
-                        position: relative;
-                        inset: auto;
-                        width: 100%;
-                        min-height: 525px;
-                        transform: none;
-                    }
-                    .hf-price-card--champion { min-height: 560px; order: -1; }
-                    .hf-price-card--ghost { display: none; }
-                }
-                @media (max-width: 760px) {
-                    .hf-price-v2 { --hf-calc-scale: 1; }
-                    .hf-price-v2 { padding: 4.75rem 0 4.25rem; }
-                    .hf-price-v2__inner { width: min(90%, 560px); }
-                    .hf-price-v2__eyebrow { margin-bottom: 1.35rem; font-size: .72rem; }
-                    .hf-price-v2__title { font-size: clamp(3rem, 14vw, 4.35rem); }
-                    .hf-price-v2__lead { margin-top: 1.6rem; padding-left: 1rem; font-size: .98rem; }
-                    .hf-price-v2__benefits { gap: .95rem; }
-                    .hf-price-v2__benefits li { font-size: .94rem; }
-                    .hf-price-v2__stage { grid-template-columns: 1fr; gap: 1.2rem; margin-top: 3rem; }
-                    .hf-price-card--popular,
-                    .hf-price-card--champion {
-                        min-height: 0;
-                        padding: 1.75rem 1.4rem 1.45rem;
-                    }
-                    .hf-price-card--champion { order: -1; padding-top: 2.15rem; }
-                    .hf-price-badge--champion { width: 8.8rem; min-height: 5.35rem; font-size: 1.02rem; }
-                    .hf-price-card--popular .hf-price-card__title,
-                    .hf-price-card--champion .hf-price-card__title { font-size: 2rem; }
-                    .hf-price-card--popular .hf-price-card__price,
-                    .hf-price-card--champion .hf-price-card__price { font-size: clamp(2.45rem, 12vw, 3.2rem); }
-                }
-                @media (prefers-reduced-motion: reduce) {
-                    .hf-price-card--popular,
-                    .hf-price-card--champion,
-                    .hf-price-card__cta { transition: none !important; }
-                    .hf-price-card--popular:hover,
-                    .hf-price-card--champion:hover,
-                    .hf-price-card__cta:hover { transform: none !important; }
-                }
-
-                /* ======================================================================
-                   華梵禮儀｜影音內容區（透明背景版）
-                   位置：方案價格區下方、家屬評論區上方
-                   ====================================================================== */
-                .hf-video-showcase {
-                    --hf-video-green: #294330;
-                    --hf-video-green-soft: #49614e;
-                    --hf-video-gold: #c89a50;
-                    --hf-video-paper: #fffefb;
-                    position: relative;
-                    z-index: 20;
-                    isolation: isolate;
-                    overflow: visible;
-                    padding: clamp(5.5rem, 8vw, 8.5rem) 0;
-                    background: transparent;
-                }
-
-                /* 連場過渡：與上下段落的柔性接橋
-                   上交界（評論→影音）情緒延續：M03 長距離漸層溶接 + M04 靜態光廊
-                   下交界（影音→最新消息）資訊轉換：M02 背景色繼承 + M25 水印母題
-                   所有裝飾層 aria-hidden、靜態、置於內容之後，不遮擋 CTA。 */
-                .hf-video-showcase__glow {
-                    position: absolute;
-                    left: 50%;
-                    top: -10%;
-                    z-index: -3;
-                    width: min(82vw, 1220px);
-                    height: 128%;
-                    transform: translateX(-50%);
-                    pointer-events: none;
-                    background:
-                        radial-gradient(ellipse 58% 44% at 50% 20%, rgba(255,255,255,.65), transparent 62%),
-                        radial-gradient(ellipse 44% 40% at 50% 84%, rgba(200,154,80,.10), transparent 64%);
-                    opacity: .85;
-                }
-                .hf-video-showcase__bridge {
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    z-index: -2;
-                    pointer-events: none;
-                }
-                .hf-video-showcase__bridge--top {
-                    top: 0;
-                    height: clamp(150px, 20vw, 320px);
-                    background: linear-gradient(to bottom,
-                        rgba(255,255,255,.72) 0%,
-                        rgba(255,255,255,.32) 42%,
-                        rgba(255,255,255,0) 100%);
-                }
-                .hf-video-showcase__bridge--bottom {
-                    bottom: 0;
-                    height: clamp(160px, 22vw, 360px);
-                    background: linear-gradient(to top,
-                        rgba(235,232,224,.85) 0%,
-                        rgba(235,232,224,.38) 44%,
-                        rgba(235,232,224,0) 100%);
-                }
-                .hf-video-showcase__watermark {
-                    position: absolute;
-                    left: 50%;
-                    bottom: clamp(-2rem, -1.5vw, -.5rem);
-                    z-index: -2;
-                    margin: 0;
-                    transform: translateX(-50%);
-                    color: rgba(41,67,48,.045);
-                    font-family: "Noto Serif TC", serif;
-                    font-size: clamp(5.5rem, 19vw, 19rem);
-                    font-weight: 700;
-                    line-height: .8;
-                    letter-spacing: -.045em;
-                    white-space: nowrap;
-                    pointer-events: none;
-                    user-select: none;
-                }
-                .hf-video-showcase__inner {
-                    position: relative;
-                    z-index: 1;
-                    width: min(92%, 1500px);
-                    margin: 0 auto;
-                }
-                .hf-video-showcase__head {
-                    display: flex;
-                    align-items: end;
-                    justify-content: space-between;
-                    gap: 3rem;
-                    margin-bottom: clamp(2.1rem, 4vw, 3.4rem);
-                }
-                .hf-video-showcase__heading {
-                    max-width: 53rem;
-                }
-                .hf-video-showcase__eyebrow {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: .75rem;
-                    margin-bottom: 1rem;
-                    color: #a97631;
-                    font-size: .78rem;
-                    font-weight: 900;
-                    letter-spacing: .32em;
-                    text-transform: uppercase;
-                }
-                .hf-video-showcase__eyebrow::before {
-                    content: "";
-                    width: 2.5rem;
-                    height: 1px;
-                    background: var(--hf-video-gold);
-                }
-                .hf-video-showcase__title {
-                    margin: 0;
-                    color: var(--hf-video-green);
-                    font-family: "Noto Serif TC", serif;
-                    font-size: clamp(2.35rem, 4vw, 4.3rem);
-                    font-weight: 700;
-                    line-height: 1.16;
-                    letter-spacing: -.035em;
-                }
-                .hf-video-showcase__lead {
-                    max-width: 45rem;
-                    margin: 1rem 0 0;
-                    color: #687064;
-                    font-size: clamp(.98rem, 1.15vw, 1.1rem);
-                    line-height: 1.9;
-                }
-                .hf-video-showcase__all {
-                    display: inline-flex;
-                    flex: 0 0 auto;
-                    align-items: center;
-                    justify-content: center;
-                    gap: .65rem;
-                    min-height: 3.25rem;
-                    padding: .75rem 1.25rem;
-                    border: 1px solid rgba(41,67,48,.18);
-                    border-radius: 999px;
-                    color: var(--hf-video-green);
-                    background: rgba(255,255,255,.66);
-                    font-size: .9rem;
-                    font-weight: 800;
-                    text-decoration: none;
-                    box-shadow: 0 14px 34px -28px rgba(41,67,48,.6);
-                    transition: transform .25s ease, color .25s ease, border-color .25s ease, background .25s ease;
-                }
-                .hf-video-showcase__all:hover {
-                    transform: translateY(-2px);
-                    color: #fff;
-                    border-color: var(--hf-video-green);
-                    background: var(--hf-video-green);
-                }
-                .hf-video-showcase__grid {
-                    display: grid;
-                    grid-template-columns: minmax(0, 1.56fr) minmax(320px, .74fr);
-                    gap: clamp(1.35rem, 2.5vw, 2.2rem);
-                    align-items: stretch;
-                }
-                .hf-video-card {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    overflow: hidden;
-                    height: 100%;
-                    border: 1px solid rgba(41,67,48,.1);
-                    border-radius: clamp(1.35rem, 2.4vw, 2rem);
-                    background: rgba(255,254,251,.92);
-                    box-shadow:
-                        0 28px 75px -52px rgba(41,67,48,.55),
-                        inset 0 1px 0 rgba(255,255,255,.9);
-                }
-                .hf-video-card--youtube {
-                    align-self: stretch;
-                    justify-content: center;
-                    padding: clamp(.65rem, 1vw, .9rem);
-                }
-                .hf-video-card--youtube::after {
-                    content: "";
-                    position: absolute;
-                    inset: .65rem;
-                    z-index: 3;
-                    pointer-events: none;
-                    border: 1px solid rgba(255,255,255,.16);
-                    border-radius: calc(clamp(1.35rem, 2.4vw, 2rem) - .55rem);
-                }
-                .hf-video-card__media {
-                    position: relative;
-                    overflow: hidden;
-                    width: 100%;
-                    margin: auto 0;
-                    aspect-ratio: 16 / 9;
-                    border-radius: calc(clamp(1.35rem, 2.4vw, 2rem) - .55rem);
-                    background: #142118;
-                }
-                .hf-video-card__media iframe {
-                    position: absolute;
-                    inset: 0;
-                    width: 100%;
-                    height: 100%;
-                    border: 0;
-                }
-                .hf-video-card__label {
-                    position: absolute;
-                    top: 1.55rem;
-                    left: 1.55rem;
-                    z-index: 4;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: .55rem;
-                    padding: .55rem .85rem;
-                    border: 1px solid rgba(255,255,255,.3);
-                    border-radius: 999px;
-                    color: #fff;
-                    background: rgba(21,33,24,.66);
-                    backdrop-filter: blur(10px);
-                    -webkit-backdrop-filter: blur(10px);
-                    font-size: .78rem;
-                    font-weight: 800;
-                    letter-spacing: .08em;
-                    box-shadow: 0 10px 26px rgba(0,0,0,.13);
-                }
-                .hf-video-card__label i {
-                    color: #ff5d62;
-                }
-                .hf-video-card--tiktok {
-                    display: flex;
-                    min-width: 0;
-                    flex-direction: column;
-                    padding: clamp(1.15rem, 2vw, 1.65rem);
-                    align-self: start;
-                }
-                .hf-video-card__topline {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 1rem;
-                    margin-bottom: 1rem;
-                }
-                .hf-video-card__platform {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: .65rem;
-                    color: var(--hf-video-green);
-                    font-size: .85rem;
-                    font-weight: 900;
-                    letter-spacing: .08em;
-                }
-                .hf-video-card__platform-icon {
-                    width: 2.35rem;
-                    height: 2.35rem;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    border-radius: .85rem;
-                    color: #fff;
-                    background: #151515;
-                    box-shadow: 0 10px 20px -14px rgba(0,0,0,.7);
-                }
-                .hf-video-card__profile-link {
-                    color: #8c7653;
-                    font-size: .78rem;
-                    font-weight: 800;
-                    text-decoration: none;
-                }
-                .hf-video-card__profile-link:hover {
-                    color: var(--hf-video-green);
-                }
-                .hf-video-card__tiktok-wrap {
-                    position: relative;
-                    min-height: 0;
-                    overflow: visible;
-                    width: 100%;
-                    border-radius: 1.25rem;
-                    background: transparent;
-                }
-                .hf-video-card__tiktok-wrap .tiktok-embed {
-                    display: block !important;
-                    width: 100% !important;
-                    max-width: 720px !important;
-                    min-width: 0 !important;
-                    margin: 0 auto !important;
-                }
-                .hf-video-card__tiktok-wrap iframe {
-                    display: block !important;
-                    width: 100% !important;
-                    max-width: 100% !important;
-                    margin: 0 !important;
-                    border: 0 !important;
-                }
-                .hf-video-card__tiktok-fallback {
-                    display: grid;
-                    min-height: 12rem;
-                    place-items: center;
-                    padding: 2rem;
-                    border: 1px solid rgba(41,67,48,.08);
-                    border-radius: 1.25rem;
-                    background:
-                        radial-gradient(circle at 18% 14%, rgba(200,154,80,.16), transparent 34%),
-                        linear-gradient(145deg, #faf7ef 0%, #fffefb 100%);
-                    text-align: center;
-                }
-                .hf-video-card__tiktok-fallback a {
-                    color: var(--hf-video-green);
-                    font-weight: 800;
-                    text-decoration: none;
-                }
-                .hf-video-card__tiktok-fallback a:hover { text-decoration: underline; }
-                .hf-video-showcase__note {
-                    display: flex;
-                    align-items: center;
-                    gap: .65rem;
-                    margin: 1.45rem 0 0;
-                    color: #85877f;
-                    font-size: .78rem;
-                    line-height: 1.6;
-                }
-                .hf-video-showcase__note i {
-                    color: var(--hf-video-gold);
-                }
-                @media (max-width: 1050px) {
-                    .hf-video-showcase__head {
-                        align-items: flex-start;
-                    }
-                    .hf-video-showcase__grid {
-                        grid-template-columns: 1fr;
-                    }
-                    .hf-video-card--youtube,
-                    .hf-video-card--tiktok {
-                        max-width: 46rem;
-                        width: 100%;
-                        margin: 0 auto;
-                    }
-                }
-                @media (max-width: 720px) {
-                    .hf-video-showcase {
-                        padding: 4rem 0;
-                    }
-                    .hf-video-showcase__inner {
-                        width: min(91%, 1500px);
-                    }
-                    .hf-video-showcase__head {
-                        display: block;
-                    }
-                    .hf-video-showcase__all {
-                        margin-top: 1.35rem;
-                    }
-                    .hf-video-card__label {
-                        top: 1.05rem;
-                        left: 1.05rem;
-                        padding: .45rem .7rem;
-                        font-size: .7rem;
-                    }
-                    .hf-video-card--youtube {
-                        padding: .45rem;
-                    }
-                    .hf-video-card--youtube::after {
-                        inset: .45rem;
-                    }
-                }
+        /* ================================================================
+           華梵方案價格｜景深式方案展示 (Pricing Showcase)
+           主力：尊崇方案 NT$238,000（销售冒軍）
+           次主力：幸福方案 NT$188,000（熱門推腐）
+           ================================================================ */
+        .hf-pricing-showcase {
+            --hf-price-green: #465B40;
+            --hf-price-green-dark: #2F3E2B;
+            --hf-price-gold: #C5A670;
+            --hf-price-copper: #A77E50;
+            --hf-price-line: rgba(197, 166, 112, 0.2);
+            position: relative;
+            z-index: 20;
+            isolation: isolate;
+            overflow: hidden;
+            /* padding はTailwindのpt-36/pb-24に任せる */
+            /* background はグローバル背景を透過させる */
+            background: transparent;
+        }
+        .hf-pricing-showcase::before,
+        .hf-pricing-showcase::after,
+        .hf-pricing-glow { display: none; }
+        .hf-pricing-shell {
+            width: min(96%, 1600px);
+            min-height: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(330px, 31%) minmax(0, 69%);
+            align-items: center;
+            position: relative;
+        }
+        .hf-pricing-copy {
+            position: relative;
+            z-index: 20;
+            padding-left: clamp(1rem, 3vw, 3.5rem);
+            padding-right: 1rem;
+        }
+        .hf-pricing-kicker {
+            display: inline-block;
+            margin-bottom: 1.25rem;
+            color: var(--hf-price-gold);
+            font-size: .82rem;
+            font-weight: 800;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+        }
+        .hf-pricing-copy h2 {
+            margin: 0 0 1.65rem;
+            color: var(--hf-price-green-dark);
+            font-family: "Noto Serif TC", serif;
+            font-size: clamp(3.1rem, 4.35vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+        }
+        .hf-pricing-lead {
+            max-width: 34rem;
+            margin: 0 0 2.2rem;
+            padding-left: 1.25rem;
+            border-left: 2px solid var(--hf-price-gold);
+            color: #6B7280;
+            font-size: clamp(1rem, 1.25vw, 1.18rem);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+        .hf-pricing-benefits {
+            display: grid;
+            gap: 1.15rem;
+            max-width: 35rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .hf-pricing-benefits li {
+            display: grid;
+            grid-template-columns: 2rem 1fr;
+            align-items: center;
+            gap: .8rem;
+            color: #4B5563;
+            font-size: clamp(.98rem, 1.1vw, 1.1rem);
+            font-weight: 500;
+            line-height: 1.55;
+        }
+        .hf-pricing-benefit-icon {
+            width: 2rem;
+            height: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            color: var(--hf-price-green);
+            background: rgba(70, 91, 64, .05);
+        }
+        .hf-pricing-deck {
+            position: relative;
+            z-index: 5;
+            min-width: 0;
+            min-height: 580px;
+            margin-left: clamp(-10rem, -8vw, -5rem);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: visible;
+            perspective: 1500px;
+        }
+        .hf-plan-card {
+            position: relative;
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--hf-price-line);
+            border-radius: 1.5rem;
+            background: #FFFFFF;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.05);
+            color: #4B5563;
+            transition: transform .4s ease, box-shadow .4s ease;
+        }
+        .hf-plan-card::before, .hf-plan-card::after { display: none; }
+        .hf-plan-card > * { position: relative; z-index: 2; }
+        .hf-plan-card--featured {
+            width: clamp(245px, 17vw, 285px);
+            min-height: 410px;
+            padding: 2rem 1.85rem 1.7rem;
+            z-index: 8;
+        }
+        .hf-plan-card--champion {
+            width: clamp(285px, 19vw, 330px);
+            min-height: 455px;
+            padding: 2.25rem 2rem 1.8rem;
+            margin-left: 1.35rem;
+            z-index: 10;
+            transform: translateY(-1rem);
+            border: 1px solid var(--hf-price-gold);
+            box-shadow: 0 20px 40px -10px rgba(197, 166, 112, 0.15);
+        }
+        .hf-plan-card--featured:hover { transform: translateY(-0.5rem); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); }
+        .hf-plan-card--champion:hover { transform: translateY(-1.5rem); box-shadow: 0 25px 50px -10px rgba(197,166,112,0.25); }
+        .hf-plan-card--ghost {
+            width: 188px;
+            min-height: 315px;
+            padding: 1.45rem 1.15rem 1.2rem;
+            opacity: 0.3;
+            background: rgba(255,255,255,0.5);
+            border-color: rgba(197,166,112,0.1);
+            box-shadow: none;
+            pointer-events: none;
+        }
+        .hf-plan-card--ghost .hf-plan-title { font-size: 1.1rem; }
+        .hf-plan-card--ghost .hf-plan-price { font-size: 1.45rem; }
+        .hf-plan-card--ghost .hf-plan-features { gap: .55rem; font-size: .7rem; }
+        .hf-plan-card--ghost .hf-plan-button { font-size: .7rem; min-height: 2rem; border-color: #E5E7EB; color: #9CA3AF; }
+        .hf-plan-card--ghost-left-1  { z-index: 1; margin-right: -4.55rem; transform: translateY(2.55rem) scale(.82) rotateY(8deg); }
+        .hf-plan-card--ghost-left-2  { z-index: 3; margin-right: -1.65rem; transform: translateY(1.7rem)  scale(.88) rotateY(5deg); }
+        .hf-plan-card--ghost-right-1 { z-index: 4; margin-left: .2rem;    transform: translateY(2rem)   scale(.88) rotateY(-5deg); }
+        .hf-plan-card--ghost-right-2 { z-index: 2; margin-left: -4.5rem;  transform: translateY(3rem)   scale(.8)  rotateY(-8deg); }
+        .hf-plan-topline {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: .75rem;
+            min-height: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .hf-plan-level {
+            display: inline-flex;
+            align-items: center;
+            min-height: 1.8rem;
+            padding: .3rem .78rem;
+            border-radius: 999px;
+            background: #F3F4F6;
+            color: #6B7280;
+            font-size: .74rem;
+            font-weight: 600;
+            letter-spacing: .05em;
+            white-space: nowrap;
+        }
+        .hf-plan-ribbon {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            min-height: 2rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            background: var(--hf-price-copper);
+            color: #fff;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            box-shadow: none;
+        }
+        .hf-plan-ribbon--popular {
+            border-radius: 999px;
+            background: var(--hf-price-gold);
+        }
+        .hf-plan-title {
+            margin: 0;
+            color: var(--hf-price-green-dark);
+            font-family: "Noto Serif TC", serif;
+            font-size: clamp(1.85rem, 2.25vw, 2.55rem);
+            font-weight: 700;
+            letter-spacing: .02em;
+        }
+        .hf-plan-price {
+            margin-top: 0.5rem;
+            color: var(--hf-price-copper);
+            font-family: "Noto Sans TC", sans-serif;
+            font-size: clamp(2rem, 2.55vw, 3rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -.02em;
+            white-space: nowrap;
+        }
+        .hf-plan-divider {
+            width: 100%;
+            height: 1px;
+            margin: 1.25rem 0;
+            background: #F3F4F6;
+        }
+        .hf-plan-features {
+            display: grid;
+            gap: .86rem;
+            margin: 0 0 1.5rem;
+            padding: 0;
+            list-style: none;
+            font-size: .92rem;
+            line-height: 1.45;
+        }
+        .hf-plan-features li {
+            display: grid;
+            grid-template-columns: 1rem 1fr;
+            align-items: start;
+            gap: .65rem;
+        }
+        .hf-plan-features i {
+            margin-top: .2rem;
+            color: var(--hf-price-gold);
+            font-size: .75rem;
+        }
+        .hf-plan-button {
+            width: 100%;
+            min-height: 3rem;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .55rem;
+            border: 1px solid var(--hf-price-gold);
+            border-radius: 999px;
+            color: var(--hf-price-copper);
+            background: transparent;
+            font-weight: 600;
+            transition: all .3s ease;
+        }
+        .hf-plan-button:hover,
+        .hf-plan-button:focus-visible {
+            color: #fff;
+            background: var(--hf-price-gold);
+            outline: none;
+        }
+        .hf-plan-card--champion .hf-plan-button {
+            background: var(--hf-price-gold);
+            color: #fff;
+        }
+        .hf-plan-card--champion .hf-plan-button:hover {
+            background: var(--hf-price-copper);
+            border-color: var(--hf-price-copper);
+        }
+        @media (max-width: 1450px) {
+            .hf-pricing-shell { width: min(97%, 1450px); grid-template-columns: minmax(315px, 34%) minmax(0, 66%); }
+            .hf-pricing-deck { margin-left: -8.5rem; transform: scale(.92); transform-origin: center right; }
+        }
+        @media (max-width: 1220px) {
+            .hf-pricing-shell { grid-template-columns: minmax(310px, 38%) minmax(0, 62%); }
+            .hf-pricing-deck { margin-left: -5rem; transform: scale(.88); }
+            .hf-plan-card--ghost-left-1,
+            .hf-plan-card--ghost-right-2 { display: none; }
+        }
+        @media (max-width: 1023px) {
+            .hf-pricing-showcase { padding: 6rem 0; }
+            .hf-pricing-shell { width: min(92%, 920px); min-height: 0; display: block; }
+            .hf-pricing-copy { max-width: 720px; padding: 0; }
+            .hf-pricing-copy h2 { font-size: clamp(3rem, 8vw, 4.7rem); }
+            .hf-pricing-lead { max-width: 680px; }
+            .hf-pricing-deck {
+                min-height: 0;
+                margin: 4.25rem 0 0;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.5rem;
+                transform: none;
+            }
+            .hf-plan-card--ghost { display: none; }
+            .hf-plan-card--featured,
+            .hf-plan-card--champion {
+                width: 100%;
+                min-height: 445px;
+                margin: 0;
+                transform: none;
+            }
+            .hf-plan-card--champion { order: -1; }
+            .hf-plan-card--featured:hover,
+            .hf-plan-card--champion:hover { transform: translateY(-.4rem); }
+        }
+        @media (max-width: 680px) {
+            .hf-pricing-showcase { padding: 5rem 0 4.5rem; }
+            .hf-pricing-shell { width: min(90%, 560px); }
+            .hf-pricing-kicker { font-size: .72rem; }
+            .hf-pricing-copy h2 { font-size: clamp(2.75rem, 14vw, 4rem); }
+            .hf-pricing-lead { padding-left: 1rem; font-size: .98rem; line-height: 1.85; }
+            .hf-pricing-benefits { gap: .9rem; }
+            .hf-pricing-benefits li { grid-template-columns: 2rem 1fr; font-size: .95rem; }
+            .hf-pricing-benefit-icon { width: 2rem; height: 2rem; }
+            .hf-pricing-deck { grid-template-columns: 1fr; gap: 1.15rem; margin-top: 3rem; }
+            .hf-plan-card--featured,
+            .hf-plan-card--champion { min-height: 0; padding: 1.75rem 1.45rem 1.5rem; }
+            .hf-plan-card--champion { order: -1; }
+            .hf-plan-title { font-size: 2rem; }
+            .hf-plan-price { font-size: 2.55rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hf-plan-card, .hf-plan-button { transition: none !important; }
+            .hf-plan-card--featured:hover,
+            .hf-plan-card--champion:hover,
+            .hf-plan-button:hover { transform: none !important; }
+        }
     </style>
 </head>
 <body class="text-text bg-warm relative">
@@ -2028,7 +1545,7 @@
 
 	<!-- 修改顏色為透明度漸層，融入全域背景 -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180 opacity-90">
-            <svg class="relative block w-full h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
             </svg>
         </div>
@@ -2268,7 +1785,7 @@
                     <div class="absolute inset-0 bg-gray-900">
                         <picture>
                             <source srcset="/HuaFan/image/index/華梵會館.webp" type="image/webp">
-                            <img src="/HuaFan/image/index/unnamed.webp" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 object-[95%_center] group-hover:opacity-70" alt="華梵會館" loading="lazy" decoding="async">
+                            <img src="/HuaFan/image/index/unnamed.webp" class="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105 object-[95%_center] group-hover:opacity-70" alt="靜心私人會館" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     <!-- 多層漸層：綠色調 -->
@@ -2287,12 +1804,12 @@
                         </div>
 
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 transform translate-y-4 group-hover:translate-y-0 text-center w-full px-4">
-                            <h3 class="text-3xl text-white font-serif font-bold tracking-wide mb-4 drop-shadow-lg">華梵會館</h3>
+                            <h3 class="text-3xl text-white font-serif font-bold tracking-wide mb-4 drop-shadow-lg">靜心私人會館</h3>
                             <span class="inline-block px-3 py-1 border border-white/30 rounded-full text-xs text-white/80 tracking-widest backdrop-blur-sm">PRIVATE</span>
                         </div>
 
                         <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:opacity-0 transition-opacity duration-300 drop-shadow-md">華梵會館</h3>
+                            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:opacity-0 transition-opacity duration-300 drop-shadow-md">靜心私人會館</h3>
                             <div class="w-10 h-1 bg-gradient-to-r from-[#8A9A5B] via-[#8A9A5B] to-[#8A9A5B]/60 mb-4 transition-all duration-500 group-hover:w-16 rounded-full shadow-[0_0_10px_rgba(138,154,91,0.3)]"></div>
                             <p class="text-gray-100/90 text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 border-l border-white/30 pl-4">
                                 遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，讓家屬擁有絕對的隱私。
@@ -2312,140 +1829,139 @@
 
 
 
-        <section class="hf-price-v2" id="calculator" aria-labelledby="hf-price-v2-title" style="padding-bottom: 0rem;">
-            <div class="absolute -top-[1px] left-0 w-full overflow-hidden leading-none opacity-90">
-                <svg class="relative block w-full h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
-                </svg>
+    <!-- 方案價格展示區 (Pricing Showcase) -->
+    <!-- Calculator Section (Transparency Applied) -->
+    <section id="calculator" class="hf-pricing-showcase pt-36 pb-24 relative z-10" aria-labelledby="pricing-showcase-title">
+
+        <!-- 修改顏色為透明度漸層，融入全域背景 -->
+        <div class="absolute -top-[1px] left-0 w-full overflow-hidden leading-none opacity-90">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-[#EBEDE9]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#EBEDE9"></path>
+            </svg>
+        </div>
+
+        <div class="hf-pricing-shell">
+            <div class="hf-pricing-copy">
+                <span class="hf-pricing-kicker">Transparency</span>
+                <h2 id="pricing-showcase-title">預算，<br>由您透明掌握</h2>
+                <p class="hf-pricing-lead">
+                    告別式的每一項安排，都應清楚、可比較。華梵將常見方案的空間規模、服務人力與儀式配置完整列出，讓家屬先掌握預算方向，再由專人逐項確認。
+                </p>
+                <ul class="hf-pricing-benefits" aria-label="華梵方案價格特色">
+                    <li>
+                        <span class="hf-pricing-benefit-icon"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                        <span>方案內容與項目清楚列示</span>
+                    </li>
+                    <li>
+                        <span class="hf-pricing-benefit-icon"><i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
+                        <span>可依預算彈性調整服務配置</span>
+                    </li>
+                    <li>
+                        <span class="hf-pricing-benefit-icon"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>
+                        <span>正式確認前提供完整書面明細（PDF）</span>
+                    </li>
+                </ul>
             </div>
 
-            <div class="hf-price-v2__light" aria-hidden="true"></div>
-
-            <div class="hf-price-v2__inner">
-                <div class="hf-price-v2__copy">
-                    <span class="hf-price-v2__eyebrow">Transparency</span>
-                    <h2 class="hf-price-v2__title" id="hf-price-v2-title">預算，<br>由您透明掌握</h2>
-
-                    <p class="hf-price-v2__lead">
-                        告別式的每一項安排，都應清楚、可比較。<br>
-                        華梵將常見方案的空間規模、服務人力與儀式配置完整列出，讓家屬先掌握預算方向，再由專人逐項確認。
-                    </p>
-
-                    <ul class="hf-price-v2__benefits" aria-label="方案價格服務特色">
-                        <li>
-                            <span><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-                            <strong>方案內容與項目清楚列示</strong>
-                        </li>
-                        <li>
-                            <span><i class="fa-solid fa-sliders" aria-hidden="true"></i></span>
-                            <strong>可依預算彈性調整服務配置</strong>
-                        </li>
-                        <li>
-                            <span><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>
-                            <strong>正式確認前提供完整書面明細（PDF）</strong>
-                        </li>
+            <div class="hf-pricing-deck" aria-label="華梵禮儀推薦方案">
+                <article class="hf-plan-card hf-plan-card--ghost hf-plan-card--ghost-left-1" aria-hidden="true">
+                    <div class="hf-plan-topline"><span class="hf-plan-level">基礎方案</span></div>
+                    <h3 class="hf-plan-title">樸實方案</h3>
+                    <p class="hf-plan-price">NT$88,000</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check"></i><span>接體、豎靈、入殮</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>治喪協調、告別式</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>火化、晉塔</span></li>
                     </ul>
+                    <span class="hf-plan-button">了解更多</span>
+                </article>
 
-                    <p class="hf-price-v2__more">
-                        <strong>另有其他方案可供選擇。</strong><br>
-                        實際內容將依宗教儀式、場地與家屬需求提供書面確認。
-                    </p>
-                </div>
+                <article class="hf-plan-card hf-plan-card--ghost hf-plan-card--ghost-left-2" aria-hidden="true">
+                    <div class="hf-plan-topline"><span class="hf-plan-level">進階方案</span></div>
+                    <h3 class="hf-plan-title">福氣方案</h3>
+                    <p class="hf-plan-price">NT$128,000</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check"></i><span>告別式場地（24人內）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>鮮花式場（8尺）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>樂師1名</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>禮生2名、服務人員4名</span></li>
+                    </ul>
+                    <span class="hf-plan-button">了解更多</span>
+                </article>
 
-                <div class="hf-price-v2__stage" aria-label="華梵禮儀方案價格">
-                    <!-- 次要方案僅作價格帶提示，因此淡化並取消互動。 -->
-                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-1" aria-hidden="true">
-                        <span class="hf-price-card__level">進階方案</span>
-                        <h3 class="hf-price-card__title">樸實方案</h3>
-                        <p class="hf-price-card__price">NT$88,000</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check"></i><span>接體、豎靈、入殮</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>治喪協調、告別式</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>火化、晉塔</span></li>
-                        </ul>
-                        <span class="hf-price-card__cta">了解更多</span>
-                    </article>
+                <article class="hf-plan-card hf-plan-card--featured">
+                    <div class="hf-plan-topline">
+                        <span class="hf-plan-level">進階升級</span>
+                        <span class="hf-plan-ribbon hf-plan-ribbon--popular"><i class="fa-solid fa-fire" aria-hidden="true"></i>熱門推薦</span>
+                    </div>
+                    <h3 class="hf-plan-title">幸福方案</h3>
+                    <p class="hf-plan-price">NT$188,000</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（60人內）</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>場地佈置升級</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師3名樂團演奏</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞100份</span></li>
+                    </ul>
+                    <a class="hf-plan-button" href="tel:0800800818" aria-label="撥打華梵禮儀專線諮詢幸福方案">
+                        <i class="fa-solid fa-phone" aria-hidden="true"></i>立即諮詢
+                    </a>
+                </article>
 
-                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-2" aria-hidden="true">
-                        <span class="hf-price-card__level">進階方案</span>
-                        <h3 class="hf-price-card__title">福氣方案</h3>
-                        <p class="hf-price-card__price">NT$128,000</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check"></i><span>告別式場地（24人內）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（8尺）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>樂師1名</span></li>
-                        </ul>
-                        <span class="hf-price-card__cta">了解更多</span>
-                    </article>
+                <article class="hf-plan-card hf-plan-card--champion">
+                    <div class="hf-plan-topline">
+                        <span class="hf-plan-level">頂級方案</span>
+                        <span class="hf-plan-ribbon"><i class="fa-solid fa-crown" aria-hidden="true"></i>銷售冠軍</span>
+                    </div>
+                    <h3 class="hf-plan-title">尊崇方案</h3>
+                    <p class="hf-plan-price">NT$238,000</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（80人內）</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>鮮花式場（20尺）</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師5名、服務人員6名</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞200份</span></li>
+                    </ul>
+                    <a class="hf-plan-button" href="tel:0800800818" aria-label="撥打華梵禮儀專線諮詢尊崇方案">
+                        <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>了解尊崇方案
+                    </a>
+                </article>
 
-                    <article class="hf-price-card hf-price-card--popular">
-                        <span class="hf-price-card__level">進階升級</span>
-                        <span class="hf-price-badge hf-price-badge--popular"><i class="fa-solid fa-fire" aria-hidden="true"></i>熱門推薦</span>
-                        <h3 class="hf-price-card__title">幸福方案</h3>
-                        <p class="hf-price-card__price">NT$188,000</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（60人內）</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>場地佈置升級</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師3名樂團演奏</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞100份</span></li>
-                        </ul>
-                        <a class="hf-price-card__cta" href="tel:0800800818" aria-label="致電諮詢幸福方案">
-                            <i class="fa-solid fa-phone" aria-hidden="true"></i>立即諮詢
-                        </a>
-                    </article>
+                <article class="hf-plan-card hf-plan-card--ghost hf-plan-card--ghost-right-1" aria-hidden="true">
+                    <div class="hf-plan-topline"><span class="hf-plan-level">旗艦方案</span></div>
+                    <h3 class="hf-plan-title">尊榮方案</h3>
+                    <p class="hf-plan-price">NT$480,000+</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check"></i><span>告別式場地（240人內）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>鮮花式場（30尺）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>三七、五七祭奠</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>專屬接送服務</span></li>
+                    </ul>
+                    <span class="hf-plan-button">了解更多</span>
+                </article>
 
-                    <article class="hf-price-card hf-price-card--champion">
-                        <span class="hf-price-card__level">頂級方案</span>
-                        <span class="hf-price-badge hf-price-badge--champion"><i class="fa-solid fa-crown" aria-hidden="true"></i>口碑推薦</span>
-                        <h3 class="hf-price-card__title">尊崇方案</h3>
-                        <p class="hf-price-card__price">NT$238,000</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>告別式場地（80人內）</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>鮮花式場（20尺）</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>樂師5名、服務人員6名</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>二折式訃聞200份</span></li>
-                        </ul>
-                        <a class="hf-price-card__cta" href="tel:0800800818" aria-label="致電了解尊崇方案">
-                            <i class="fa-solid fa-phone" aria-hidden="true"></i>了解尊崇方案
-                        </a>
-                    </article>
-
-                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-3" aria-hidden="true">
-                        <span class="hf-price-card__level">進階方案</span>
-                        <h3 class="hf-price-card__title">圓融方案</h3>
-                        <p class="hf-price-card__price">NT$168,000</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check"></i><span>告別式場地（40人內）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（15尺）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>誦經人員3名</span></li>
-                        </ul>
-                        <span class="hf-price-card__cta">了解更多</span>
-                    </article>
-
-                    <article class="hf-price-card hf-price-card--ghost hf-price-card--ghost-4" aria-hidden="true">
-                        <span class="hf-price-card__level">旗艦方案</span>
-                        <h3 class="hf-price-card__title">尊榮方案</h3>
-                        <p class="hf-price-card__price">NT$480,000+</p>
-                        <div class="hf-price-card__line"></div>
-                        <ul class="hf-price-card__list">
-                            <li><i class="fa-solid fa-check"></i><span>告別式場地（240人內）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>鮮花式場（30尺）</span></li>
-                            <li><i class="fa-solid fa-check"></i><span>專屬接送服務</span></li>
-                        </ul>
-                        <span class="hf-price-card__cta">了解更多</span>
-                    </article>
-                </div>
+                <article class="hf-plan-card hf-plan-card--ghost hf-plan-card--ghost-right-2" aria-hidden="true">
+                    <div class="hf-plan-topline"><span class="hf-plan-level">標準方案</span></div>
+                    <h3 class="hf-plan-title">圓融方案</h3>
+                    <p class="hf-plan-price">NT$168,000</p>
+                    <div class="hf-plan-divider"></div>
+                    <ul class="hf-plan-features">
+                        <li><i class="fa-solid fa-check"></i><span>告別式場地（40人內）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>鮮花式場（15尺）</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>誦經人員3名</span></li>
+                        <li><i class="fa-solid fa-check"></i><span>二折式訃聞80份</span></li>
+                    </ul>
+                    <span class="hf-plan-button">了解更多</span>
+                </article>
             </div>
-        </section>
-
+        </div>
+    </section>
 
     <!-- Google 評論區塊 -->
-    <section class="relative z-30" style="margin-top: 7rem;">
+    <section class="pt-12 pb-16 relative overflow-hidden">
 
         <div class="container mx-auto px-6 relative z-10">
             
@@ -2697,71 +2213,8 @@
         </div>
     </section>
 
-    <!-- 影音內容區（透明背景）：位於方案價格區下方 -->
-    <section class="hf-video-showcase" id="videos" aria-labelledby="hf-video-title">
-      <!-- 連場過渡裝飾層（純裝飾，不進入閱讀與焦點順序） -->
-      <div class="hf-video-showcase__bridge hf-video-showcase__bridge--bottom" aria-hidden="true"></div>
-      <span class="hf-video-showcase__watermark" aria-hidden="true">Stories</span>
-      <div class="hf-video-showcase__inner">
-        <div class="hf-video-showcase__head">
-          <div class="hf-video-showcase__heading">
-            <span class="hf-video-showcase__eyebrow">Stories in motion</span>
-            <h2 class="hf-video-showcase__title" id="hf-video-title">看見華梵的陪伴</h2>
-            <p class="hf-video-showcase__lead">
-              認識華梵的服務理念、空間與陪伴方式，讓每一項選擇都更安心、更有方向。
-            </p>
-          </div>
-          <a class="hf-video-showcase__all" href="https://www.tiktok.com/@huafanlife" target="_blank" rel="noopener noreferrer">
-            查看更多短影音 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-          </a>
-        </div>
-
-        <div class="hf-video-showcase__grid">
-          <article class="hf-video-card hf-video-card--youtube" aria-label="華梵禮儀 YouTube 影片">
-            <span class="hf-video-card__label"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube｜完整影片</span>
-            <div class="hf-video-card__media">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/yWqoDkkfMdc?rel=0&modestbranding=1"
-                title="華梵禮儀 YouTube 影片"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </article>
-
-          <article class="hf-video-card hf-video-card--tiktok" aria-label="華梵禮儀 TikTok 短影音入口">
-            <div class="hf-video-card__topline">
-              <span class="hf-video-card__platform">
-                <span class="hf-video-card__platform-icon"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></span>
-                TikTok 短影音
-              </span>
-              <a class="hf-video-card__profile-link" href="https://www.tiktok.com/@huafanlife" target="_blank" rel="noopener noreferrer">@huafanlife</a>
-            </div>
-
-            <div class="hf-video-card__tiktok-wrap">
-              <blockquote
-                class="tiktok-embed"
-                cite="https://www.tiktok.com/@huafanlife"
-                data-unique-id="huafanlife"
-                data-embed-type="creator"
-                data-embed-from="oembed"
-                style="width:100%;max-width:720px;min-width:288px;margin:0 auto;">
-                <section class="hf-video-card__tiktok-fallback">
-                  <a href="https://www.tiktok.com/@huafanlife?refer=creator_embed" target="_blank" rel="noopener noreferrer">
-                    查看華梵禮儀 TikTok｜@huafanlife
-                  </a>
-                </section>
-              </blockquote>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- 最新消息區塊 (Refined Layout using Flow for Overlap Prevention) -->
-    <section class="pt-28 pb-24 relative z-20 overflow-visible overflow-hidden">
+    <section class="pt-16 pb-24 relative z-20 overflow-visible overflow-hidden">
 
         <!-- 背景裝飾葉片 -->
         <div class="absolute -bottom-12 md:-bottom-20 left-16 md:left-36 opacity-40 pointer-events-none">
@@ -2820,26 +2273,25 @@
                          這樣它會佔據流體高度，撐開容器，將下方內容（說明文字）推擠下去。
                          w-[62%]: 保持原本的寬度比例
                     -->
-                    <a href="news.html?id=award-114" class="group relative block w-[62%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] z-20 cursor-pointer lg:w-full lg:aspect-auto lg:h-[400px] lg:shadow-card lg:hover:shadow-2xl lg:transition-all lg:duration-500 lg:hover:-translate-y-2 lg:z-auto">
-                        <img src="/HuaFan/image/index/114評鑑.webp"
-                             alt="114年臺中市殯葬禮儀服務業評鑑 特優等"
-                             loading="lazy"
+                    <div class="group relative w-[62%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] z-20 cursor-pointer lg:w-full lg:aspect-auto lg:h-[400px] lg:shadow-card lg:hover:shadow-2xl lg:transition-all lg:duration-500 lg:hover:-translate-y-2 lg:z-auto">
+                        <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&q=80" 
+                             alt="圓滿服務" 
                              class="w-full h-full object-cover hover-zoom-img">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
                         <div class="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white/90 backdrop-blur-sm text-center py-1.5 px-3 lg:py-2 lg:px-3.5 rounded-xl shadow-sm">
-                            <span class="block text-[8px] lg:text-[10px] text-gray-500 uppercase tracking-widest font-bold">Year</span>
-                            <span class="block text-lg lg:text-xl font-serif font-bold text-primary leading-none mt-0.5">114</span>
+                            <span class="block text-[8px] lg:text-[10px] text-gray-500 uppercase tracking-widest font-bold">Oct</span>
+                            <span class="block text-lg lg:text-xl font-serif font-bold text-primary leading-none mt-0.5">15</span>
                         </div>
                         <div class="absolute top-4 right-4 lg:top-6 lg:right-6">
-                            <span class="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-primary/80 backdrop-blur text-white text-[10px] lg:text-xs tracking-wider border border-white/20 shadow-sm">獲獎殊榮</span>
+                            <span class="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-primary/80 backdrop-blur text-white text-[10px] lg:text-xs tracking-wider border border-white/20 shadow-sm">圓滿服務</span>
                         </div>
                         <div class="absolute bottom-0 left-0 w-full p-5 lg:p-8 z-20">
-                            <h3 class="text-lg lg:text-2xl font-serif font-bold text-white mb-2 lg:mb-3 leading-snug group-hover:text-accentLight transition-colors">114年殯葬禮儀服務業評鑑「特優等」</h3>
+                            <h3 class="text-lg lg:text-2xl font-serif font-bold text-white mb-2 lg:mb-3 leading-snug group-hover:text-accentLight transition-colors">圓滿服務：讓愛延續...</h3>
                             <div class="hidden lg:block">
                                 <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
                                     <div class="overflow-hidden">
                                         <p class="text-gray-300 text-sm font-light leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
-                                            同時榮獲性別平等獎、環保永續獎、創新服務獎三項專項肯定...
+                                            在每一場告別式中，我們看見的不只是結束...
                                         </p>
                                     </div>
                                 </div>
@@ -2852,19 +2304,18 @@
                                 Read Article <i class="fa-solid fa-arrow-right-long ml-1"></i>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                     <!-- Card 2 (Back / Right) -->
                     <!-- 保持 absolute，定位相對於 Cards Wrapper -->
-                    <a href="news.html?id=firefighter-farewell" class="group absolute block top-12 left-[32%] w-[58%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-none z-10 opacity-60 grayscale-[30%] cursor-pointer lg:relative lg:top-auto lg:left-auto lg:w-full lg:aspect-auto lg:h-[400px] lg:opacity-100 lg:grayscale-0 lg:shadow-card lg:hover:shadow-2xl lg:z-auto lg:mt-8 lg:transition-all lg:duration-500 lg:hover:-translate-y-2">
-                        <img src="/HuaFan/image/原檔/聯合奠祭.jpg"
-                             alt="台中消防英雄告別式"
-                             loading="lazy"
+                    <div class="group absolute top-12 left-[32%] w-[58%] aspect-[4/5] bg-gray-200 rounded-[2rem] overflow-hidden shadow-none z-10 opacity-60 grayscale-[30%] cursor-pointer lg:relative lg:top-auto lg:left-auto lg:w-full lg:aspect-auto lg:h-[400px] lg:opacity-100 lg:grayscale-0 lg:shadow-card lg:hover:shadow-2xl lg:z-auto lg:mt-8 lg:transition-all lg:duration-500 lg:hover:-translate-y-2">
+                        <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=80" 
+                             alt="台中消防英雄告別式" 
                              class="w-full h-full object-cover hover-zoom-img">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
                         <div class="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white/90 backdrop-blur-sm text-center py-1.5 px-3 lg:py-2 lg:px-3.5 rounded-xl shadow-sm">
-                            <span class="block text-[8px] lg:text-[10px] text-gray-500 uppercase tracking-widest font-bold">Year</span>
-                            <span class="block text-lg lg:text-xl font-serif font-bold text-primary leading-none mt-0.5">112</span>
+                            <span class="block text-[8px] lg:text-[10px] text-gray-500 uppercase tracking-widest font-bold">Sep</span>
+                            <span class="block text-lg lg:text-xl font-serif font-bold text-primary leading-none mt-0.5">28</span>
                         </div>
                         <div class="absolute top-4 right-4 lg:top-6 lg:right-6">
                             <span class="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-primary/80 backdrop-blur text-white text-[10px] lg:text-xs tracking-wider border border-white/20 shadow-sm">致敬典範</span>
@@ -2887,7 +2338,7 @@
                                 Read Article <i class="fa-solid fa-arrow-right-long ml-1"></i>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                 </div>
 
@@ -2924,7 +2375,7 @@
                             以及我們如何守護每一份囑託。
                             </p>
                         </div>
-                        <a href="news.html" aria-label="查看所有最新消息" class="group flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-[#D1D5DB] bg-[#F3F4F6]/80 hover:bg-primary hover:border-primary text-gray-500 hover:text-white transition-all duration-300 shadow-sm backdrop-blur-sm">
+                        <a href="#" class="group flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-[#D1D5DB] bg-[#F3F4F6]/80 hover:bg-primary hover:border-primary text-gray-500 hover:text-white transition-all duration-300 shadow-sm backdrop-blur-sm">
                             <i class="fa-solid fa-arrow-right -rotate-45 text-base lg:text-lg group-hover:rotate-0 transition-transform duration-300"></i>
                         </a>
                     </div>
@@ -2950,28 +2401,28 @@
 
          <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-wrap justify-center gap-6 md:gap-8">
-                <a href="wiki.html#subsidy" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">喪葬補助</h3>
                     <p class="text-gray-500 text-xs font-medium">勞保/國保申請</p>
                 </a>
                 <!-- ... other bubbles ... -->
-                 <a href="wiki.html" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[70%_30%_30%_70%/60%_40%_60%_40%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
+                 <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[70%_30%_30%_70%/60%_40%_60%_40%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-book-journal-whills"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">禮儀百科</h3>
                     <p class="text-gray-500 text-xs font-medium">習俗與禁忌</p>
                 </a>
-                <a href="wiki.html#contracts" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[50%_50%_20%_80%/25%_25%_75%_75%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[50%_50%_20%_80%/25%_25%_75%_75%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-file-signature"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">契約書表</h3>
                     <p class="text-gray-500 text-xs font-medium">下載範本文件</p>
                 </a>
-                <a href="https://mort.moi.gov.tw/" target="_blank" rel="noopener" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[20%_80%_20%_80%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[20%_80%_20%_80%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4 mt-6 sm:mt-8 md:mt-12">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-gavel"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">合法查詢</h3>
-                    <p class="text-gray-500 text-xs font-medium">內政部名冊 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></p>
+                    <p class="text-gray-500 text-xs font-medium">內政部名冊</p>
                 </a>
-                <a href="faq.html" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[80%_20%_80%_20%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
+                <a href="#" class="group relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[80%_20%_80%_20%/50%_50%_50%_50%] bg-[#EBEDE9]/80 backdrop-blur-md border border-white/60 shadow-stone hover:bg-white hover:shadow-xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center text-center p-4">
                     <div class="text-3xl text-accent mb-3 group-hover:-translate-y-1 transition duration-300"><i class="fa-solid fa-circle-question"></i></div>
                     <h3 class="text-primary font-bold mb-1 text-lg">常見問題</h3>
                     <p class="text-gray-500 text-xs font-medium">百日對年計算</p>
@@ -2981,11 +2432,9 @@
     </section>
 
     <!-- Locations Section (服務據點區) -->
-    <!-- 註：此區不設 z-index，讓白色字卡（下方 relative z-30）能浮在頁尾 screentone 疊加層（z-25）之上，
-         而區塊自身的 #F0F5F2 底色仍在 screentone 之下，使點點只顯示在字卡周圍的留白、不壓在白卡上。 -->
-    <section id="locations" class="pt-2 pb-32 md:pb-52 relative bg-gradient-to-b from-transparent to-[#F0F5F2] via-[#F0F5F2] via-80%">
+    <section id="locations" class="pt-2 pb-32 md:pb-40 relative z-10 bg-gradient-to-b from-transparent to-[#F0F5F2] via-[#F0F5F2] via-80%">
         <div class="container mx-auto px-6">
-            <div class="relative z-30 bg-surface rounded-[3rem] p-4 shadow-soft overflow-hidden flex flex-col lg:flex-row border border-white gap-0">
+            <div class="bg-surface rounded-[3rem] p-4 shadow-soft overflow-hidden flex flex-col lg:flex-row border border-white gap-0">
                 
                 <!-- Text & Locations List (Left on Desktop) -->
                 <div class="p-6 lg:p-10 lg:w-1/2 flex flex-col">
@@ -3910,7 +3359,7 @@ function adjustFontSize(change) {
             cta: "觀看花藝作品"
         },
         {
-            title: "華梵會館",
+            title: "靜心私人會館",
             image: "/HuaFan/image/index/華梵會館.webp",
             fallback: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2070&auto=format&fit=crop",
             desc: "遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，溫馨典雅的環境設計，讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感，陪伴摯愛最後一程。",
@@ -4446,7 +3895,5 @@ function adjustFontSize(change) {
         initMap();
 
 </script>
-<!-- TikTok 官方嵌入腳本（供影音區 TikTok 個人檔案嵌入使用） -->
-<script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>

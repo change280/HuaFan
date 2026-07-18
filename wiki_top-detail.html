@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <!-- 禮儀百科資料層 -->
+    <script src="js/hf-wiki-data.js"></script>
+    <title>載入中…｜華梵禮儀百科</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 100px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        .wiki-toc-link { transition: all .25s ease; border-left: 2px solid transparent; }
+        .wiki-toc-link:hover, .wiki-toc-link.active { border-left-color: #C5A670; color: #465B40; background: rgba(197,166,112,.08); }
+
+        /* 文章 Hero */
+        .article-hero { position: relative; background: #2F3E2B; overflow: hidden; }
+        .article-hero-img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.5;
+        }
+        .article-hero-fade {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(47,62,43,0.25) 0%, rgba(47,62,43,0.6) 55%, rgba(47,62,43,0.92) 100%);
+        }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* ===== 原 wiki.html 區塊樣式（釘選文章量身版） ===== */
+        .wiki-card { background: #FFFEFA; border: 1px solid rgba(255,255,255,.9); }
+
+        details.wiki-detail summary::-webkit-details-marker { display: none; }
+        details.wiki-detail summary::after { content: '+'; margin-left: auto; color: #C5A670; font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+        details.wiki-detail[open] summary::after { content: '−'; }
+        details.wiki-detail[open] { background: rgba(255,255,255,.95); border-color: rgba(197,166,112,.5); }
+
+        /* 內容 HTML 通用樣式（後台以純 HTML 編輯，樣式由此統一給定） */
+        .wiki-rich p { margin: 0 0 0.85rem; line-height: 1.85; }
+        .wiki-rich p:last-child { margin-bottom: 0; }
+        .wiki-rich strong { color: #2F3E2B; font-weight: 700; }
+        .wiki-rich a { color: #C5A670; font-weight: 700; }
+        .wiki-rich a:hover { text-decoration: underline; }
+        .wiki-rich a i { font-size: 0.7em; }
+        .wiki-rich ul { margin: 0.25rem 0 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .wiki-rich ul:last-child { margin-bottom: 0; }
+        .wiki-rich li { line-height: 1.75; }
+        .wiki-rich li > i:first-child { color: #C5A670; font-size: 0.75rem; margin-right: 0.5rem; }
+
+        /* 段落（章節導言） */
+        .top-paragraph { color: #6b7280; line-height: 2; font-size: 1.02rem; margin: 0 0 1.6rem; }
+        .top-paragraph strong { color: #2F3E2B; }
+
+        /* 提示框 */
+        .top-note { border-radius: 1rem; padding: 1.25rem; font-size: 0.9rem; line-height: 1.85; color: #4b5563; margin: 1.4rem 0; }
+        .top-note.tone-gold { border: 1px solid rgba(197,166,112,.4); background: rgba(197,166,112,.06); }
+        .top-note.tone-red { border: 1px solid rgba(159,74,70,.3); background: rgba(159,74,70,.05); }
+        .top-note.tone-red strong { color: #9F4A46; }
+        .top-note i { color: #C5A670; margin-right: 0.4rem; }
+        .top-note.tone-red i { color: #9F4A46; }
+        .top-note a { color: #465B40; font-weight: 700; }
+        .top-note a:hover { color: #C5A670; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wiki-toc-link { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== 讀取中 / 找不到文章 ===== -->
+    <section id="article-fallback" class="hidden px-4 md:px-6 pt-48 pb-32">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface border border-white shadow-soft flex items-center justify-center">
+                <i class="fa-regular fa-file-lines text-3xl text-accent"></i>
+            </div>
+            <h1 class="font-serif text-3xl md:text-4xl font-bold text-primaryDark mb-4">找不到這篇文章</h1>
+            <p class="text-gray-500 leading-loose mb-10">
+                這篇文章可能已被移除，或連結不正確。<br>
+                你可以回到「禮儀百科」繼續探索其他知識。
+            </p>
+            <a href="wiki.html" class="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-primary text-white text-sm tracking-widest font-bold hover:bg-primaryDark transition-all">
+                <i class="fa-solid fa-arrow-left-long text-xs"></i> 返回禮儀百科
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== 文章 Hero + 波浪 ===== -->
+    <header id="article-hero" class="article-hero pt-40 pb-28 md:pt-48 md:pb-36 px-4 md:px-6 text-white hidden">
+        <img id="article-hero-img" class="article-hero-img" alt="">
+        <div class="article-hero-fade"></div>
+        <div class="max-w-5xl mx-auto relative z-10">
+            <a href="wiki.html" class="inline-flex items-center gap-2 text-xs md:text-sm tracking-widest text-white/70 hover:text-white mb-8 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 禮儀百科 · Etiquette Encyclopedia
+            </a>
+            <div class="flex items-center gap-3 mb-6">
+                <span id="article-icon" class="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 backdrop-blur flex items-center justify-center text-accent text-xl"></span>
+                <span class="px-3 py-1 rounded-full bg-accent/90 text-primaryDark text-[11px] font-bold tracking-[0.2em]"><i class="fa-solid fa-thumbtack mr-1"></i>釘選文章</span>
+            </div>
+            <h1 id="article-title" class="font-serif text-3xl md:text-5xl font-bold leading-tight mb-4 text-shadow-lg"></h1>
+            <p id="article-subtitle" class="text-base md:text-xl text-white/85 leading-relaxed max-w-3xl"></p>
+        </div>
+        <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[50px] md:h-[90px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- ===== 內容 + 釘選目錄側欄 ===== -->
+    <main id="article-main" class="px-4 md:px-6 py-12 md:py-16 pb-60 md:pb-96 hidden relative z-30">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10">
+
+            <!-- 側邊：釘選文章目錄（含返回按鍵） -->
+            <aside class="lg:w-64 flex-shrink-0" id="wiki-pinned-nav"></aside>
+
+            <!-- 內容 -->
+            <div class="flex-1 min-w-0">
+                <article id="article-body" class="space-y-4"></article>
+
+                <!-- 上一則 / 下一則 釘選文章 -->
+                <div id="article-siblings" class="mt-14 pt-8 border-t border-accent/30 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
+                <!-- CTA -->
+                <section class="mt-12 rounded-[2rem] bg-primary text-white p-8 md:p-12 text-center relative overflow-hidden">
+                    <div class="absolute -top-16 -right-16 w-64 h-64 bg-accent/20 rounded-full blur-[80px] pointer-events-none"></div>
+                    <h2 class="text-2xl md:text-3xl font-serif font-bold mb-3 relative z-10">還有其他疑問嗎？</h2>
+                    <p class="text-white/80 mb-8 relative z-10">看看常見問題，或直接與我們的禮儀師聊聊，24 小時都在。</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                        <a href="faq.html" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-solid fa-circle-question mr-2"></i>常見問題 FAQ</a>
+                        <a href="tel:0800800818" class="px-8 py-3.5 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-phone-volume mr-2"></i>0800-800-818</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾（含頁尾前螢幕網屏緩衝帶） -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    (function initTopDetail() {
+        'use strict';
+        // ?id=xxx 為主；#xxx 為後援（供舊錨點連結與部分預覽環境使用）
+        function currentId() {
+            var params = new URLSearchParams(location.search);
+            return params.get('id') || (location.hash || '').replace('#', '');
+        }
+
+        var fallbackEl = document.getElementById('article-fallback');
+        var heroEl = document.getElementById('article-hero');
+        var mainEl = document.getElementById('article-main');
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        /* ---------- 釘選文章複合區塊渲染 ---------- */
+        function renderAccordion(b) {
+            var items = (b.items || []).map(function (it) {
+                return '<details class="wiki-detail rounded-2xl border border-primary/10 bg-white/70 p-5 transition"' + (it.open ? ' open' : '') + '>' +
+                    '<summary class="flex items-center gap-4 cursor-pointer font-serif font-bold text-lg text-primaryDark">' + esc(it.title || '') + '</summary>' +
+                    '<div class="wiki-rich text-gray-600 mt-4">' + (it.html || '') + '</div>' +
+                '</details>';
+            }).join('');
+            return '<div class="space-y-4">' + items + '</div>';
+        }
+
+        function renderCards(b) {
+            var cols = b.cols === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+            var items = (b.items || []).map(function (it) {
+                var inner = '' +
+                    (it.icon ? '<div class="text-2xl text-accent mb-3"><i class="' + esc(it.icon) + '"></i></div>' : '') +
+                    '<h3 class="font-serif font-bold text-lg text-primaryDark mb-3">' +
+                        (it.num ? '<span class="text-accent mr-2">' + esc(it.num) + '</span>' : '') +
+                        esc(it.title || '') +
+                        (it.href ? ' <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-60"></i>' : '') +
+                    '</h3>' +
+                    '<div class="wiki-rich text-sm text-gray-600">' + (it.html || '') + '</div>';
+                if (it.href) {
+                    return '<a href="' + esc(it.href) + '" target="_blank" rel="noopener" class="wiki-card group rounded-2xl p-6 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all block">' + inner + '</a>';
+                }
+                return '<div class="wiki-card rounded-2xl p-6 shadow-soft">' + inner + '</div>';
+            }).join('');
+            return '<div class="grid ' + cols + ' gap-5">' + items + '</div>';
+        }
+
+        function renderActions(b) {
+            var items = (b.items || []).map(function (it) {
+                return '<div class="wiki-card rounded-2xl p-6 shadow-soft flex flex-col md:flex-row md:items-center gap-4">' +
+                    '<div class="flex-1">' +
+                        '<h3 class="font-serif font-bold text-lg text-primaryDark mb-1">' + esc(it.title || '') + '</h3>' +
+                        '<div class="wiki-rich text-sm text-gray-600">' + (it.html || '') + '</div>' +
+                    '</div>' +
+                    (it.href ? '<a href="' + esc(it.href) + '" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-sm font-bold hover:bg-primaryDark transition">' +
+                        esc(it.label || '前往') + ' <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>' : '') +
+                '</div>';
+            }).join('');
+            return '<div class="space-y-4">' + items + '</div>';
+        }
+
+        function renderBlocks(blocks) {
+            if (!blocks || !blocks.length) return '<p class="text-gray-500">（尚無內容）</p>';
+            return blocks.map(function (b) {
+                if (!b || !b.type) return '';
+                switch (b.type) {
+                    case 'paragraph': {
+                        var paras = String(b.text || '').split(/\n{2,}/).filter(Boolean);
+                        return paras.map(function (p) {
+                            return '<p class="top-paragraph">' + esc(p).replace(/\n/g, '<br>') + '</p>';
+                        }).join('');
+                    }
+                    case 'heading': {
+                        if (b.level === 3) {
+                            return '<h3 class="text-xl font-serif font-bold text-primary mt-8 mb-3">' + esc(b.text || '') + '</h3>';
+                        }
+                        return '<h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mt-10 mb-4 flex items-center gap-3">' +
+                            '<span class="w-8 h-[2px] bg-accent inline-block"></span>' + esc(b.text || '') + '</h2>';
+                    }
+                    case 'quote':
+                        return '<blockquote class="my-6 px-6 py-5 border-l-[3px] border-accent bg-accent/5 rounded-r-2xl">' +
+                            '<p class="font-serif text-lg text-primaryDark leading-relaxed">' + esc(b.text || '') + '</p>' +
+                            (b.cite ? '<cite class="block mt-2 text-xs text-gray-400 not-italic">— ' + esc(b.cite) + '</cite>' : '') +
+                        '</blockquote>';
+                    case 'image':
+                        if (!b.src) return '';
+                        return '<figure class="my-8' + (b.size === 'small' ? ' max-w-[33%] mx-auto' : '') + '">' +
+                            '<img src="' + esc(b.src) + '" alt="' + esc(b.alt || b.caption || '') + '" loading="lazy" class="w-full rounded-2xl shadow-card">' +
+                            (b.caption ? '<figcaption class="mt-3 text-sm text-gray-400 text-center">' + esc(b.caption) + '</figcaption>' : '') +
+                        '</figure>';
+                    case 'divider':
+                        return '<hr class="my-10 w-16 mx-auto border-0 border-t border-accent">';
+                    case 'accordion': return renderAccordion(b);
+                    case 'cards': return renderCards(b);
+                    case 'actions': return renderActions(b);
+                    case 'note':
+                        return '<div class="top-note wiki-rich ' + (b.tone === 'red' ? 'tone-red' : 'tone-gold') + '">' + (b.html || '') + '</div>';
+                    case 'html':
+                        return '<div class="wiki-rich text-gray-600">' + (b.html || '') + '</div>';
+                    default: return '';
+                }
+            }).join('');
+        }
+
+        /* ---------- 上一則 / 下一則 ---------- */
+        function renderSiblings(current) {
+            var el = document.getElementById('article-siblings');
+            var pinned = WikiStore.getPinned();
+            var idx = pinned.findIndex(function (p) { return p.id === current.id; });
+            var prev = idx > 0 ? pinned[idx - 1] : null;
+            var next = idx >= 0 && idx < pinned.length - 1 ? pinned[idx + 1] : null;
+            function card(p, dir) {
+                if (!p) return '<span class="hidden sm:block"></span>';
+                var arrow = dir === 'prev'
+                    ? '<i class="fa-solid fa-arrow-left-long"></i> 上一則'
+                    : '下一則 <i class="fa-solid fa-arrow-right-long"></i>';
+                var align = dir === 'prev' ? '' : ' text-right';
+                return '<a href="' + esc(WikiStore.detailUrlOf(p)) + '" class="block bg-surface border border-white shadow-soft rounded-2xl p-5 hover:shadow-card hover:-translate-y-1 transition-all' + align + '">' +
+                    '<p class="text-[10px] font-bold tracking-[0.2em] text-accent uppercase mb-2">' + arrow + '</p>' +
+                    '<p class="font-serif font-bold text-primaryDark">' +
+                        (p.icon ? '<i class="' + esc(p.icon) + ' text-accent mr-2"></i>' : '') + esc(p.title) + '</p>' +
+                '</a>';
+            }
+            el.innerHTML = card(prev, 'prev') + card(next, 'next');
+        }
+
+        function renderPost(post) {
+            document.title = post.title + '｜華梵禮儀百科';
+
+            var cover = WikiStore.coverOf(post);
+            var imgEl = document.getElementById('article-hero-img');
+            imgEl.src = cover;
+            imgEl.alt = post.title;
+            imgEl.onerror = function () { imgEl.src = WikiStore.pickFallbackCover(post.id); };
+
+            document.getElementById('article-icon').innerHTML =
+                '<i class="' + esc(post.icon || 'fa-solid fa-bookmark') + '"></i>';
+            document.getElementById('article-title').textContent = post.title;
+            var subEl = document.getElementById('article-subtitle');
+            if (post.subtitle) { subEl.textContent = post.subtitle; subEl.classList.remove('hidden'); }
+            else { subEl.classList.add('hidden'); }
+
+            document.getElementById('article-body').innerHTML = renderBlocks(post.blocks);
+
+            document.getElementById('wiki-pinned-nav').innerHTML =
+                WikiStore.renderPinnedNavHTML({ activeId: post.id, showBack: true });
+
+            renderSiblings(post);
+
+            heroEl.classList.remove('hidden');
+            mainEl.classList.remove('hidden');
+            fallbackEl.classList.add('hidden');
+        }
+
+        function tryRender() {
+            var id = currentId();
+            var post = id ? WikiStore.getById(id) : null;
+            if (post && !post.pinned) {
+                // 一般文章走標準頁
+                location.replace(WikiStore.detailUrlOf(post));
+                return;
+            }
+            if (post) renderPost(post);
+            else {
+                heroEl.classList.add('hidden');
+                mainEl.classList.add('hidden');
+                fallbackEl.classList.remove('hidden');
+                document.title = '找不到文章｜華梵禮儀百科';
+            }
+        }
+
+        tryRender();
+        window.addEventListener('hashchange', tryRender);
+        WikiStore.subscribe(tryRender);
+        WikiStore.refreshFromRemote().then(function (ok) { if (ok) tryRender(); });
+    })();
+    </script>
+    <script src="js/hf-wiki-admin.js"></script>
+</body>
+</html>
