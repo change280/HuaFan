@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/hf-image-path.js"></script>
+    <script src="js/hf-components.js"></script>
+    <title>禮體淨身 SPA｜華梵禮儀 - 專業遺體美容與 A・B・C 套組</title>
+    <meta name="description" content="華梵禮體淨身 SPA：選用頂級精油與專業 SPA 用品，於獨立空間為逝者進行專業清潔、儀容整理與個性化妝容。提供禮體 A（13 道）、B（18 道）、C（22 道）套組及多項專業修復服務。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: {
+                    primary: '#465B40', primaryDark: '#2F3E2B', secondary: '#2F3E2B',
+                    accent: '#C5A670', warm: '#F7F5F0', pale: '#E3EBE5', surface: '#FFFEFA',
+                    emergency: '#9F4A46', text: '#3D443B', menu: '#E5E7EB',
+                },
+                fontFamily: { serif: ['"Noto Serif TC"', 'serif'], sans: ['"Noto Sans TC"', 'sans-serif'] },
+                boxShadow: {
+                    'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                    'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                    'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                }
+            } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 96px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        .spa-hero { position: relative; background: #2F3E2B; overflow: hidden; }
+        .spa-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+        .spa-hero-fade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(47,62,43,0.35) 0%, rgba(47,62,43,0.62) 55%, rgba(47,62,43,0.9) 100%); }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* 套組價目卡 */
+        .set-card {
+            display: flex; flex-direction: column;
+            background: #FFFEFA; border: 1px solid rgba(255,255,255,.9);
+            border-radius: 1.5rem; overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(70,91,64,.1);
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        }
+        .set-card:hover { transform: translateY(-5px); box-shadow: 0 24px 48px -18px rgba(70,91,64,.32); border-color: rgba(197,166,112,.5); }
+        .set-card.featured { border-color: rgba(197,166,112,.7); }
+        .set-head { padding: 1.6rem 1.6rem 1.3rem; text-align: center; position: relative; }
+        .set-list { padding: 0 1.5rem 1.5rem; }
+        .set-list li { display: flex; gap: .6rem; padding: .42rem 0; border-bottom: 1px dashed rgba(197,166,112,.25); font-size: .86rem; color: #4b5563; line-height: 1.5; }
+        .set-list li:last-child { border-bottom: 0; }
+        .set-list li .num { flex-shrink: 0; width: 1.4rem; color: #C5A670; font-weight: 700; font-family: 'Noto Serif TC', serif; }
+
+        .addon-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px dashed rgba(197,166,112,.3); }
+        .addon-row:last-child { border-bottom: 0; }
+
+        @media (prefers-reduced-motion: reduce) { .set-card { transition: none !important; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== Hero ===== -->
+    <header class="spa-hero pt-40 pb-28 md:pt-48 md:pb-36 px-4 md:px-6 text-white">
+        <img src="/HuaFan/image/index/禮體spa3.webp" class="spa-hero-img" alt="禮體淨身 SPA">
+        <div class="spa-hero-fade"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <a href="services.html#spa" class="inline-flex items-center gap-2 text-xs md:text-sm tracking-widest text-white/70 hover:text-white mb-8 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 服務方案 · 禮體照護
+            </a>
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/25 backdrop-blur text-white text-sm font-medium tracking-[0.2em] uppercase mb-6">
+                <i class="fa-solid fa-spa text-accent"></i> Body SPA｜禮體淨身
+            </span>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold leading-tight text-shadow-lg">禮體淨身 SPA</h1>
+            <p class="text-white/85 mt-6 max-w-2xl mx-auto leading-loose text-base md:text-lg">
+                有一種儀式，一生只有一次。<br class="hidden md:block">
+                以頂級精油與專業照護，為摯愛留下自然、安詳而有尊嚴的容顏。
+            </p>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[50px] md:h-[90px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="relative z-30">
+
+        <!-- ===== 圖文簡介 ===== -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="rounded-[2rem] overflow-hidden shadow-card relative h-72 md:h-[440px]">
+                        <img src="/HuaFan/image/index/禮體spa3.webp" alt="禮體淨身 SPA" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">About the Ritual</span>
+                        <h2 class="text-2xl md:text-4xl font-serif font-bold text-primaryDark mb-5 leading-snug">如同對待生者般的溫柔觸碰</h2>
+                        <p class="text-gray-600 leading-loose">
+                            禮體淨身 SPA 不只是清潔程序，更是一段莊嚴的告別儀式。透過專業淨身、儀容整理與個性化妝容，
+                            洗去病痛、回復安詳容顏，協助逝者以自然而有尊嚴的姿態與家人道別。
+                        </p>
+                        <p class="text-gray-600 leading-loose mt-4">
+                            服務於獨立、隱私的空間進行，選用<strong class="text-primaryDark">頂級精油</strong>與精選 SPA 專業用品，
+                            美容耗材皆一次性使用。家屬可全程陪伴，並參與「浴足孝思禮」等追思儀式，
+                            透過梳髮、更衣或最後的觸碰，好好說再見。
+                        </p>
+                        <div class="mt-7 flex flex-wrap gap-3">
+                            <a href="#sets" class="px-7 py-3 rounded-full bg-primary text-white font-bold hover:bg-primaryDark transition"><i class="fa-solid fa-list-check mr-2"></i>查看套組內容</a>
+                            <a href="tel:0800800818" class="px-7 py-3 rounded-full border border-primary/30 text-primary font-bold hover:bg-primary hover:text-white transition"><i class="fa-solid fa-phone-volume mr-2"></i>0800-800-818</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SPA 特色 ===== -->
+        <section class="pb-8">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto rounded-[2rem] bg-surface border border-white shadow-soft p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">SPA Features</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark">華梵 SPA 特色</h2>
+                    </div>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+                        <div class="flex gap-3"><i class="fa-solid fa-bath text-accent mt-1"></i><span class="text-gray-600">最專業的沐浴設備</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-user-shield text-accent mt-1"></i><span class="text-gray-600">嚴格挑選專業人員</span></div>
+                        <div class="flex gap-3"><i class="fa-regular fa-clock text-accent mt-1"></i><span class="text-gray-600">全程 90～120 分鐘</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-door-closed text-accent mt-1"></i><span class="text-gray-600">舒適溫馨的獨立空間</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-eye-slash text-accent mt-1"></i><span class="text-gray-600">三點不露，維護隱私尊嚴</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-soap text-accent mt-1"></i><span class="text-gray-600">百分百清潔淨度</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-recycle text-accent mt-1"></i><span class="text-gray-600">美容耗材一次性使用</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-people-group text-accent mt-1"></i><span class="text-gray-600">家屬全程陪伴，參與孝思禮</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-droplet text-accent mt-1"></i><span class="text-gray-600">選用頂級精油與 SPA 專業用品</span></div>
+                        <div class="flex gap-3"><i class="fa-solid fa-wand-magic-sparkles text-accent mt-1"></i><span class="text-gray-600">專業遺體美容，恢復自然風采</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 三大套組 ===== -->
+        <section id="sets" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">Care Sets</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-primaryDark leading-snug">禮體淨身三大套組</h2>
+                    <p class="text-gray-500 mt-5 max-w-2xl mx-auto leading-relaxed">
+                        依家屬需求與遺體狀況，提供 A、B、C 三種完整度不同的照護套組。
+                    </p>
+                </div>
+
+                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 items-start">
+
+                    <!-- A 套組 -->
+                    <div class="set-card">
+                        <div class="set-head">
+                            <span class="w-12 h-12 mx-auto rounded-full bg-primary/10 text-primary flex items-center justify-center font-serif text-2xl font-bold mb-3">A</span>
+                            <h3 class="font-serif text-xl font-bold text-primaryDark">禮體 A 套組</h3>
+                            <p class="text-xs text-gray-400 mt-1 tracking-wider">13 道專業工序</p>
+                            <p class="mt-3"><span class="text-primary font-serif text-3xl font-bold">18,000</span><span class="text-gray-400 text-sm ml-1">元起</span></p>
+                            <p class="text-[11px] text-accent tracking-widest mt-1">優惠參考價</p>
+                        </div>
+                        <ol class="set-list">
+                            <li><span class="num">1</span>全身洗淨</li>
+                            <li><span class="num">2</span>臉部細毛刮除（男：鬍子・鬢毛・鼻毛／女：眉毛）</li>
+                            <li><span class="num">3</span>眼・耳・口・鼻清潔</li>
+                            <li><span class="num">4</span>脫肛清潔</li>
+                            <li><span class="num">5</span>臉部按摩洗淨</li>
+                            <li><span class="num">6</span>頭髮及耳窩清潔洗淨</li>
+                            <li><span class="num">7</span>全身細部清潔</li>
+                            <li><span class="num">8</span>手部・足部清潔洗淨及指甲修剪</li>
+                            <li><span class="num">9</span>換上新衣</li>
+                            <li><span class="num">10</span>化妝（上妝）</li>
+                            <li><span class="num">11</span>頭髮吹整（微修剪）</li>
+                            <li><span class="num">12</span>傳統孝思禮</li>
+                            <li><span class="num">13</span>SPA 完成</li>
+                        </ol>
+                    </div>
+
+                    <!-- B 套組（精選） -->
+                    <div class="set-card featured">
+                        <div class="set-head">
+                            <span class="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-accent text-primaryDark text-[10px] font-bold tracking-[0.15em]">熱門</span>
+                            <span class="w-12 h-12 mx-auto rounded-full bg-accent/20 text-accent flex items-center justify-center font-serif text-2xl font-bold mb-3">B</span>
+                            <h3 class="font-serif text-xl font-bold text-primaryDark">禮體 B 套組</h3>
+                            <p class="text-xs text-gray-400 mt-1 tracking-wider">18 道專業工序</p>
+                            <p class="mt-3"><span class="text-primary font-serif text-3xl font-bold">28,000</span><span class="text-gray-400 text-sm ml-1">元起</span></p>
+                            <p class="text-[11px] text-accent tracking-widest mt-1">優惠參考價</p>
+                        </div>
+                        <ol class="set-list">
+                            <li><span class="num">1</span>沐浴凝膠（去除皮膚老化角質）</li>
+                            <li><span class="num">2</span>全身洗淨</li>
+                            <li><span class="num">3</span>臉部細毛刮除（男／女）</li>
+                            <li><span class="num">4</span>眼・耳・口・鼻清潔</li>
+                            <li><span class="num">5</span>脫肛清潔</li>
+                            <li><span class="num">6</span>臉部按摩洗淨</li>
+                            <li><span class="num">7</span>頭髮及耳窩清潔洗淨</li>
+                            <li><span class="num">8</span>全身細部清潔</li>
+                            <li><span class="num">9</span>手部・足部清潔及指甲修剪</li>
+                            <li><span class="num">10</span>足部按摩</li>
+                            <li><span class="num">11</span>浴足孝思禮（家屬參與）</li>
+                            <li><span class="num">12</span>全身 SPA 精油按摩</li>
+                            <li><span class="num">13</span>上指甲油（手・足）</li>
+                            <li><span class="num">14</span>換上新衣</li>
+                            <li><span class="num">15</span>化妝（上妝）</li>
+                            <li><span class="num">16</span>頭髮吹整（微修剪）</li>
+                            <li><span class="num">17</span>傳統孝思禮</li>
+                            <li><span class="num">18</span>SPA 完成</li>
+                        </ol>
+                    </div>
+
+                    <!-- C 套組 -->
+                    <div class="set-card">
+                        <div class="set-head">
+                            <span class="w-12 h-12 mx-auto rounded-full bg-primaryDark/10 text-primaryDark flex items-center justify-center font-serif text-2xl font-bold mb-3">C</span>
+                            <h3 class="font-serif text-xl font-bold text-primaryDark">禮體 C 套組</h3>
+                            <p class="text-xs text-gray-400 mt-1 tracking-wider">22 道專業工序</p>
+                            <p class="mt-3"><span class="text-primary font-serif text-3xl font-bold">38,000</span><span class="text-gray-400 text-sm ml-1">元起</span></p>
+                            <p class="text-[11px] text-accent tracking-widest mt-1">優惠參考價</p>
+                        </div>
+                        <ol class="set-list">
+                            <li><span class="num">1</span>沐浴凝膠（去除皮膚老化角質）</li>
+                            <li><span class="num">2</span>全身洗淨</li>
+                            <li><span class="num">3</span>臉部細毛刮除（男／女）</li>
+                            <li><span class="num">4</span>眼・耳・口・鼻清潔</li>
+                            <li><span class="num">5</span>脫肛清潔</li>
+                            <li><span class="num">6</span>臉部按摩洗淨</li>
+                            <li><span class="num">7</span>頭髮及耳窩清潔洗淨</li>
+                            <li><span class="num">8</span>全身細部清潔</li>
+                            <li><span class="num">9</span>手部・足部清潔及指甲修剪</li>
+                            <li><span class="num">10</span>足部按摩</li>
+                            <li><span class="num">11</span>浴足孝思禮（家屬參與）</li>
+                            <li><span class="num">12</span>全身 SPA 精油按摩</li>
+                            <li><span class="num">13</span>嚴選面膜臉部滋潤</li>
+                            <li><span class="num">14</span>六道指壓臉部按摩</li>
+                            <li><span class="num">15</span>筋絡放鬆</li>
+                            <li><span class="num">16</span>上指甲油（手・足）</li>
+                            <li><span class="num">17</span>口腔塑形（玻尿酸飽滿豐潤面容）</li>
+                            <li><span class="num">18</span>換上新衣</li>
+                            <li><span class="num">19</span>化妝（上妝）</li>
+                            <li><span class="num">20</span>頭髮吹整（修剪）</li>
+                            <li><span class="num">21</span>傳統孝思禮</li>
+                            <li><span class="num">22</span>SPA 完成</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <p class="max-w-6xl mx-auto text-center text-xs text-gray-400 mt-6 leading-relaxed">
+                    ※ 以上為優惠參考價，用品皆為一次性使用；實際內容與費用依遺體狀況及需求另行報價，歡迎來電免費諮詢。
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== 其他項目 ===== -->
+        <section class="pb-16 md:pb-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-4xl mx-auto rounded-[2rem] bg-surface border border-white shadow-soft p-8 md:p-10">
+                    <div class="text-center mb-8">
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">Add-on Services</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark">其他專業修復項目</h2>
+                        <p class="text-gray-500 text-sm mt-3">可依需求單獨加選，協助遺體修復與美容，讓摯愛以最完整的樣貌告別。</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-x-10">
+                        <div>
+                            <div class="addon-row"><span class="text-gray-600">氣切</span><span class="font-serif font-bold text-primary">3,600</span></div>
+                            <div class="addon-row"><span class="text-gray-600">造口</span><span class="font-serif font-bold text-primary">6,000</span></div>
+                            <div class="addon-row"><span class="text-gray-600">頭蓋骨</span><span class="font-serif font-bold text-primary">12,000</span></div>
+                            <div class="addon-row"><span class="text-gray-600">Y 字縫合</span><span class="font-serif font-bold text-primary">20,000</span></div>
+                            <div class="addon-row"><span class="text-gray-600">雙手縫合</span><span class="font-serif font-bold text-primary">12,000</span></div>
+                            <div class="addon-row"><span class="text-gray-600">雙腳縫合</span><span class="font-serif font-bold text-primary">15,000</span></div>
+                        </div>
+                        <div>
+                            <div class="addon-row"><span class="text-gray-600">假髮吹整</span><span class="font-serif font-bold text-primary">2,000</span></div>
+                            <div class="addon-row"><span class="text-gray-600">臉部特殊化妝（擦傷・小傷口）</span><span class="font-serif font-bold text-primary">3,600</span></div>
+                            <div class="addon-row"><span class="text-gray-600">口腔塑型</span><span class="font-serif font-bold text-primary">3,600</span></div>
+                            <div class="addon-row"><span class="text-gray-600">假髮代購</span><span class="text-gray-400 text-sm">依情況另議</span></div>
+                            <div class="addon-row"><span class="text-gray-600">局部或全身傷口美容</span><span class="text-gray-400 text-sm">依情況另議</span></div>
+                            <div class="addon-row"><span class="text-gray-600">全身修復</span><span class="text-gray-400 text-sm">依骨骼情況另議</span></div>
+                        </div>
+                    </div>
+                    <p class="text-center text-xs text-gray-400 mt-6">單位：新臺幣（元）。部分項目需視遺體狀況評估後報價。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 服務流程三步 ===== -->
+        <section class="pb-16 md:pb-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-10">
+                    <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">The Ritual</span>
+                    <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark">真心道別，感恩出發</h2>
+                    <p class="text-gray-500 text-sm mt-3">生命之花，乘願開放。</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid sm:grid-cols-3 gap-5">
+                    <div class="rounded-[1.5rem] bg-surface border border-white shadow-soft p-7 text-center">
+                        <span class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-clipboard-check"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark mb-1">確認流程</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">服務前向家屬完整說明流程、套組內容與注意事項。</p>
+                    </div>
+                    <div class="rounded-[1.5rem] bg-surface border border-white shadow-soft p-7 text-center">
+                        <span class="w-14 h-14 mx-auto rounded-2xl bg-accent/15 text-accent flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-hand-holding-droplet"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark mb-1">浴足孝思禮</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">家屬可親自參與，透過浴足與陪伴，表達最後的感謝。</p>
+                    </div>
+                    <div class="rounded-[1.5rem] bg-surface border border-white shadow-soft p-7 text-center">
+                        <span class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-spa"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark mb-1">SPA 完成</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">完成專業遺體美容，以自然安詳的容顏與家人團聚。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA ===== -->
+        <section class="pb-56 md:pb-72">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto rounded-[2rem] bg-primary text-white p-8 md:p-14 text-center relative overflow-hidden">
+                    <div class="absolute -top-16 -right-16 w-64 h-64 bg-accent/20 rounded-full blur-[80px] pointer-events-none"></div>
+                    <h2 class="text-2xl md:text-4xl font-serif font-bold mb-4 relative z-10">想為摯愛預約禮體 SPA？</h2>
+                    <p class="text-white/80 mb-8 relative z-10 leading-relaxed">由專人為您說明套組內容、時間安排與家屬可參與的孝思禮，24 小時免費諮詢。</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                        <a href="tel:0800800818" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-solid fa-phone-volume mr-2"></i>0800-800-818</a>
+                        <a href="process.html?card=7" class="px-8 py-3.5 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-diagram-project mr-2"></i>此服務於流程第七階段</a>
+                    </div>
+                </div>
+                <div class="max-w-6xl mx-auto grid sm:grid-cols-3 gap-5 mt-6">
+                    <a href="services.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">返回服務方案 <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                    <a href="hall.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">認識華梵會館 <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                    <a href="preneed.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">生前契約與方案 <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+</body>
+</html>

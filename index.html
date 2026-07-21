@@ -2059,13 +2059,13 @@
                                         多元化 <span class="text-accent font-serif font-bold">禮儀服務</span>
                                     </h2>
                                     <!-- Mobile circular arrow button -->
-                                    <a href="process.html"
+                                    <a href="services.html"
                                        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white text-xl font-bold shadow-gold hover:bg-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/60 ml-2 -translate-y-1"
                                        aria-label="查看所有方案">
                                         <span>&gt;</span>
                                     </a>
                                     <!-- Desktop button remains unchanged below -->
-                                    <a href="process.html"
+                                    <a href="services.html"
                                          class="hidden md:inline-flex items-center justify-center w-14 h-14 rounded-full bg-accent text-white text-2xl font-bold shadow-gold hover:bg-primary transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/60 translate-y-1"
                                          aria-label="查看所有方案">
                                         <span>&gt;</span>
@@ -2107,7 +2107,7 @@
                         <div class="w-12 h-1 bg-accent mb-4 rounded-full"></div>
                         <div id="text-content-religion" class="content-enter-active">
                             <p id="religion-desc" class="text-gray-600 text-base leading-relaxed mb-6 font-light">遵循古禮，莊嚴誦經。引導家屬為逝者積福報，圓滿功德，讓孝思流傳。</p>
-                            <a href="process.html#timeline" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
+                            <a href="services.html#ways" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
                                 <span>了解詳細方案</span>
                                 <i class="fa-solid fa-arrow-right ml-2 transform group-link-hover:translate-x-2 transition duration-300"></i>
                             </a>
@@ -2165,7 +2165,7 @@
                                 如同對待生者般的溫柔觸碰，透過專業的SPA淨身技術，洗去病痛，回復安詳容顏。我們使用頂級精油與溫水，細緻地為逝者清潔，展現對生命最後的尊重與呵護。
                             </p>
 
-                            <a href="process.html?card=7" id="service-link-mobile" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
+                            <a href="spa.html" id="service-link-mobile" class="inline-flex items-center text-primary font-bold text-sm hover:text-accent transition group-link">
                                 <span id="service-cta-mobile">了解詳細方案</span>
                                 <i class="fa-solid fa-arrow-right ml-2 transform group-link-hover:translate-x-2 transition duration-300"></i>
                             </a>
@@ -2222,7 +2222,7 @@
 
                 <!-- Card 2: SPA -->
                 <div class="group relative h-full rounded-[28px] overflow-hidden cursor-pointer transition-all duration-700 ease-out hover:z-10 md:-translate-y-8 border border-white/30 shadow-[0_25px_60px_-40px_rgba(70,91,64,0.55)] before:absolute before:inset-0 before:-z-10 before:rounded-[28px] before:bg-gradient-to-br before:from-white/5 before:via-transparent before:to-black/10 after:absolute after:inset-0 after:rounded-[28px] after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-700 after:bg-radial-gradient after:pointer-events-none">
-                    <a href="process.html?card=7" class="absolute inset-0 z-50" style="pointer-events:auto;" aria-label="展開禮體淨身SPA流程卡牌"></a>
+                    <a href="spa.html" class="absolute inset-0 z-50" style="pointer-events:auto;" aria-label="了解禮體淨身SPA服務"></a>
                     <div class="absolute inset-0 bg-gray-900">
                         <picture>
                             <source srcset="/HuaFan/image/index/禮體spa3.webp" type="image/webp">
@@ -2383,7 +2383,7 @@
                     <article class="hf-price-card hf-price-card--popular">
                         <span class="hf-price-card__level">進階升級</span>
                         <span class="hf-price-badge hf-price-badge--popular"><i class="fa-solid fa-fire" aria-hidden="true"></i>熱門推薦</span>
-                        <h3 class="hf-price-card__title">幸福方案</h3>
+                        <h3 class="hf-price-card__title">幸福之約</h3>
                         <p class="hf-price-card__price">NT$188,000</p>
                         <div class="hf-price-card__line"></div>
                         <ul class="hf-price-card__list">
@@ -2400,7 +2400,7 @@
                     <article class="hf-price-card hf-price-card--champion">
                         <span class="hf-price-card__level">頂級方案</span>
                         <span class="hf-price-badge hf-price-badge--champion"><i class="fa-solid fa-crown" aria-hidden="true"></i>口碑推薦</span>
-                        <h3 class="hf-price-card__title">尊崇方案</h3>
+                        <h3 class="hf-price-card__title">尊貴之約</h3>
                         <p class="hf-price-card__price">NT$238,000</p>
                         <div class="hf-price-card__line"></div>
                         <ul class="hf-price-card__list">
@@ -3900,21 +3900,24 @@ function adjustFontSize(change) {
             image: "/HuaFan/image/index/禮體spa3.webp",
             fallback: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
             desc: "如同對待生者般的溫柔觸碰，透過專業的SPA淨身技術，洗去病痛，回復安詳容顏。我們使用頂級精油與溫水，細緻地為逝者清潔，展現對生命最後的尊重與呵護。",
-            cta: "了解詳細方案"
+            cta: "了解詳細方案",
+            link: "spa.html"
         },
         {
             title: "會場佈置花藝",
             image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=2070&auto=format&fit=crop",
             fallback: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=2070&auto=format&fit=crop",
             desc: "捨棄擁擠的傳統罐頭塔，採用客製化鮮花佈置。無論是溫馨歐式或莊嚴日式，皆能呈現。每一朵花都代表著對逝者的思念，打造最優雅的告別場景。",
-            cta: "觀看花藝作品"
+            cta: "觀看花藝作品",
+            link: "services.html#memorial-design"
         },
         {
             title: "華梵會館",
             image: "/HuaFan/image/index/華梵會館.webp",
             fallback: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2070&auto=format&fit=crop",
             desc: "遠離公立殯儀館的喧囂與冰冷。我們提供飯店級的獨立治喪空間，溫馨典雅的環境設計，讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感，陪伴摯愛最後一程。",
-            cta: "預約參觀會館"
+            cta: "預約參觀會館",
+            link: "hall.html"
         }
     ];
 
@@ -3990,9 +3993,13 @@ function adjustFontSize(change) {
             descEl.textContent = data.desc;
             ctaEl.textContent = data.cta;
 
+            // 連結跟著目前分頁切換（SPA / 花藝 / 會館 對應 services.html 錨點）
+            const linkEl = document.getElementById('service-link-mobile');
+            if (linkEl && data.link) linkEl.setAttribute('href', data.link);
+
             titleEl.classList.remove('opacity-0', 'translate-y-4');
             titleEl.classList.add('content-enter-active');
-            
+
             textContent.classList.remove('opacity-0', 'translate-y-4');
             textContent.classList.add('content-enter-active');
         }, 300);

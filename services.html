@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 共用：本機 / 部署 圖片路徑自動切換（需以相對路徑載入） -->
+    <script src="js/hf-image-path.js"></script>
+    <!-- 共用：Header / 漢堡選單 / 右側懸浮鈕 / Footer 版型元件 -->
+    <script src="js/hf-components.js"></script>
+    <title>服務方案｜華梵禮儀 - 告別方式與特色服務</title>
+    <meta name="description" content="華梵禮儀告別方式與特色服務：中式傳統禮儀、西式與基督宗教追思、環保自然葬、禮體淨身 SPA、華梵會館，以及客製會場、生命故事與影像典藏等個人化追思服務。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#465B40',
+                        primaryDark: '#2F3E2B',
+                        secondary: '#2F3E2B',
+                        accent: '#C5A670',
+                        warm: '#F7F5F0',
+                        pale: '#E3EBE5',
+                        surface: '#FFFEFA',
+                        emergency: '#9F4A46',
+                        text: '#3D443B',
+                        menu: '#E5E7EB',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                        'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                        'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 96px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        /* Hero 背景 */
+        .services-hero-bg {
+            background-image: url('/HuaFan/image/index/告別.webp');
+            background-size: cover;
+            background-position: center 40%;
+            position: relative;
+        }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* 頁內分類導覽：固定於 Hero 下方（不隨頁面捲動懸浮於頂端） */
+        .svc-subnav { position: static; }
+        .svc-subnav-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.5rem 1.1rem; border-radius: 999px;
+            font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+            color: #4b5563; border: 1px solid transparent;
+            transition: all 0.25s ease; white-space: nowrap;
+        }
+        .svc-subnav-link:hover { color: #465B40; border-color: rgba(70,91,64,.3); }
+        .svc-subnav-link.active { background: #465B40; color: #fff; }
+
+        /* 告別方式 字卡（窄版並排） */
+        .way-card {
+            background: #FFFEFA;
+            border: 1px solid rgba(255,255,255,.9);
+            border-radius: 1.5rem; overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(70, 91, 64, 0.1);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+        .way-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 48px -18px rgba(70,91,64,.32);
+            border-color: rgba(197,166,112,.5);
+        }
+        .way-cover { position: relative; overflow: hidden; }
+        .way-cover img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        .way-card:hover .way-cover img { transform: scale(1.03); }
+
+        details.way-detail summary::-webkit-details-marker { display: none; }
+        details.way-detail summary::after {
+            content: '+'; margin-left: auto; color: #C5A670;
+            font-size: 1.3rem; line-height: 1; flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+        details.way-detail[open] summary::after { content: '−'; }
+        details.way-detail[open] { background: rgba(255,255,255,.95); border-color: rgba(197,166,112,.5); }
+
+        .way-tag {
+            display: inline-flex; align-items: center;
+            padding: 0.3rem 0.8rem; border-radius: 999px;
+            border: 1px solid rgba(197,166,112,.4); background: rgba(197,166,112,.06);
+            font-size: 0.75rem; letter-spacing: 0.08em; color: #6b7280;
+        }
+        .way-link {
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            font-size: 0.85rem; font-weight: 700; color: #465B40;
+            transition: color 0.2s ease, gap 0.2s ease;
+        }
+        .way-link:hover { color: #C5A670; gap: 0.7rem; }
+
+        /* 個人化追思 雜誌式拼版 */
+        .mosaic { display: grid; gap: 1.25rem; }
+        @media (min-width: 900px) {
+            .mosaic {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                grid-template-rows: repeat(2, minmax(220px, auto));
+            }
+            .mosaic-large  { grid-column: span 3; grid-row: span 2; }
+            .mosaic-medium { grid-column: span 3; grid-row: span 1; }
+            .mosaic-small  { grid-column: span 1; grid-row: span 1; }
+            .mosaic-small-wrap { grid-column: span 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        }
+        .mosaic-card {
+            position: relative; border-radius: 1.5rem; overflow: hidden;
+            background: #FFFEFA; border: 1px solid rgba(255,255,255,.9);
+            box-shadow: 0 10px 40px -10px rgba(70, 91, 64, 0.1);
+            display: flex; flex-direction: column;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .mosaic-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px -18px rgba(70,91,64,.3); }
+        .mosaic-photo { position: relative; overflow: hidden; flex: 1; min-height: 200px; }
+        .mosaic-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .mosaic-card:hover .mosaic-photo img { transform: scale(1.04); }
+        .mosaic-photo-fade {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(47,62,43,0) 30%, rgba(47,62,43,0.82) 100%);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .way-cover img, .mosaic-card, .mosaic-photo img, .svc-subnav-link { transition: none !important; }
+        }
+    </style>
+    <style id="continuous-scene-overrides">
+        :root {
+            --hf-forest-950: #213020;
+            --hf-forest-900: #2F3E2B;
+            --hf-forest-700: #465B40;
+            --hf-sage-100: #E8EEE7;
+            --hf-ivory: #F7F5F0;
+            --hf-paper: #FFFEFA;
+            --hf-gold: #C5A670;
+            --hf-ink: #343A32;
+            --hf-muted: #687067;
+            --hf-red: #9F4A46;
+            --space-section: clamp(2.5rem, 4vw, 4rem);
+            --scene-blur: clamp(4rem, 8vw, 8rem);
+            --overlap-depth: clamp(1.5rem, 4vw, 4.5rem);
+            --motion-fast: 260ms;
+            --motion-content: 720ms;
+            --ease-out-expo: cubic-bezier(.22, 1, .36, 1);
+            --z-bg: 0;
+            --z-scene: 5;
+            --z-content: 20;
+            --z-bridge: 30;
+            --z-nav: 50;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            position: relative;
+            overflow-x: clip;
+            background: var(--hf-ivory);
+            color: var(--hf-ink);
+            letter-spacing: .015em;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-bg);
+            pointer-events: none;
+            opacity: .035;
+            background-image: radial-gradient(circle at center, var(--hf-forest-900) .65px, transparent .75px);
+            background-size: 15px 15px;
+        }
+        .site-atmosphere {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-scene);
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .site-atmosphere::before,
+        .site-atmosphere::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(var(--scene-blur));
+            opacity: .1;
+        }
+        .site-atmosphere::before {
+            width: min(42rem, 52vw);
+            height: min(42rem, 52vw);
+            top: 18vh;
+            right: -18vw;
+            background: var(--hf-gold);
+            animation: atmosphere-drift 90s ease-in-out infinite alternate;
+        }
+        .site-atmosphere::after {
+            width: min(34rem, 46vw);
+            height: min(34rem, 46vw);
+            top: 145vh;
+            left: -18vw;
+            background: #91A08C;
+            animation: atmosphere-drift 110s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes atmosphere-drift {
+            to { transform: translate3d(4vw, 8vh, 0) scale(1.08); }
+        }
+        #hf-floating, #hf-menu, #hf-header { position: relative; z-index: var(--z-nav); }
+        main { position: relative; z-index: var(--z-content); }
+        a:focus-visible, summary:focus-visible {
+            outline: 3px solid var(--hf-gold);
+            outline-offset: 4px;
+            border-radius: .5rem;
+        }
+        .way-cover img, .feature-image img, .mosaic-photo img, .evidence-image img { background: linear-gradient(135deg, #DCE5DA, #BFCBBB); }
+        img.img-missing { opacity: 0 !important; }
+
+        /* Hero：M05 曝光淡化＋M15 對齊線接力 */
+        .services-hero-bg {
+            min-height: clamp(680px, 84vh, 900px);
+            isolation: isolate;
+            background-color: var(--hf-forest-900);
+            background-position: center 38%;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background:
+                linear-gradient(90deg, rgba(25,37,24,.94) 0%, rgba(34,48,32,.78) 42%, rgba(34,48,32,.26) 76%, rgba(34,48,32,.42) 100%),
+                linear-gradient(180deg, rgba(24,34,23,.24), rgba(29,42,28,.54));
+        }
+        .services-hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 76% 26%, rgba(197,166,112,.24), transparent 24%),
+                linear-gradient(90deg, transparent 6.5%, rgba(255,255,255,.16) 6.55%, transparent 6.65%);
+            mix-blend-mode: screen;
+        }
+        .hero-content {
+            width: min(1200px, calc(100% - 3rem));
+            margin-inline: auto;
+            text-align: left;
+        }
+        .hero-copy-block { max-width: 760px; }
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: .65rem;
+            margin-bottom: 1.6rem;
+            padding: .55rem .95rem;
+            border: 1px solid rgba(255,255,255,.28);
+            border-radius: 999px;
+            background: rgba(255,255,255,.1);
+            backdrop-filter: blur(12px);
+            color: rgba(255,255,255,.92);
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .18em;
+        }
+        .hero-title {
+            max-width: 730px;
+            color: #fff;
+            font-size: clamp(3rem, 5.6vw, 5.4rem);
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: .045em;
+            text-wrap: balance;
+            text-shadow: 0 8px 28px rgba(0,0,0,.28);
+        }
+        .hero-title em { color: #E1C996; font-style: normal; }
+        .hero-description {
+            max-width: 700px;
+            margin-top: 2rem;
+            color: rgba(255,255,255,.84);
+            font-size: clamp(.98rem, 1.3vw, 1.12rem);
+            line-height: 2.05;
+        }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.4rem; }
+        .hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: .8rem 1.45rem;
+            border-radius: 999px;
+            font-size: .92rem;
+            font-weight: 700;
+            transition: transform var(--motion-fast) ease, background-color var(--motion-fast) ease, border-color var(--motion-fast) ease;
+        }
+        .hero-actions a:hover { transform: translateY(-3px); }
+        .hero-primary { color: var(--hf-forest-950); background: var(--hf-gold); box-shadow: 0 16px 40px rgba(0,0,0,.18); }
+        .hero-primary:hover { background: #E0C893; }
+        .hero-emergency { color: #fff; background: var(--hf-red); box-shadow: 0 14px 34px rgba(89,27,24,.26); }
+        .hero-secondary { color: #fff; border: 1px solid rgba(255,255,255,.5); background: rgba(20,30,19,.18); }
+        .hero-side-note {
+            position: absolute;
+            right: clamp(1.5rem, 4vw, 4.5rem);
+            bottom: 8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255,255,255,.72);
+            font-family: 'Noto Serif TC', serif;
+            font-size: .78rem;
+            letter-spacing: .28em;
+            writing-mode: vertical-rl;
+        }
+        .hero-side-note::before { content: ''; width: 1px; height: 5rem; background: linear-gradient(var(--hf-gold), transparent); }
+        .hero-dissolve {
+            position: absolute;
+            right: 0;
+            bottom: -1px;
+            left: 0;
+            z-index: var(--z-bridge);
+            height: clamp(8rem, 16vw, 14rem);
+            pointer-events: none;
+            background: linear-gradient(180deg, transparent 0%, rgba(247,245,240,.35) 36%, var(--hf-ivory) 100%);
+        }
+
+        /* Hero → 信賴：M12 內容重疊橋＋M02 色彩繼承 */
+        .svc-subnav {
+            position: relative;
+            width: min(1120px, calc(100% - 2rem));
+            margin: 0.5rem auto 0;
+            border: 1px solid rgba(255,255,255,.82);
+            border-radius: 999px;
+            background: rgba(255,254,250,.9);
+            box-shadow: 0 18px 55px rgba(47,62,43,.14);
+            backdrop-filter: blur(18px);
+        }
+        .svc-subnav-link { padding: .68rem 1.12rem; color: #667064; }
+        .svc-subnav-link:hover { background: var(--hf-sage-100); border-color: transparent; }
+        .svc-subnav-link.active { color: #fff; background: var(--hf-forest-700); box-shadow: 0 6px 16px rgba(47,62,43,.18); }
+        .trust-scene {
+            position: relative;
+            z-index: var(--z-content);
+            margin-top: -1.7rem;
+            padding: 3.4rem 0 2.6rem;
+            color: #fff;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(197,166,112,.14), transparent 24%),
+                var(--hf-forest-900);
+        }
+        .trust-grid { position: relative; }
+        .trust-grid::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,166,112,.4), transparent);
+        }
+        .trust-item { position: relative; padding: .6rem 1rem; }
+        .trust-item p:first-child { letter-spacing: .02em; }
+
+        /* 全頁章節系統：M25 水印＋M27 標題基線接力 */
+        .story-canvas { background: transparent; }
+        .story-section { position: relative; padding-block: var(--space-section); }
+        .section-head { position: relative; max-width: 780px; margin: 0 auto clamp(1.75rem, 3.5vw, 3rem); text-align: center; }
+        .section-head::after {
+            content: '';
+            display: block;
+            width: 4.5rem;
+            height: 1px;
+            margin: 1.7rem auto 0;
+            background: linear-gradient(90deg, transparent, var(--hf-gold), transparent);
+        }
+        .section-label { display: block; margin-bottom: .9rem; color: #9A7B46; font-size: .72rem; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; }
+        .section-title { color: var(--hf-forest-950); font-size: clamp(2rem, 4.2vw, 3.75rem); font-weight: 600; line-height: 1.45; letter-spacing: .04em; text-wrap: balance; }
+        .section-copy { max-width: 670px; margin: 1.15rem auto 0; color: var(--hf-muted); line-height: 1.95; }
+
+        /* 告別方式 */
+        .ways-scene { isolation: isolate; padding-top: clamp(2.75rem, 4.5vw, 4rem); padding-bottom: clamp(2.75rem, 4.5vw, 4rem); }
+        .ways-scene::before {
+            content: 'WAYS';
+            position: absolute;
+            z-index: -1;
+            top: 2.4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(47,62,43,.035);
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(7rem, 19vw, 17rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: .08em;
+            white-space: nowrap;
+        }
+        .way-card {
+            position: relative;
+            border: 1px solid rgba(70,91,64,.1);
+            border-radius: 1.7rem;
+            background: rgba(255,254,250,.92);
+            box-shadow: 0 24px 70px -44px rgba(33,48,32,.48);
+        }
+        .way-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,.72);
+            border-radius: inherit;
+        }
+        .way-card:hover { transform: translateY(-7px); box-shadow: 0 34px 72px -38px rgba(33,48,32,.48); }
+        .way-cover { min-height: 13.25rem; background: linear-gradient(135deg, #81917D, #33422F); }
+        .way-cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(150deg, rgba(197,166,112,.18), transparent 45%);
+            mix-blend-mode: screen;
+        }
+        .way-tag { color: #646A61; background: #F6F1E5; border-color: rgba(197,166,112,.35); }
+        .way-link { position: relative; z-index: 2; }
+        .quote-bridge {
+            position: relative;
+            z-index: var(--z-bridge);
+            width: min(900px, calc(100% - 2rem));
+            margin: -2.4rem auto 0;
+            padding: 1.2rem 2rem;
+            border: 1px solid rgba(197,166,112,.34);
+            border-radius: 999px;
+            color: var(--hf-forest-700);
+            background: rgba(255,254,250,.92);
+            box-shadow: 0 15px 40px rgba(47,62,43,.1);
+            text-align: center;
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(.95rem, 1.5vw, 1.15rem);
+            letter-spacing: .13em;
+            backdrop-filter: blur(14px);
+        }
+        .quote-bridge span::before, .quote-bridge span::after { color: var(--hf-gold); }
+        .quote-bridge span::before { content: '「'; }
+        .quote-bridge span::after { content: '」'; }
+
+        /* 照護與空間：M07 材質連續＋M15 對齊線 */
+        .care-scene {
+            overflow: hidden;
+            margin-top: -1.5rem;
+            padding-top: clamp(3rem, 5vw, 4.5rem);
+            padding-bottom: clamp(2.75rem, 4.5vw, 4rem);
+            background: var(--hf-ivory);
+        }
+        .care-scene::after {
+            content: '';
+            position: absolute;
+            top: 24rem;
+            bottom: -1.5rem;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(transparent, rgba(197,166,112,.48) 14%, rgba(197,166,112,.48) 86%, transparent);
+        }
+        .feature-row { position: relative; z-index: 2; }
+        .feature-image {
+            overflow: hidden;
+            min-height: 27rem;
+            border: 7px solid rgba(255,255,255,.66);
+            border-radius: 46% 46% 2.2rem 2.2rem / 18% 18% 2.2rem 2.2rem;
+            background: linear-gradient(135deg, #81917D, #33422F);
+            box-shadow: 0 30px 70px -38px rgba(33,48,32,.5);
+        }
+        .feature-image img { transition: transform 1.2s var(--ease-out-expo); }
+        .feature-row:hover .feature-image img { transform: scale(1.025); }
+        .feature-copy {
+            padding: clamp(1.25rem, 3vw, 2.5rem);
+            border-left: 1px solid rgba(197,166,112,.34);
+        }
+        .feature-copy h3 { font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 600; letter-spacing: .04em; }
+        .feature-copy p { color: #5C655A; }
+        .feature-copy ul li { line-height: 1.6; }
+        .feature-note { background: rgba(255,254,250,.66) !important; border-color: rgba(197,166,112,.24) !important; backdrop-filter: blur(12px); }
+        .section-button {
+            display: inline-flex;
+            align-items: center;
+            min-height: 48px;
+            padding: .75rem 1.4rem;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--hf-forest-700);
+            font-weight: 700;
+            box-shadow: 0 12px 28px rgba(47,62,43,.16);
+            transition: transform var(--motion-fast) ease, background var(--motion-fast) ease;
+        }
+        .section-button:hover { transform: translateY(-3px); background: var(--hf-forest-950); }
+
+        /* 個人化追思：維持原暖白底，以影像與排版建立章節感 */
+        .memorial-scene {
+            overflow: hidden;
+            padding-top: clamp(3rem, 5vw, 4.5rem);
+            padding-bottom: clamp(2.75rem, 4.5vw, 4rem);
+            color: var(--hf-ink);
+            background: var(--hf-ivory);
+        }
+        .memorial-scene::before {
+            content: 'MEMORY';
+            position: absolute;
+            top: clamp(3.5rem, 7vw, 6rem);
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(47,62,43,.035);
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(6rem, 17vw, 15rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: .08em;
+            white-space: nowrap;
+        }
+        .memorial-scene .section-label { color: #9A7B46; }
+        .memorial-scene .section-title { color: var(--hf-forest-950); }
+        .memorial-scene .section-copy { color: var(--hf-muted); }
+        .memorial-scene .section-head::after { background: linear-gradient(90deg, transparent, var(--hf-gold), transparent); }
+        .memorial-scene .mosaic-card { border-color: rgba(70,91,64,.1); background: rgba(255,254,250,.94); box-shadow: 0 24px 60px -40px rgba(33,48,32,.46); }
+        .memorial-scene .mosaic-card:not(:has(.mosaic-photo)) { color: var(--hf-ink); }
+        .memorial-scene .mosaic-card:not(:has(.mosaic-photo)) h3 { color: var(--hf-forest-950); }
+        .memorial-scene .mosaic-card:not(:has(.mosaic-photo)) p { color: #6B7369; }
+        .memorial-scene .mosaic-photo-fade { background: linear-gradient(180deg, rgba(25,35,23,.02) 16%, rgba(25,35,23,.91) 100%); }
+
+        /* 證據 → 行動：M12 重疊橋＋M36 CTA 收束 */
+        .evidence-scene {
+            margin-top: -1px;
+            padding: 0 0 clamp(6rem, 10vw, 9rem);
+            background: var(--hf-ivory);
+        }
+        .evidence-card {
+            position: relative;
+            top: calc(var(--overlap-depth) * -1);
+            border: 1px solid rgba(197,166,112,.24) !important;
+            border-radius: 2.25rem !important;
+            background: rgba(255,254,250,.96) !important;
+            box-shadow: 0 35px 90px -42px rgba(33,48,32,.52) !important;
+        }
+        .evidence-image { background: linear-gradient(135deg, #81917D, #33422F); }
+        .next-scene { padding: clamp(3rem, 6vw, 5rem) 0 clamp(5rem, 8vw, 8rem); background: var(--hf-ivory); }
+        .next-head { max-width: 760px; margin: 0 auto clamp(3rem, 5vw, 4.5rem); text-align: center; }
+        .next-head h2 { color: var(--hf-forest-950); font-size: clamp(2rem, 3.6vw, 3.25rem); font-weight: 600; line-height: 1.45; text-wrap: balance; }
+        .next-head p { margin-top: 1rem; color: var(--hf-muted); line-height: 1.9; }
+        .next-cta { margin-top: 1.8rem; }
+        .next-cta a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            padding: .9rem 1.75rem;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--hf-red);
+            font-weight: 700;
+            box-shadow: 0 14px 34px rgba(117,49,45,.2);
+            transition: transform var(--motion-fast) ease;
+        }
+        .next-cta a:hover { transform: translateY(-3px); }
+        .route-card {
+            min-height: 190px;
+            justify-content: space-between;
+            border-color: rgba(70,91,64,.1);
+            background: rgba(255,254,250,.9);
+            box-shadow: 0 20px 55px -38px rgba(33,48,32,.42);
+        }
+        .route-card:hover { transform: translateY(-5px); }
+        .route-card span { transition: transform var(--motion-fast) var(--ease-out-expo); }
+        .route-card:hover span { transform: rotate(-6deg) scale(1.06); }
+
+        @media (min-width: 900px) {
+            .way-card:nth-child(2) { transform: translateY(1.75rem); }
+            .way-card:nth-child(2):hover { transform: translateY(1.25rem); }
+            .feature-row + .feature-row { margin-top: clamp(2.75rem, 4.5vw, 4.5rem); }
+            .care-scene .section-head { transform: translateX(-8vw); }
+            #spa .feature-copy { position: relative; }
+            #spa .feature-copy::before {
+                content: '';
+                position: absolute;
+                left: -1px;
+                bottom: 100%;
+                width: 1px;
+                height: 10rem;
+                background: linear-gradient(transparent, rgba(197,166,112,.34));
+            }
+        }
+
+        @media (max-width: 899px) {
+            .site-atmosphere::after { display: none; }
+            .services-hero-bg { min-height: 720px; padding-top: 9rem !important; padding-bottom: 10rem !important; background-position: 58% 40%; }
+            .hero-overlay { background: linear-gradient(90deg, rgba(27,39,26,.92), rgba(31,45,29,.64)); }
+            .hero-content { width: min(100% - 2rem, 720px); }
+            .hero-title { font-size: clamp(2.6rem, 10vw, 4.4rem); }
+            .hero-description br { display: none; }
+            .hero-side-note { display: none; }
+            .svc-subnav { width: calc(100% - 1rem); margin-top: 0.3rem; border-radius: 1.2rem; }
+            .svc-subnav > div { padding-inline: .35rem; }
+            .svc-subnav-link { padding: .62rem .85rem; font-size: .78rem; }
+            .trust-scene { margin-top: -1rem; padding-top: 2.8rem; }
+            .trust-grid::before { display: none; }
+            .care-scene::after { display: none; }
+            .feature-copy { padding-inline: .25rem; border-left: 0; }
+            .feature-image { min-height: 21rem; border-radius: 2.2rem 2.2rem 1.5rem 1.5rem; }
+            .memorial-scene, .evidence-scene { background: var(--hf-ivory); }
+            .mosaic-small-wrap { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        @media (max-width: 639px) {
+            .site-atmosphere::before { width: 90vw; height: 90vw; right: -50vw; opacity: .06; animation-duration: 120s; }
+            .hero-kicker { align-items: flex-start; max-width: 100%; border-radius: 1rem; font-size: .7rem; line-height: 1.6; letter-spacing: .12em; }
+            .hero-title { font-size: clamp(2.45rem, 12vw, 3.35rem); line-height: 1.33; }
+            .hero-description { margin-top: 1.4rem; font-size: .92rem; line-height: 1.9; }
+            .hero-actions { gap: .65rem; margin-top: 1.8rem; }
+            .hero-actions a { width: 100%; min-height: 48px; }
+            .quote-bridge { border-radius: 1.25rem; padding: 1rem 1.25rem; line-height: 1.7; }
+            .section-head { margin-bottom: 2.7rem; }
+            .section-title { font-size: 2rem; }
+            .way-card { border-radius: 1.35rem; }
+            .way-cover { min-height: 12rem; }
+            .feature-row { gap: 1.75rem !important; }
+            .feature-copy ul { grid-template-columns: 1fr !important; }
+            .feature-image { min-height: 18.5rem; }
+            .memorial-scene .mosaic-photo { min-height: 17rem; }
+            .evidence-card { border-radius: 1.5rem !important; }
+            .route-card { min-height: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .site-atmosphere::before, .site-atmosphere::after { animation: none !important; }
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 共用元件（由 js/hf-components.js 注入） -->
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== 01 Hero 區 ===== -->
+    <section class="services-hero-bg min-h-[60vh] flex flex-col justify-center relative pt-36 pb-36 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-primary30 to-primary/40"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-sm font-medium tracking-[0.25em] uppercase mb-6">
+                <i class="fa-solid fa-hand-holding-heart text-accent"></i> Funeral Services｜告別方式與特色服務
+            </span>
+            <h1 class="text-white text-4xl md:text-6xl font-serif font-bold leading-tight text-shadow-lg">
+                每一種告別，<br>都有適合它的方式。
+            </h1>
+            <p class="text-white/90 mt-8 max-w-3xl mx-auto leading-loose text-base md:text-lg">
+                信仰、家庭習慣與人生故事各不相同。華梵不以單一形式套用每一場告別，<br class="hidden md:block">
+                而是從中式、西式、基督宗教與環保自然葬，到禮體照護、專屬會館及個人化追思，<br class="hidden md:block">
+                陪伴家屬找到真正適合的安排。
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#ways" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition shadow-card">
+                    <i class="fa-solid fa-compass mr-2"></i>探索服務方式
+                </a>
+                <a href="tel:0800800818" class="px-8 py-3.5 rounded-full bg-emergency text-white font-bold shadow-red-glow hover:opacity-90 transition">
+                    <i class="fa-solid fa-phone-volume mr-2"></i>請專人協助選擇
+                </a>
+                <a href="process.html" class="px-8 py-3.5 rounded-full border border-white/50 text-white font-bold hover:bg-white hover:text-primary transition">
+                    <i class="fa-solid fa-diagram-project mr-2"></i>了解完整服務流程
+                </a>
+            </div>
+        </div>
+
+        <!-- 波浪分隔線 -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[100px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== 02 頁內固定分類導覽 ===== -->
+    <nav class="svc-subnav bg-warm/90 backdrop-blur-md border-b border-primary/10 shadow-sm" aria-label="服務分類">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center gap-1 md:gap-2 md:justify-center overflow-x-auto py-2.5" id="svc-subnav-links">
+                <a href="#ways" class="svc-subnav-link" data-spy="ways"><i class="fa-solid fa-hands-praying text-accent text-xs"></i>告別方式</a>
+                <a href="#spa" class="svc-subnav-link" data-spy="spa"><i class="fa-solid fa-spa text-accent text-xs"></i>禮體照護</a>
+                <a href="#hall" class="svc-subnav-link" data-spy="hall"><i class="fa-solid fa-building text-accent text-xs"></i>會館空間</a>
+                <a href="#memorial-design" class="svc-subnav-link" data-spy="memorial-design"><i class="fa-solid fa-heart text-accent text-xs"></i>個人化追思</a>
+                <a href="#gallery" class="svc-subnav-link" data-spy="gallery"><i class="fa-regular fa-images text-accent text-xs"></i>聯合奠祭</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="story-canvas relative z-30">
+
+        <!-- ============================================================
+             第一大區：選擇適合的告別方式
+        ============================================================= -->
+        <section id="ways" class="story-section ways-scene">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="section-head">
+                    <span class="section-label">Ways of Farewell · 01</span>
+                </div>
+
+                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 items-stretch">
+
+                    <!-- 01 中式傳統禮儀 -->
+                    <article id="traditional" class="way-card flex flex-col">
+                        <div class="way-cover h-44">
+                            <img src="/HuaFan/image/index/啟靈.webp" alt="中式傳統禮儀">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primaryDark/90 via-primaryDark/25 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-5">
+                                <span class="text-accent text-[11px] font-bold tracking-[0.25em] uppercase block mb-1">01</span>
+                                <h3 class="text-white text-xl font-serif font-bold text-shadow-lg">中式傳統禮儀</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 md:p-6 flex flex-col flex-1">
+                            <p class="text-primary font-serif text-sm italic mb-3">在禮俗與心意之間，安排莊重而不繁複的送別。</p>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                依佛教、道教、地方民俗與逝者意願調整，協助釐清助念、豎靈、誦經、法事、家奠公奠與安奉內容，並逐項說明儀節意義。
+                            </p>
+                            <ul class="mt-4 space-y-2.5 text-sm">
+                                <li class="flex gap-2.5"><i class="fa-solid fa-dharmachakra text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">佛教禮儀</b>　助念、誦經、佛事與祝禱</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-yin-yang text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">道教禮儀</b>　道教科儀與地方習俗</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-scroll text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">傳統民俗</b>　保留家族重視的儀節</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-1.5 mt-4">
+                                <span class="way-tag">家奠公奠</span><span class="way-tag">法事安排</span><span class="way-tag">禮俗協調</span>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-dashed border-accent/40 flex flex-col gap-2.5">
+                                <a href="wiki_top-detail.html?id=religions" class="way-link">認識佛道教葬儀 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                                <a href="process.html" class="way-link">查看完整服務流程 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 02 西式・基督宗教・人文追思 -->
+                    <article id="western" class="way-card flex flex-col">
+                        <div class="way-cover h-44">
+                            <img src="/HuaFan/image/index/彌撒.webp" alt="西式・基督宗教・人文追思">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primaryDark/90 via-primaryDark/25 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-5">
+                                <span class="text-accent text-[11px] font-bold tracking-[0.25em] uppercase block mb-1">02</span>
+                                <h3 class="text-white text-xl font-serif font-bold text-shadow-lg">西式・基督宗教・人文追思</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 md:p-6 flex flex-col flex-1">
+                            <p class="text-primary font-serif text-sm italic mb-3">以詩歌、花禮與生命分享，溫柔說完想說的話。</p>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                協助安排場地、花藝、影像、音樂與親友分享；宗教儀式內容尊重牧師、神父、教會與家屬指引，完成符合信仰精神的追思。
+                            </p>
+                            <ul class="mt-4 space-y-2.5 text-sm">
+                                <li class="flex gap-2.5"><i class="fa-solid fa-cross text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">基督教</b>　安息／追思禮拜</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-church text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">天主教</b>　殯葬彌撒與祈禱</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-dove text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">人文追思</b>　以生命故事為主角</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-1.5 mt-4">
+                                <span class="way-tag">詩歌音樂</span><span class="way-tag">生命分享</span><span class="way-tag">西式花藝</span>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-dashed border-accent/40 flex flex-col gap-2.5">
+                                <a href="wiki_top-detail.html?id=religions" class="way-link">認識基督宗教葬儀 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                                <a href="news.html" class="way-link">查看服務案例 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 03 環保自然葬 -->
+                    <article id="natural" class="way-card flex flex-col">
+                        <div class="way-cover h-44">
+                            <img src="/HuaFan/image/index/樹葬1.webp" alt="環保自然葬">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primaryDark/90 via-primaryDark/25 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-5">
+                                <span class="text-accent text-[11px] font-bold tracking-[0.25em] uppercase block mb-1">03</span>
+                                <h3 class="text-white text-xl font-serif font-bold text-shadow-lg">環保自然葬</h3>
+                            </div>
+                        </div>
+                        <div class="p-5 md:p-6 flex flex-col flex-1">
+                            <p class="text-primary font-serif text-sm italic mb-3">不立碑、不造墳，讓生命回到自然的循環。</p>
+                            <p class="text-gray-500 text-sm leading-relaxed">
+                                將火化後骨灰經適當處理，以不設永久設施、不進納骨塔、不立碑造墳的方式，安置於政府核定的自然環境。華梵協助比較葬法、辦理申請與儀式安排。
+                            </p>
+                            <ul class="mt-4 space-y-2.5 text-sm">
+                                <li class="flex gap-2.5"><i class="fa-solid fa-tree text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">樹葬・花葬</b>　骨灰回歸土地與花木</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-water text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">海葬</b>　核定海域骨灰拋灑</span></li>
+                                <li class="flex gap-2.5"><i class="fa-solid fa-leaf text-accent mt-1 text-xs"></i><span class="text-gray-600"><b class="text-primaryDark">灑葬・植存</b>　指定綠地拋灑植存</span></li>
+                            </ul>
+                            <div class="flex flex-wrap gap-1.5 mt-4">
+                                <span class="way-tag">自行申請</span><span class="way-tag">政府聯合辦理</span><span class="way-tag">華梵協辦</span>
+                            </div>
+                            <div class="mt-auto pt-5 border-t border-dashed border-accent/40 flex flex-col gap-2.5">
+                                <a href="wiki_top-detail.html?id=burials" class="way-link">比較各種自然葬 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                                <a href="wiki_base-detail.html?id=joint-sea-burial" class="way-link">查看申請方式與文件 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
+             第二大區：專業照護與空間
+        ============================================================= -->
+        <section class="story-section care-scene">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="section-head">
+                    <span class="section-label">Care &amp; Space · 02</span>
+                </div>
+
+                <!-- 04 禮體淨身 SPA：圖左文右 -->
+                <div id="spa" class="feature-row max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="feature-image relative h-72 md:h-[420px]">
+                        <img src="/HuaFan/image/index/禮體spa3.webp" alt="禮體淨身 SPA" class="w-full h-full object-cover">
+                        <span class="absolute top-5 left-5 px-4 py-1.5 rounded-full bg-primaryDark/80 backdrop-blur text-accent text-xs font-bold tracking-[0.2em]">
+                            <i class="fa-solid fa-spa mr-1"></i>禮體照護
+                        </span>
+                    </div>
+                    <div class="feature-copy">
+                        <h3 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-4">禮體淨身 SPA</h3>
+                        <p class="text-gray-600 leading-loose">
+                            禮體淨身 SPA 透過專業清潔、儀容整理與個性化妝容，協助逝者以自然、安詳且保有尊嚴的姿態與家人告別。
+                            服務於獨立空間進行，選用頂級精油與精選 SPA 專業用品，美容耗材皆一次性使用；
+                            家屬亦可全程陪伴、參與孝思禮，透過梳髮、更衣或最後的觸碰，表達感謝與不捨。
+                        </p>
+                        <p class="text-primary font-serif italic mt-3">有一種儀式，一生只有一次。</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2.5 mt-6 text-sm text-gray-600">
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>頂級精油專業照護</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>專業淨身與清潔</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>梳髮及儀容整理</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>個性化妝容</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>耗材一次性使用</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>獨立隱私空間</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>家屬孝思禮參與</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>約 90–120 分鐘</li>
+                        </ul>
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            <span class="way-tag">禮體 A 套組 · 13 道</span>
+                            <span class="way-tag">禮體 B 套組 · 18 道</span>
+                            <span class="way-tag">禮體 C 套組 · 22 道</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-4 mt-8">
+                            <a href="spa.html" class="section-button">
+                                <i class="fa-solid fa-spa mr-2"></i>完整 SPA 介紹與套組
+                            </a>
+                            <a href="tel:0800800818" class="way-link">預約諮詢 <i class="fa-solid fa-phone-volume text-xs"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 05 華梵會館：文左圖右 -->
+                <div id="hall" class="feature-row max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="feature-image md:order-2 relative h-102 md:h-[420px]">
+                        <img src="/HuaFan/image/index/華梵會館.webp" alt="華梵會館" class="w-full h-full object-cover">
+                        <span class="absolute top-5 left-5 px-4 py-1.5 rounded-full bg-primaryDark/80 backdrop-blur text-accent text-xs font-bold tracking-[0.2em]">
+                            <i class="fa-solid fa-building mr-1"></i>會館空間
+                        </span>
+                    </div>
+                    <div class="feature-copy md:order-1">
+                        <h3 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-4">華梵會館</h3>
+                        <p class="text-gray-600 leading-loose">
+                            遠離公立殯儀館的喧囂與冰冷，華梵會館提供飯店級的獨立治喪空間。
+                            溫馨典雅的環境設計，搭配專人接待、家屬專屬包廂及公共休憩區，
+                            讓家屬擁有絕對的隱私，在最舒適的氛圍中凝聚情感、從容接待前來弔唁的親友，陪伴摯愛最後一程。
+                        </p>
+                        <ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2.5 mt-6 text-sm text-gray-600">
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>專人拜飯</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>專業人員接待</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>親友弔唁引導</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>家屬專屬包廂</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>公共休憩空間</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>沙發與接待桌椅</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>無線網路</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>茶水及咖啡</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i>飯店式空間管理</li>
+                        </ul>
+                        <div class="feature-note mt-6 p-4 rounded-2xl bg-surface border border-white shadow-soft text-sm text-gray-600">
+                            <p><i class="fa-solid fa-location-dot text-accent mr-2"></i>台中市北區學士路 257 號 7 樓</p>
+                            <p class="mt-1"><i class="fa-solid fa-phone text-accent mr-2"></i>24H 專線：<a href="tel:0800800818" class="font-bold text-primary hover:text-accent transition">0800-800-818</a></p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-4 mt-6">
+                            <a href="hall.html" class="section-button">
+                                <i class="fa-solid fa-building mr-2"></i>完整會館介紹
+                            </a>
+                            <a href="tel:0800800818" class="way-link">預約參觀 <i class="fa-regular fa-calendar-check text-xs"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             第三大區：華梵個人化追思服務
+        ============================================================= -->
+        <section id="memorial-design" class="story-section memorial-scene">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="section-head">
+                    <span class="section-label">Personal Memorial · 03</span>
+                    <h2 class="section-title font-serif">
+                        不只是完成一場儀式，<br class="md:hidden">而是留下屬於他的樣子。
+                    </h2>
+                    <p class="section-copy">
+                        客製花藝・生命故事・奠禮攝影・獻燭祝福・追思影像
+                    </p>
+                </div>
+
+                <div class="max-w-6xl mx-auto mosaic">
+
+                    <!-- 大卡：客製會場與花藝 -->
+                    <div class="mosaic-card mosaic-large">
+                        <div class="mosaic-photo min-h-[300px]">
+                            <img src="/HuaFan/image/index/花.webp" alt="客製會場與花藝">
+                            <div class="mosaic-photo-fade"></div>
+                            <div class="absolute bottom-0 left-0 p-6 md:p-8 z-10">
+                                <h3 class="text-white text-xl md:text-2xl font-serif font-bold text-shadow-lg mb-2">客製會場與花藝</h3>
+                                <p class="text-white/85 text-sm leading-relaxed max-w-md">
+                                    根據逝者的個性、喜好、職業與家屬期待，規劃花藝色彩、照片、燈光、紀念物及現場動線。
+                                    會場不只是告別的背景，也能成為一場關於生命的展覽。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中卡：功績與生命故事展示 -->
+                    <div class="mosaic-card mosaic-medium">
+                        <div class="mosaic-photo">
+                            <img src="/HuaFan/image/index/辭生.webp" alt="功績與生命故事展示">
+                            <div class="mosaic-photo-fade"></div>
+                            <div class="absolute bottom-0 left-0 p-5 md:p-6 z-10">
+                                <h3 class="text-white text-lg md:text-xl font-serif font-bold text-shadow-lg mb-1.5">功績與生命故事展示</h3>
+                                <p class="text-white/85 text-sm leading-relaxed">
+                                    將獎章、作品、照片、收藏及重要人生經歷整理為故事牆或展示區，讓親友重新認識逝者走過的歲月與留下的精神。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中卡：Photo Story 生命影像 -->
+                    <div class="mosaic-card mosaic-medium">
+                        <div class="mosaic-photo">
+                            <img src="/HuaFan/image/index/hero.webp" alt="Photo Story 生命影像">
+                            <div class="mosaic-photo-fade"></div>
+                            <div class="absolute bottom-0 left-0 p-5 md:p-6 z-10">
+                                <h3 class="text-white text-lg md:text-xl font-serif font-bold text-shadow-lg mb-1.5">Photo Story 生命影像</h3>
+                                <p class="text-white/85 text-sm leading-relaxed">
+                                    依據家屬提供的照片與生平描述，整理重要人物、事件與人生階段，製作專屬生命故事影像，而不是套用固定模板。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 小卡 × 3 -->
+                    <div class="mosaic-small-wrap">
+                        <div class="mosaic-card p-5 justify-between">
+                            <span class="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-3"><i class="fa-solid fa-camera-retro"></i></span>
+                            <div>
+                                <h3 class="font-serif font-bold text-primaryDark mb-1.5">奠禮影像典藏</h3>
+                                <p class="text-gray-500 text-xs leading-relaxed">
+                                    保留告別當天的重要畫面與儀式細節，可整理為回憶影片或數位典藏。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mosaic-card p-5 justify-between">
+                            <span class="w-11 h-11 rounded-2xl bg-accent/15 text-accent flex items-center justify-center mb-3"><i class="fa-solid fa-fire-flame-simple"></i></span>
+                            <div>
+                                <h3 class="font-serif font-bold text-primaryDark mb-1.5">獻燭</h3>
+                                <p class="text-gray-500 text-xs leading-relaxed">
+                                    以溫暖燭光取代部分傳統致意形式，讓親友透過安靜的獻燭，表達思念、感謝與祝福。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mosaic-card p-5 justify-between">
+                            <span class="w-11 h-11 rounded-2xl bg-emergency/10 text-emergency flex items-center justify-center mb-3"><i class="fa-regular fa-envelope-open"></i></span>
+                            <div>
+                                <h3 class="font-serif font-bold text-primaryDark mb-1.5">祝福卡與獻花</h3>
+                                <p class="text-gray-500 text-xs leading-relaxed">
+                                    在瞻仰或送別時提供卡片與花朵，讓親友寫下來不及說出口的話，化為溫暖的祝福。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             服務實況：政府聯合奠祭（信賴區）
+        ============================================================= -->
+        <section id="gallery" class="pt-8 md:pt-12 pb-10">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto rounded-[2rem] bg-surface border border-white shadow-soft overflow-hidden md:flex">
+                    <div class="md:w-2/5 h-56 md:h-auto relative">
+                        <img src="/HuaFan/image/about/聯合奠祭.webp" alt="臺中市聯合奠祭" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 p-7 md:p-10">
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-xs block mb-3">Trusted Service</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark mb-4">政府聯合奠祭</h2>
+                        <p class="text-gray-600 leading-loose text-sm md:text-base">
+                            華梵禮儀是台中市政府「聯合奠祭」與「聯合海葬」的重要協辦廠商，並自 103 年起承辦臺中市殯葬生命禮儀管理所勞務管理工作。
+                            多年的公部門合作經驗，讓每一場服務都有可被檢視的專業標準。
+                        </p>
+                        <div class="flex flex-wrap gap-x-8 gap-y-3 mt-6 pt-5 border-t border-dashed border-accent/40">
+                            <a href="news.html" class="way-link">查看服務動態與實況 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                            <a href="about.html#official-recognition" class="way-link">了解政府合作與評鑑 <i class="fa-solid fa-arrow-right-long text-xs"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             底部：四個方向卡（交叉導流，不放流程）
+        ============================================================= -->
+        <section class="pt-8 pb-44 md:pb-56 relative z-30">
+            <div class="container mx-auto px-4 md:px-6 relative z-30">
+                <div class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <a href="process.html" class="mosaic-card p-6 group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-diagram-project"></i></span>
+                        <p class="text-xs text-gray-400 mb-1">想知道事情怎麼依序進行？</p>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">查看完整服務流程 <i class="fa-solid fa-arrow-right-long text-xs text-accent ml-1"></i></h3>
+                    </a>
+                    <a href="preneed.html" class="mosaic-card p-6 group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-file-signature"></i></span>
+                        <p class="text-xs text-gray-400 mb-1">想了解費用與契約方案？</p>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">查看生前契約與方案 <i class="fa-solid fa-arrow-right-long text-xs text-accent ml-1"></i></h3>
+                    </a>
+                    <a href="wiki.html" class="mosaic-card p-6 group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-book-open"></i></span>
+                        <p class="text-xs text-gray-400 mb-1">想了解宗教、習俗與法規？</p>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">瀏覽禮儀百科 <i class="fa-solid fa-arrow-right-long text-xs text-accent ml-1"></i></h3>
+                    </a>
+                    <a href="faq.html" class="mosaic-card p-6 group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-circle-question"></i></span>
+                        <p class="text-xs text-gray-400 mb-1">還不知道如何選擇？</p>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">常見問題／聯絡禮儀師 <i class="fa-solid fa-arrow-right-long text-xs text-accent ml-1"></i></h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 共用元件（由 js/hf-components.js 注入）：Footer 頁尾（含頁尾前螢幕網屏疊加層） -->
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+
+    <script>
+    (function initServicesPage() {
+        'use strict';
+
+        /* 頁內固定分類導覽：scrollspy 高亮 */
+        var links = Array.from(document.querySelectorAll('#svc-subnav-links [data-spy]'));
+        var sections = links.map(function (l) {
+            return document.getElementById(l.getAttribute('data-spy'));
+        });
+
+        function updateSpy() {
+            var offset = 170;
+            var currentIdx = -1;
+            sections.forEach(function (sec, i) {
+                if (sec && sec.getBoundingClientRect().top <= offset) currentIdx = i;
+            });
+            links.forEach(function (l, i) {
+                l.classList.toggle('active', i === currentIdx);
+            });
+        }
+
+        var ticking = false;
+        window.addEventListener('scroll', function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () { updateSpy(); ticking = false; });
+        }, { passive: true });
+        updateSpy();
+
+        /* 圖片路徑尚未載入時保留調性色塊，避免破圖破壞版面 */
+        document.querySelectorAll('img').forEach(function (image) {
+            image.addEventListener('error', function () { image.classList.add('img-missing'); }, { once: true });
+        });
+    })();
+    </script>
+</body>
+</html>

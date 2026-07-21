@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/hf-image-path.js"></script>
+    <script src="js/hf-components.js"></script>
+    <title>華梵會館｜華梵禮儀 - 飯店級獨立治喪與親友接待空間</title>
+    <meta name="description" content="華梵會館：遠離公立殯儀館的喧囂與冰冷，提供飯店級的獨立治喪空間。專人接待、家屬專屬包廂與公共休憩區，讓家屬擁有隱私、在最舒適的氛圍中陪伴摯愛最後一程。">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/hf-header-menu.css">
+
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: {
+                    primary: '#465B40', primaryDark: '#2F3E2B', secondary: '#2F3E2B',
+                    accent: '#C5A670', warm: '#F7F5F0', pale: '#E3EBE5', surface: '#FFFEFA',
+                    emergency: '#9F4A46', text: '#3D443B', menu: '#E5E7EB',
+                },
+                fontFamily: { serif: ['"Noto Serif TC"', 'serif'], sans: ['"Noto Sans TC"', 'sans-serif'] },
+                boxShadow: {
+                    'soft': '0 10px 40px -10px rgba(70, 91, 64, 0.1)',
+                    'card': '0 20px 40px -15px rgba(70, 91, 64, 0.25)',
+                    'red-glow': '0 4px 15px rgba(159, 74, 70, 0.4)',
+                }
+            } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F7F5F0; color: #3D443B; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Noto Serif TC', serif; }
+        [id] { scroll-margin-top: 96px; }
+
+        .bg-dots-pattern { background-color: #F7F5F0; }
+        .bg-dots-pattern::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#465B40 0.5px, transparent 0.5px);
+            background-size: 12px 12px; opacity: 0.06; pointer-events: none;
+        }
+
+        .hall-hero { position: relative; background: #2F3E2B; overflow: hidden; }
+        .hall-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.42; }
+        .hall-hero-fade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(47,62,43,0.3) 0%, rgba(47,62,43,0.6) 55%, rgba(47,62,43,0.9) 100%); }
+        .text-shadow-lg { text-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        .facility-card {
+            background: #FFFEFA; border: 1px solid rgba(255,255,255,.9);
+            border-radius: 1.25rem; padding: 1.5rem;
+            box-shadow: 0 10px 40px -10px rgba(70,91,64,.1);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .facility-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(70,91,64,.28); }
+
+        @media (prefers-reduced-motion: reduce) { .facility-card { transition: none !important; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="hf-floating"></div>
+    <div id="hf-menu"></div>
+    <div id="hf-header"></div>
+
+    <!-- ===== Hero ===== -->
+    <header class="hall-hero pt-40 pb-28 md:pt-48 md:pb-36 px-4 md:px-6 text-white">
+        <img src="/HuaFan/image/index/華梵會館.webp" class="hall-hero-img" alt="華梵會館">
+        <div class="hall-hero-fade"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <a href="services.html#hall" class="inline-flex items-center gap-2 text-xs md:text-sm tracking-widest text-white/70 hover:text-white mb-8 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 服務方案 · 會館空間
+            </a>
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/25 backdrop-blur text-white text-sm font-medium tracking-[0.2em] uppercase mb-6">
+                <i class="fa-solid fa-building text-accent"></i> Hua Fan Hall｜華梵會館
+            </span>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold leading-tight text-shadow-lg">飯店級的<br class="md:hidden">獨立治喪空間</h1>
+            <p class="text-white/85 mt-6 max-w-2xl mx-auto leading-loose text-base md:text-lg">
+                遠離公立殯儀館的喧囂與冰冷，<br class="hidden md:block">
+                讓家屬擁有絕對的隱私，在最舒適的氛圍中陪伴摯愛最後一程。
+            </p>
+            <div class="mt-9 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="tel:0800800818" class="px-8 py-3.5 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-regular fa-calendar-check mr-2"></i>預約參觀會館</a>
+                <a href="#location" class="px-8 py-3.5 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-location-dot mr-2"></i>交通與位置</a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 translate-y-[1px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[50px] md:h-[90px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,744.38,13.78c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-[#F7F5F0]"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="relative z-30">
+
+        <!-- ===== 圖文簡介 ===== -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="rounded-[2rem] overflow-hidden shadow-card relative h-72 md:h-[440px]">
+                        <img src="/HuaFan/image/index/華梵會館.webp" alt="華梵會館空間" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">Private &amp; Comfortable</span>
+                        <h2 class="text-2xl md:text-4xl font-serif font-bold text-primaryDark mb-5 leading-snug">在最舒適的氛圍中，好好道別</h2>
+                        <p class="text-gray-600 leading-loose">
+                            治喪期間的每一天，家屬都需要一個能安心停留的地方。華梵會館以飯店式管理，
+                            提供溫馨典雅、具隱私感的獨立空間，讓家屬遠離公立殯儀館的喧囂與冰冷，
+                            在從容而莊重的環境中凝聚情感、接待前來弔唁的親友。
+                        </p>
+                        <p class="text-gray-600 leading-loose mt-4">
+                            專人接待、家屬專屬包廂與公共休憩區，讓您在最艱難的時刻，仍能保有<strong class="text-primaryDark">絕對的隱私</strong>
+                            與被妥善照顧的安心感，安靜地陪伴摯愛走完最後一程。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 設施 ===== -->
+        <section class="pb-8">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12">
+                    <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">Facilities</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-primaryDark">會館設施與服務</h2>
+                </div>
+                <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+                    <div class="facility-card text-center"><i class="fa-solid fa-bowl-rice text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">專人拜飯</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">依禮俗協助家屬完成拜飯</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-user-tie text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">專業接待</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">專業人員全程接待引導</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-hands-holding text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">弔唁引導</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">協助親友弔唁動線安排</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-door-closed text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">專屬包廂</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">家屬專屬、保有隱私</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-couch text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">休憩空間</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">舒適沙發與接待桌椅</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-wifi text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">無線網路</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">全館免費 Wi-Fi</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-mug-hot text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">茶水咖啡</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">備有茶水及咖啡</p></div>
+                    <div class="facility-card text-center"><i class="fa-solid fa-hotel text-accent text-2xl mb-3"></i><h3 class="font-serif font-bold text-primaryDark">飯店式管理</h3><p class="text-gray-500 text-xs mt-1.5 leading-relaxed">整潔、有序、專業維護</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 適合哪些家庭 ===== -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-5xl mx-auto rounded-[2rem] bg-surface border border-white shadow-soft p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">For You</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-primaryDark">會館適合這樣的家庭</h2>
+                    </div>
+                    <div class="grid sm:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <span class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-shield-heart"></i></span>
+                            <h3 class="font-serif font-bold text-primaryDark mb-1">重視隱私</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">希望在不受打擾的獨立空間裡，安靜陪伴與接待親友。</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="w-14 h-14 mx-auto rounded-2xl bg-accent/15 text-accent flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-people-roof"></i></span>
+                            <h3 class="font-serif font-bold text-primaryDark mb-1">親友眾多</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">需要寬敞舒適的接待與休憩空間，從容招呼前來致意的賓客。</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-mug-saucer"></i></span>
+                            <h3 class="font-serif font-bold text-primaryDark mb-1">重視品質</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">期待以飯店級的環境與服務，讓治喪期間也能被妥善照顧。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 位置與交通 ===== -->
+        <section id="location" class="pb-16 md:pb-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto rounded-[2rem] bg-primary text-white overflow-hidden md:flex">
+                    <div class="flex-1 p-8 md:p-12">
+                        <span class="text-accent font-bold tracking-[0.3em] uppercase text-sm block mb-3">Location</span>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold mb-6">會館位置與聯絡</h2>
+                        <div class="space-y-4 text-white/85">
+                            <p class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-accent mt-1"></i><span>台中市北區學士路 257 號 7 樓<br><span class="text-white/60 text-sm">（近中國醫藥大學、崇德路一帶）</span></span></p>
+                            <p class="flex items-center gap-3"><i class="fa-solid fa-phone-volume text-accent"></i><span class="tracking-wider text-lg">0800-800-818</span><span class="text-xs bg-white/10 px-2 py-0.5 rounded">24H</span></p>
+                            <p class="flex items-center gap-3"><i class="fa-solid fa-envelope text-accent"></i><span>k0921758755@yahoo.com.tw</span></p>
+                        </div>
+                        <div class="mt-8 flex flex-wrap gap-4">
+                            <a href="tel:0800800818" class="px-7 py-3 rounded-full bg-accent text-primaryDark font-bold hover:bg-white transition"><i class="fa-regular fa-calendar-check mr-2"></i>預約參觀</a>
+                            <a href="wiki_top-detail.html?id=traffic" class="px-7 py-3 rounded-full border border-white/40 font-bold hover:bg-white hover:text-primary transition"><i class="fa-solid fa-route mr-2"></i>殯儀館交通資訊</a>
+                        </div>
+                    </div>
+                    <div class="md:w-2/5 relative min-h-[240px]">
+                        <img src="/HuaFan/image/index/華梵會館.webp" alt="華梵會館外觀" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 交叉導流 ===== -->
+        <section class="pb-56 md:pb-72">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-6xl mx-auto grid sm:grid-cols-3 gap-5">
+                    <a href="services.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">返回服務方案 <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                    <a href="spa.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-spa"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">禮體淨身 SPA <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                    <a href="process.html" class="rounded-2xl bg-surface border border-white shadow-soft p-6 hover:shadow-card transition group">
+                        <span class="w-12 h-12 rounded-2xl bg-primary text-accent flex items-center justify-center mb-4"><i class="fa-solid fa-diagram-project"></i></span>
+                        <h3 class="font-serif font-bold text-primaryDark group-hover:text-primary transition-colors">完整服務流程 <i class="fa-solid fa-arrow-right-long text-xs text-accent"></i></h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="hf-footer"></div>
+    <div id="hf-sticky-footer"></div>
+</body>
+</html>
