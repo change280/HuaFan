@@ -118,7 +118,7 @@
             '</span>' +
             '<span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">About Us</span>' +
           '</button>' +
-          '<a href="' + HOME + '#services" class="menu-link group text-right cursor-pointer relative">' +
+          '<a href="services.html" data-nav="services" class="menu-link group text-right cursor-pointer relative">' +
             '<span class="block text-3xl md:text-4xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">服務方案</span>' +
             '<span class="block text-[10px] tracking-[0.3em] text-[#9CA3AF] mt-1.5 uppercase group-hover:text-accent/70 transition-colors font-sans">Services</span>' +
           '</a>' +
@@ -181,7 +181,21 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<a href="' + HOME + '#services" class="hover:text-primary relative group transition">服務方案<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
+          '<div class="relative group h-full flex items-center">' +
+            '<a href="services.html" data-nav="services" class="hover:text-primary relative py-4 flex items-center gap-1 group-hover:text-primary transition-colors font-medium">服務方案 <span class="absolute bottom-2 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
+            '<div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform origin-top -translate-y-1 group-hover:translate-y-0 pt-2">' +
+              '<div class="bg-[#FFFEFA] rounded-sm shadow-xl border border-[#E3EBE5] py-2 overflow-hidden">' +
+                '<div class="flex flex-col">' +
+                  dropdownItem('services.html#traditional', '中式、西式、環保') +
+                  dropdownItem('spa.html', '禮體淨身 SPA') +
+                  dropdownItem('hall.html', '華梵會館') +
+                  dropdownItem('services.html#memorial-design', '客製會場') +
+                  dropdownItem('services.html#gallery', '聯合奠祭') +
+                  dropdownItem('process.html', '完整服務流程') +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
           '<a href="preneed.html" data-nav="preneed" class="hover:text-primary relative group transition">生前契約<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
           '<a href="wiki.html" data-nav="wiki" class="hover:text-primary relative group transition">禮儀百科<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
           '<a href="' + HOME + '#locations" class="hover:text-primary relative group transition">服務據點<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span></a>' +
@@ -274,6 +288,7 @@
             '<h4 class="text-white font-bold mb-6 text-lg">快速連結</h4>' +
             '<ul class="space-y-3">' +
               '<li><a href="guide.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 臨終關懷 SOP</a></li>' +
+              '<li><a href="services.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 告別方式與特色服務</a></li>' +
               '<li><a href="process.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 治喪流程</a></li>' +
               '<li><a href="' + HOME + '#calculator" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 服務費用試算</a></li>' +
               '<li><a href="wiki.html" class="hover:text-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> 生命禮儀百科</a></li>' +
@@ -397,6 +412,9 @@
   function markActive() {
     var key = null;
     if (page === 'about.html') key = 'about';
+    else if (page === 'services.html') key = 'services';
+    else if (page === 'spa.html') key = 'services';   // 禮體 SPA 歸類於服務方案群組
+    else if (page === 'hall.html') key = 'services';   // 華梵會館 歸類於服務方案群組
     else if (page === 'preneed.html') key = 'preneed';
     else if (page === 'process.html') key = 'process';
     else if (page === 'wiki.html') key = 'wiki';
