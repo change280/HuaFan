@@ -73,3 +73,18 @@
     animation: fadeInUp 0.4s ease-out forwards;
     opacity: 0;
 }
+
+/*
+ * 頁尾前螢幕網屏底圖（footer_screentone）
+ * 桌面（md 以上）維持依比例隨寬度縮放（沿用元件 inline style：width:100% + aspect-ratio）。
+ * 手機（md 以下）改為固定高度 + object-fit: cover，讓網屏點點維持一致大小，
+ * 不會隨螢幕變窄而縮小到幾乎看不見。
+ */
+@media (max-width: 1320px) {
+    .hf-footer-screentone {
+        height: 480px !important;
+        aspect-ratio: auto !important;
+        object-fit: cover !important;
+        object-position: center bottom !important;
+    }
+}
